@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -109,6 +110,13 @@ namespace DebianPackagesExplorer
 					Packages.ParseListParallel(list);
 				}));
 			});
+		}
+
+		private void TextBoxHomepage_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			string link = (sender as TextBox).Text;
+			if (!string.IsNullOrEmpty(link))
+				Process.Start((sender as TextBox).Text);
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -100,36 +100,41 @@
 						<TextBlock Grid.Row="0" Grid.Column="0" Text="Author" />
 						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Author, Mode=OneWay}" />
 
+						<!--  Maintainer  -->
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="Maintainer" />
+						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Maintainer, Mode=OneWay}" />
+
 						<!--  Homepage  -->
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="Homepage" />
-						<TextBox Grid.Row="1" Grid.Column="1" Cursor="Hand" Foreground="Blue"
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="Homepage" />
+						<TextBox Name="TextBoxHomepage" Grid.Row="2" Grid.Column="1" Cursor="Hand"
+						         Foreground="Blue" PreviewMouseDown="TextBoxHomepage_MouseDown"
 						         Style="{DynamicResource StyleTextBoxInfo}"
 						         Text="{Binding Homepage, Mode=OneWay}"
 						         TextDecorations="Underline" />
 
 						<!--  Depends  -->
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="Depends" />
-						<TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Depends, Mode=OneWay}" />
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="Depends" />
+						<TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Depends, Mode=OneWay}" />
 
 						<!--  Suggets  -->
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="MD5" />
-						<TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="MD5" />
+						<TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
 
 						<!--  SHA1  -->
-						<TextBlock Grid.Row="4" Grid.Column="0" Text="SHA1" />
-						<TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="SHA1" />
+						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
 
 						<!--  SHA256  -->
-						<TextBlock Grid.Row="5" Grid.Column="0" Text="SHA256" />
-						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="SHA256" />
+						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
 						<!--  Suggests  -->
-						<TextBlock Grid.Row="6" Grid.Column="0" Text="Suggests" />
-						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="Suggests" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
 
 						<!--  Tags  -->
-						<TextBlock Grid.Row="7" Grid.Column="0" Text="Tags" />
-						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
+						<TextBlock Grid.Row="8" Grid.Column="0" Text="Tags" />
+						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
 
 						<!--    -->
 						<!--
@@ -168,7 +173,7 @@
 		<StatusBar Grid.Row="3">
 			<StatusBarItem Width="300" HorizontalAlignment="Right">
 				<ProgressBar Name="ProgressBarStatus" Width="290" Height="14" HorizontalAlignment="Stretch"
-				             VerticalAlignment="Stretch" Maximum="100" Minimum="0" Value="50" />
+				             VerticalAlignment="Stretch" Maximum="100" Minimum="0" />
 			</StatusBarItem>
 			<StatusBarItem>
 				<TextBlock Name="TextBlockStatus" Text="Ready" />
