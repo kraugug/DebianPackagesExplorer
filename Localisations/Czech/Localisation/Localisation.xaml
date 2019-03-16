@@ -1,0 +1,25 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Czech.Localisation"
+                    xmlns:mscore="clr-namespace:System;assembly=mscorlib">
+	<!--  About Window  -->
+	<mscore:String x:Key="AboutWindow_Title">O {0}</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_CopyInfo_Content">Zkopírovat Informace</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_Ok_Content">OK</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_SystemInfo_Content">Systémové Informace</mscore:String>
+	<mscore:String x:Key="AboutWindow_GroupBox_LoadedAssemblies_Header">Nahrané assemblies</mscore:String>
+
+	<!--  Main Window  -->
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File">_Soubor</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Help">_Nápověda</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Help_About">_O programu</mscore:String>
+
+	<!--  Options Window  -->
+
+	<!--  Packages Sources Window  -->
+
+	<!--  Strings  -->
+	<mscore:String x:Key="String_AllRightsReserved">Všechna práva vyhrazena.</mscore:String>
+	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
+	<mscore:String x:Key="String_VersionInfo">{0}\nVerze {1}\n{2}\n{3}</mscore:String>
+</ResourceDictionary>
