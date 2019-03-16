@@ -26,6 +26,7 @@
 		</Grid.RowDefinitions>
 
 		<!--  Background image  -->
+
 		<Image Grid.RowSpan="4" Panel.ZIndex="0" Opacity="0.1" Source="/Resources/DebianLogo.png" />
 
 		<!--  Main menu  -->
@@ -55,7 +56,8 @@
 					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}" Header="Section" />
 					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="Size (Bytes)" />
 					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}" Header="Installed Size (Bytes)" />
-					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}" Header="Description" />
+					<DataGridTextColumn Binding="{Binding Filename, Mode=OneWay}" Header="Filename" />
+					<DataGridTextColumn Width="*" />
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>
@@ -89,6 +91,9 @@
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
+							<RowDefinition />
 						</Grid.RowDefinitions>
 
 						<!--  Author  -->
@@ -97,7 +102,10 @@
 
 						<!--  Homepage  -->
 						<TextBlock Grid.Row="1" Grid.Column="0" Text="Homepage" />
-						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Homepage, Mode=OneWay}" />
+						<TextBox Grid.Row="1" Grid.Column="1" Cursor="Hand" Foreground="Blue"
+						         Style="{DynamicResource StyleTextBoxInfo}"
+						         Text="{Binding Homepage, Mode=OneWay}"
+						         TextDecorations="Underline" />
 
 						<!--  Depends  -->
 						<TextBlock Grid.Row="2" Grid.Column="0" Text="Depends" />
@@ -115,9 +123,13 @@
 						<TextBlock Grid.Row="5" Grid.Column="0" Text="SHA256" />
 						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
+						<!--  Suggests  -->
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="Suggests" />
+						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
+
 						<!--  Tags  -->
-						<TextBlock Grid.Row="6" Grid.Column="0" Text="" />
-						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="Tags" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
 
 						<!--    -->
 						<!--
@@ -162,14 +174,5 @@
 				<TextBlock Name="TextBlockStatus" Text="Ready" />
 			</StatusBarItem>
 		</StatusBar>
-
-		<!--  Rest  -->
-		<Border Name="BorderOpenFileLink" Grid.RowSpan="4" Width="320" Height="30"
-		        HorizontalAlignment="Center" VerticalAlignment="Center" Background="Black"
-		        Visibility="Collapsed">
-			<Grid Margin="5">
-				<TextBox Name="TextBoxOpenFileLink" VerticalContentAlignment="Center" KeyDown="TextBoxOpenFileLink_KeyDown" />
-			</Grid>
-		</Border>
 	</Grid>
 </Window>

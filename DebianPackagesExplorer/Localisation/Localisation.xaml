@@ -4,10 +4,14 @@
                     xmlns:mscore="clr-namespace:System;assembly=mscorlib">
 	<!--  About Window  -->
 	<mscore:String x:Key="AboutWindow_Title">About {0}</mscore:String>
-	<mscore:String x:Key="AboutWindow_Button_CopyInfo_Content">Copy Info</mscore:String>
-	<mscore:String x:Key="AboutWindow_Button_Ok_Content">OK</mscore:String>
-	<mscore:String x:Key="AboutWindow_Button_SystemInfo_Content">System Info</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_Content_CopyInfo">Copy Info</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_Content_Ok">OK</mscore:String>
+	<mscore:String x:Key="AboutWindow_Button_Content_SystemInfo">System Info</mscore:String>
 	<mscore:String x:Key="AboutWindow_GroupBox_LoadedAssemblies_Header">Loaded assemblies</mscore:String>
+
+	<!--  Link Window  -->
+	<mscore:String x:Key="LinkWindow_Button_Content_Cancel">Cancel</mscore:String>
+	<mscore:String x:Key="LinkWindow_Button_Content_Ok">OK</mscore:String>
 
 	<!--  Main Window  -->
 

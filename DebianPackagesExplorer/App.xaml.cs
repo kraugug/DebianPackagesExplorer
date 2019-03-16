@@ -29,10 +29,30 @@ namespace DebianPackagesExplorer
 
 		#endregion
 
+		#region Methods
+
+		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+		{
+			MessageBox.Show(MainWindow, e.Exception.Message, e.Exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+			e.Handled = true;
+		}
+
+		protected override void OnExit(ExitEventArgs e)
+		{
+			DebianPackagesExplorer.Properties.Settings.Default.Save();
+			base.OnExit(e);
+		}
+
+		#endregion
+
 		#region Constructor
 
 		public App()
 		{
+			if (DebianPackagesExplorer.Properties.Settings.Default.LinkHistory == null)
+			{
+				DebianPackagesExplorer.Properties.Settings.Default.LinkHistory = new System.Collections.Specialized.StringCollection();
+			}
 			Localisation.LocalisationAssemblyCollection loc = new Localisation.LocalisationAssemblyCollection();
 			loc.AddDefault("English");
 			//loc.Apply("Czech");
@@ -45,11 +65,5 @@ namespace DebianPackagesExplorer
 		public string this[string resourceKey] { get { return Resources[resourceKey] as string; } }
 
 		#endregion
-
-		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-		{
-			MessageBox.Show(MainWindow, e.Exception.Message, e.Exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-			e.Handled = true;
-		}
 	}
 }

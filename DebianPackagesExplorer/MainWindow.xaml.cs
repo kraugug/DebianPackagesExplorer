@@ -1,5 +1,6 @@
 ﻿using DebianPackagesExplorer.Debian;
 using DebianPackagesExplorer.Extensions;
+using DebianPackagesExplorer.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -56,15 +58,39 @@ namespace DebianPackagesExplorer
 			dialog.CheckFileExists = true;
 			dialog.Filter = "Archives|*.gz|Text files|*.txt";
 			if (dialog.ShowDialog().Value)
-			{
-				IEnumerable<string> packagesInfo = PackagesCollection.ParseArchive(dialog.FileName);
-				Packages.ParseListParallel(packagesInfo);
-			}
+				ParseList(PackagesCollection.ParseArchive(dialog.FileName));
 		}
 
 		private void CommandFileOpenLink_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			BorderOpenFileLink.Visibility = Visibility.Visible;
+			OpenLinkWindow dialog = new OpenLinkWindow(this);
+			if (dialog.ShowDialog().Value)
+			{
+				string tempFile = System.IO.Path.GetTempFileName();
+				using (WebClient webClient = new WebClient())
+				{
+					ProgressBarStatus.Value = 0;
+					TextBlockStatus.Text = string.Format("Downloading file {0}", dialog.Link);
+					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
+					{
+						ProgressBarStatus.Value = 0;
+						TextBlockStatus.Text = "Parsing file ...";
+						if (e1.Error == null)
+						{
+							if (!e1.Cancelled)
+								ParseList(PackagesCollection.ParseArchive(tempFile));
+							TextBlockStatus.Text = "Ready";
+						}
+						else
+							MessageBox.Show(this, TextBlockStatus.Text =  e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+					};
+					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
+					{
+						ProgressBarStatus.Value = e1.ProgressPercentage;
+					};
+					webClient.DownloadFileAsync(new Uri(dialog.Link), tempFile);
+				}
+			}
 		}
 
 		private void CommandHelpAbout_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -74,31 +100,15 @@ namespace DebianPackagesExplorer
 
 		#endregion
 
-		private void TextBoxOpenFileLink_KeyDown(object sender, KeyEventArgs e)
+		private void ParseList(IEnumerable<string> list)
 		{
-			if (e.Key == Key.Enter)
+			Task.Factory.StartNew(() =>
 			{
-				string tempFile = System.IO.Path.GetTempFileName();
-				using (WebClient webClient = new WebClient())
+				Dispatcher.BeginInvoke(new Action(() =>
 				{
-					ProgressBarStatus.Value = 0;
-					TextBlockStatus.Text = string.Format("Downloading file {0}", TextBoxOpenFileLink.Text);
-					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
-					{
-						ProgressBarStatus.Value = 0;
-						TextBlockStatus.Text = "Parsing file ...";
-						if (!e1.Cancelled)
-							Packages.ParseListParallel(PackagesCollection.ParseArchive(tempFile));
-						TextBlockStatus.Text = "Ready";
-						BorderOpenFileLink.Visibility = Visibility.Collapsed;
-					};
-					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
-					{
-						ProgressBarStatus.Value = e1.ProgressPercentage;
-					};
-					webClient.DownloadFileAsync(new Uri(TextBoxOpenFileLink.Text), tempFile);
-				}
-			}
+					Packages.ParseListParallel(list);
+				}));
+			});
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)

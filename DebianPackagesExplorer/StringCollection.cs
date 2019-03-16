@@ -58,6 +58,11 @@ namespace DebianPackagesExplorer
 			return Parse(str, DefaultDelimiter);
 		}
 
+		//public static implicit operator string(StringCollection collection)
+		//{
+		//	return collection.ToString();
+		//}
+
 		#endregion
 	}
 }

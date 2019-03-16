@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace DebianPackagesExplorer.Debian
 {
