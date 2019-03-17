@@ -12,10 +12,12 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
 	<Window.CommandBindings>
+		<CommandBinding Command="local:MainWindow.CommandFileBrowseDebianSources" Executed="CommandFileBrowseDebianSources_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileExit" Executed="CommandFileExit_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenFile" Executed="CommandFileOpenFile_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenLink" Executed="CommandFileOpenLink_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandHelpAbout" Executed="CommandHelpAbout_Executed" />
+		<CommandBinding Command="local:MainWindow.CommandToolsOptions" Executed="CommandToolsOptions_Executed" />
 	</Window.CommandBindings>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -35,7 +37,12 @@
 				<MenuItem Command="local:MainWindow.CommandFileOpenFile" Header="{DynamicResource MainWindow_MenuItem_Header_File_OpenFile}" />
 				<MenuItem Command="local:MainWindow.CommandFileOpenLink" Header="{DynamicResource MainWindow_MenuItem_Header_File_OpenLink}" />
 				<Separator />
+				<MenuItem Command="local:MainWindow.CommandFileBrowseDebianSources" Header="{DynamicResource MainWindow_MenuItem_Header_File_BrowseDebianSources}" />
+				<Separator />
 				<MenuItem Command="local:MainWindow.CommandFileExit" Header="{DynamicResource MainWindow_MenuItem_Header_File_Exit}" />
+			</MenuItem>
+			<MenuItem Header="{DynamicResource MainWindow_MenuItem_Header_Tools}">
+				<MenuItem Command="local:MainWindow.CommandToolsOptions" Header="{DynamicResource MainWindow_MenuItem_Header_Tools_Options}" />
 			</MenuItem>
 			<MenuItem Header="{DynamicResource MainWindow_MenuItem_Header_Help}">
 				<MenuItem Command="local:MainWindow.CommandHelpAbout" Header="{DynamicResource MainWindow_MenuItem_Header_Help_About}" />
@@ -47,7 +54,7 @@
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
 			          Background="Transparent" HeadersVisibility="Column"
 			          ItemsSource="{Binding Packages}"
-			          RowBackground="Transparent" SelectionMode="Single" SelectionUnit="FullRow">
+			          RowBackground="Transparent" SelectionMode="Single" SelectionUnit="FullRow" MouseDoubleClick="DataGridPackages_MouseDoubleClick">
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="Name" />
 					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}" Header="Architecture" />
@@ -56,14 +63,13 @@
 					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}" Header="Section" />
 					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="Size (Bytes)" />
 					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}" Header="Installed Size (Bytes)" />
-					<DataGridTextColumn Binding="{Binding Filename, Mode=OneWay}" Header="Filename" />
-					<DataGridTextColumn Width="*" />
+					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}" Header="Description" />
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>
 
 		<!--  Package info  -->
-		<GroupBox Grid.Row="2" MinHeight="200" Margin="5,0,5,0" Header="Package Info">
+		<GroupBox Grid.Row="2" MinHeight="200" Margin="5,5,5,0" Header="Package Info">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
@@ -84,6 +90,7 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
+							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
@@ -128,13 +135,17 @@
 						<TextBlock Grid.Row="6" Grid.Column="0" Text="SHA256" />
 						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
+						<!--  Filename  -->
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="Filename" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Filename, Mode=OneWay}" />
+
 						<!--  Suggests  -->
-						<TextBlock Grid.Row="7" Grid.Column="0" Text="Suggests" />
-						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
+						<TextBlock Grid.Row="8" Grid.Column="0" Text="Suggests" />
+						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
 
 						<!--  Tags  -->
-						<TextBlock Grid.Row="8" Grid.Column="0" Text="Tags" />
-						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
+						<TextBlock Grid.Row="9" Grid.Column="0" Text="Tags" />
+						<TextBox Grid.Row="9" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
 
 						<!--    -->
 						<!--

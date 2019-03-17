@@ -31,10 +31,12 @@ namespace DebianPackagesExplorer
 	{
 		#region Fields
 
+		public static readonly RoutedCommand CommandFileBrowseDebianSources = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileExit = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileOpenFile = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileOpenLink = new RoutedCommand();
 		public static readonly RoutedCommand CommandHelpAbout = new RoutedCommand();
+		public static readonly RoutedCommand CommandToolsOptions = new RoutedCommand();
 
 		#endregion
 
@@ -53,6 +55,15 @@ namespace DebianPackagesExplorer
 			Close();
 		}
 
+		private void CommandFileBrowseDebianSources_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			PackagesSourcesWindow dialog = new PackagesSourcesWindow();
+			if (dialog.ShowDialog().Value)
+			{
+
+			}
+		}
+
 		private void CommandFileOpenFile_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
@@ -64,7 +75,7 @@ namespace DebianPackagesExplorer
 
 		private void CommandFileOpenLink_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			OpenLinkWindow dialog = new OpenLinkWindow(this);
+			OpenLinkWindow dialog = new OpenLinkWindow();
 			if (dialog.ShowDialog().Value)
 			{
 				string tempFile = System.IO.Path.GetTempFileName();
@@ -81,6 +92,8 @@ namespace DebianPackagesExplorer
 							if (!e1.Cancelled)
 								ParseList(PackagesCollection.ParseArchive(tempFile));
 							TextBlockStatus.Text = "Ready";
+							if (!Properties.Settings.Default.LinkHistory.Contains(dialog.Link))
+								Properties.Settings.Default.LinkHistory.Add(dialog.Link);
 						}
 						else
 							MessageBox.Show(this, TextBlockStatus.Text =  e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -99,7 +112,28 @@ namespace DebianPackagesExplorer
 			(new Windows.AboutWindow()).ShowDialog();
 		}
 
+		private void CommandToolsOptions_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			OptionsWindow dialog = new OptionsWindow();
+			if (dialog.ShowDialog().Value)
+			{
+
+			}
+		}
+
 		#endregion
+
+		private void DataGridPackages_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			DataGrid dataGrid = sender as DataGrid;
+			if (dataGrid != null)
+			{
+				string link = (dataGrid.SelectedItem as PackageInfo)?.Homepage;
+				if (!string.IsNullOrEmpty(link))
+					Process.Start(link);
+			}
+				
+		}
 
 		private void ParseList(IEnumerable<string> list)
 		{
@@ -116,7 +150,7 @@ namespace DebianPackagesExplorer
 		{
 			string link = (sender as TextBox).Text;
 			if (!string.IsNullOrEmpty(link))
-				Process.Start((sender as TextBox).Text);
+				Process.Start(link);
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -16,12 +16,14 @@
 	<!--  Main Window  -->
 
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File">_File</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_BrowseDebianSources">_Browse Debian Sources</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_Exit">_Exit</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_OpenFile">Open _File ...</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_OpenLink">Open _Link ...</mscore:String>
-	<mscore:String x:Key="MainWindow_MenuItem_Header_File_Exit">_Exit</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help">_Help</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help_About">_About</mscore:String>
-
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools">_Tools</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools_Options">_Options</mscore:String>
 	<!--  Options Window  -->
 
 	<!--  Packages Sources Window  -->

@@ -41,11 +41,7 @@ namespace DebianPackagesExplorer.Windows
 		{
 			Uri testUri;
 			if (Uri.TryCreate(Link, UriKind.Absolute, out testUri))
-			{
-				if (!Properties.Settings.Default.LinkHistory.Contains(Link))
-					Properties.Settings.Default.LinkHistory.Add(Link);
 				DialogResult = true;
-			}
 			else
 				MessageBox.Show("Invalid link!", Title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
@@ -54,10 +50,10 @@ namespace DebianPackagesExplorer.Windows
 
 		#region Constructor
 
-		public OpenLinkWindow(Window owner)
+		public OpenLinkWindow()
 		{
 			DataContext = this;
-			Owner = owner;
+			Owner = App.MainWindow;
 			InitializeComponent();
 		}
 

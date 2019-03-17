@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Michal Heczko")]
 [assembly: AssemblyProduct("DebianPackagesExplorer")]
-[assembly: AssemblyCopyright("Copyright © 2019, Michal Heczko")]
+[assembly: AssemblyCopyright("Copyright © 2019 Michal Heczko")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
