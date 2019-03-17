@@ -37,6 +37,11 @@ namespace DebianPackagesExplorer
 			e.Handled = true;
 		}
 
+		public TType GetResource<TType>(string resourceKey)
+		{
+			return (TType)Resources[resourceKey];
+		}
+
 		protected override void OnExit(ExitEventArgs e)
 		{
 			DebianPackagesExplorer.Properties.Settings.Default.Save();
@@ -54,8 +59,9 @@ namespace DebianPackagesExplorer
 				DebianPackagesExplorer.Properties.Settings.Default.LinkHistory = new System.Collections.Specialized.StringCollection();
 			}
 			Localisation.LocalisationAssemblyCollection loc = new Localisation.LocalisationAssemblyCollection();
-			loc.AddDefault("English");
-			//loc.Apply("Czech");
+			//loc.AddDefault("English");
+			//loc.Apply("English");
+			loc.Apply("Czech");
 		}
 
 		#endregion

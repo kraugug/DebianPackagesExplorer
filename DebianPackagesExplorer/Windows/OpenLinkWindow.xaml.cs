@@ -43,7 +43,7 @@ namespace DebianPackagesExplorer.Windows
 			if (Uri.TryCreate(Link, UriKind.Absolute, out testUri))
 				DialogResult = true;
 			else
-				MessageBox.Show("Invalid link!", Title, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(App.Current.GetResource<string>(Properties.Resources.ResKey_String_InvalidLink), Title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		#endregion

@@ -68,7 +68,7 @@ namespace DebianPackagesExplorer
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.CheckFileExists = true;
-			dialog.Filter = "Archives|*.gz|Text files|*.txt";
+			dialog.Filter = App.Current.GetResource<string>(Properties.Resources.ResKey_String_OpenFileDialogFilter);
 			if (dialog.ShowDialog().Value)
 				ParseList(PackagesCollection.ParseArchive(dialog.FileName));
 		}
@@ -82,24 +82,29 @@ namespace DebianPackagesExplorer
 				using (WebClient webClient = new WebClient())
 				{
 					ProgressBarStatus.Value = 0;
-					TextBlockStatus.Text = string.Format("Downloading file {0}", dialog.Link);
+					ProgressBarStatus.IsIndeterminate = true;
+					TextBlockStatus.Text = string.Format(App.Current.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), dialog.Link);
 					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
 					{
 						ProgressBarStatus.Value = 0;
-						TextBlockStatus.Text = "Parsing file ...";
+						TextBlockStatus.Text = App.Current.GetResource<string>(Properties.Resources.ResKey_String_ParsingFile);
 						if (e1.Error == null)
 						{
 							if (!e1.Cancelled)
 								ParseList(PackagesCollection.ParseArchive(tempFile));
-							TextBlockStatus.Text = "Ready";
+							TextBlockStatus.Text = App.Current.GetResource<string>(Properties.Resources.ResKey_String_Ready);
 							if (!Properties.Settings.Default.LinkHistory.Contains(dialog.Link))
 								Properties.Settings.Default.LinkHistory.Add(dialog.Link);
 						}
 						else
 							MessageBox.Show(this, TextBlockStatus.Text =  e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+						ProgressBarStatus.IsIndeterminate = false;
+						TextBlockStatus.Text = null;
 					};
 					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
 					{
+						if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
+							ProgressBarStatus.IsIndeterminate = false;
 						ProgressBarStatus.Value = e1.ProgressPercentage;
 					};
 					webClient.DownloadFileAsync(new Uri(dialog.Link), tempFile);

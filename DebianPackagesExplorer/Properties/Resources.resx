@@ -151,6 +151,21 @@
   <data name="ResKey_String_DotNetVersionInfo" xml:space="preserve">
     <value>String_DotNetVersionInfo</value>
   </data>
+  <data name="ResKey_String_DownloadingFile_Formatted" xml:space="preserve">
+    <value>String_DownloadingFile_Formatted</value>
+  </data>
+  <data name="ResKey_String_InvalidLink" xml:space="preserve">
+    <value>String_InvalidLink</value>
+  </data>
+  <data name="ResKey_String_OpenFileDialogFilter" xml:space="preserve">
+    <value>String_OpenFileDialogFilter</value>
+  </data>
+  <data name="ResKey_String_ParsingFile" xml:space="preserve">
+    <value>String_ParsingFile</value>
+  </data>
+  <data name="ResKey_String_Ready" xml:space="preserve">
+    <value>String_Ready</value>
+  </data>
   <data name="ResKey_String_VersionInfo" xml:space="preserve">
     <value>String_VersionInfo</value>
   </data>

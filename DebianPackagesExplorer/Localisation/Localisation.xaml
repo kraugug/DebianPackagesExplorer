@@ -14,7 +14,14 @@
 	<mscore:String x:Key="LinkWindow_Button_Content_Ok">OK</mscore:String>
 
 	<!--  Main Window  -->
-
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architecture</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Description</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_InstalledSize">Installed Size (Bytes)</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Name">Name</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Priority">Priority</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Section">Section</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Size">Size (Bytes)</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Version">Version</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File">_File</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_BrowseDebianSources">_Browse Debian Sources</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_Exit">_Exit</mscore:String>
@@ -24,6 +31,7 @@
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help_About">_About</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools">_Tools</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools_Options">_Options</mscore:String>
+
 	<!--  Options Window  -->
 
 	<!--  Packages Sources Window  -->
@@ -31,6 +39,10 @@
 	<!--  Strings  -->
 	<mscore:String x:Key="String_AllRightsReserved">All rights reserved.</mscore:String>
 	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
+	<mscore:String x:Key="String_DownloadingFile_Formatted">Downloaing file {0}</mscore:String>
+	<mscore:String x:Key="String_InvalidLink">Invalid link!</mscore:String>
+	<mscore:String x:Key="String_OpenFileDialogFilter">Archives|*.gz|Text files|*.txt</mscore:String>
+	<mscore:String x:Key="String_ParsingFile">Parsing file ...</mscore:String>
+	<mscore:String x:Key="String_Ready">Ready</mscore:String>
 	<mscore:String x:Key="String_VersionInfo">{0}\nVersion {1}\n{2}\n{3}</mscore:String>
-
 </ResourceDictionary>

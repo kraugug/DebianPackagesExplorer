@@ -54,16 +54,17 @@
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
 			          Background="Transparent" HeadersVisibility="Column"
 			          ItemsSource="{Binding Packages}"
-			          RowBackground="Transparent" SelectionMode="Single" SelectionUnit="FullRow" MouseDoubleClick="DataGridPackages_MouseDoubleClick">
+			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent"
+			          SelectionMode="Single" SelectionUnit="FullRow">
 				<DataGrid.Columns>
-					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="Name" />
-					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}" Header="Architecture" />
-					<DataGridTextColumn Binding="{Binding Version, Mode=OneWay}" Header="Version" />
-					<DataGridTextColumn Binding="{Binding Priority, Mode=OneWay}" Header="Priority" />
-					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}" Header="Section" />
-					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="Size (Bytes)" />
-					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}" Header="Installed Size (Bytes)" />
-					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}" Header="Description" />
+					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
+					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Architecture}" />
+					<DataGridTextColumn Binding="{Binding Version, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Version}" />
+					<DataGridTextColumn Binding="{Binding Priority, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Priority}" />
+					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Section}" />
+					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Size}" />
+					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_InstalledSize}" />
+					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Description}" />
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>
@@ -187,7 +188,7 @@
 				             VerticalAlignment="Stretch" Maximum="100" Minimum="0" />
 			</StatusBarItem>
 			<StatusBarItem>
-				<TextBlock Name="TextBlockStatus" Text="Ready" />
+				<TextBlock Name="TextBlockStatus" />
 			</StatusBarItem>
 		</StatusBar>
 	</Grid>

@@ -162,6 +162,51 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String_DownloadingFile_Formatted.
+        /// </summary>
+        internal static string ResKey_String_DownloadingFile_Formatted {
+            get {
+                return ResourceManager.GetString("ResKey_String_DownloadingFile_Formatted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_InvalidLink.
+        /// </summary>
+        internal static string ResKey_String_InvalidLink {
+            get {
+                return ResourceManager.GetString("ResKey_String_InvalidLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_OpenFileDialogFilter.
+        /// </summary>
+        internal static string ResKey_String_OpenFileDialogFilter {
+            get {
+                return ResourceManager.GetString("ResKey_String_OpenFileDialogFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_ParsingFile.
+        /// </summary>
+        internal static string ResKey_String_ParsingFile {
+            get {
+                return ResourceManager.GetString("ResKey_String_ParsingFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_Ready.
+        /// </summary>
+        internal static string ResKey_String_Ready {
+            get {
+                return ResourceManager.GetString("ResKey_String_Ready", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String_VersionInfo.
         /// </summary>
         internal static string ResKey_String_VersionInfo {

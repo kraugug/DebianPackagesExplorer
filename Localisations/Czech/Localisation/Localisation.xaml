@@ -9,10 +9,28 @@
 	<mscore:String x:Key="AboutWindow_Button_SystemInfo_Content">Systémové Informace</mscore:String>
 	<mscore:String x:Key="AboutWindow_GroupBox_LoadedAssemblies_Header">Nahrané assemblies</mscore:String>
 
+	<!--  Link Window  -->
+	<mscore:String x:Key="LinkWindow_Button_Content_Cancel">Zrušit</mscore:String>
+	<mscore:String x:Key="LinkWindow_Button_Content_Ok">OK</mscore:String>
+
 	<!--  Main Window  -->
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architektura</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Popis</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_InstalledSize">Velikost po instalaci (Bytes)</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Name">Název</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Priority">Priorita</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Section">Sekce</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Size">Velikost (Bytes)</mscore:String>
+	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Version">Verzen</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File">_Soubor</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_BrowseDebianSources">_Browse Debian Sources</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_Exit">_Exit</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_OpenFile">Otevřít _Soubor ...</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_File_OpenLink">Otevřít _Odkaz ...</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help">_Nápověda</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help_About">_O programu</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools">_Nástroje</mscore:String>
+	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools_Options">_Možnosti</mscore:String>
 
 	<!--  Options Window  -->
 
@@ -21,5 +39,10 @@
 	<!--  Strings  -->
 	<mscore:String x:Key="String_AllRightsReserved">Všechna práva vyhrazena.</mscore:String>
 	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
+	<mscore:String x:Key="String_DownloadingFile_Formatted">Stahuji soubor {0}</mscore:String>
+	<mscore:String x:Key="String_InvalidLink">Neplatný odkaz!</mscore:String>
+	<mscore:String x:Key="String_OpenFileDialogFilter">GZ krabice|*.gz|Textové soubory|*.txt</mscore:String>
+	<mscore:String x:Key="String_ParsingFile">Čučím do souboru ...</mscore:String>
+	<mscore:String x:Key="String_Ready">Připraven</mscore:String>
 	<mscore:String x:Key="String_VersionInfo">{0}\nVerze {1}\n{2}\n{3}</mscore:String>
 </ResourceDictionary>
