@@ -35,6 +35,12 @@
 	<!--  Options Window  -->
 
 	<!--  Packages Sources Window  -->
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Add">_Add...</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Cancel">_Cancel</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Ok">_Ok</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">_Refresh</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_WorkWith">Work with:</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Title">Packages Sources</mscore:String>
 
 	<!--  Strings  -->
 	<mscore:String x:Key="String_AllRightsReserved">All rights reserved.</mscore:String>

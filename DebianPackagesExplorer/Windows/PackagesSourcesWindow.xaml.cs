@@ -18,6 +18,27 @@ namespace DebianPackagesExplorer.Windows
 	/// </summary>
 	public partial class PackagesSourcesWindow : Window
 	{
+		#region Fields
+
+		public static readonly RoutedCommand CommandOk = new RoutedCommand();
+
+		#endregion
+
+		#region Properties
+
+		public string PackageFilename { get; }
+
+		#endregion
+
+		#region Methods
+
+		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			DialogResult = true;
+		}
+
+		#endregion
+
 		#region Constructor
 
 		public PackagesSourcesWindow()

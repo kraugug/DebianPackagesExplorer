@@ -63,6 +63,16 @@ namespace DebianPackagesExplorer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Application_x_deb {
+            get {
+                object obj = ResourceManager.GetObject("Application_x_deb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DebianLogo {
             get {
                 object obj = ResourceManager.GetObject("DebianLogo", resourceCulture);
