@@ -55,9 +55,9 @@ namespace DebianPackagesExplorer
 		public App()
 		{
 			if (DebianPackagesExplorer.Properties.Settings.Default.LinkHistory == null)
-			{
 				DebianPackagesExplorer.Properties.Settings.Default.LinkHistory = new System.Collections.Specialized.StringCollection();
-			}
+			if (DebianPackagesExplorer.Properties.Settings.Default.Sources == null)
+				DebianPackagesExplorer.Properties.Settings.Default.Sources = new System.Collections.Specialized.StringCollection();
 			Localisation.LocalisationAssemblyCollection loc = new Localisation.LocalisationAssemblyCollection();
 			//loc.AddDefault("English");
 			//loc.Apply("English");

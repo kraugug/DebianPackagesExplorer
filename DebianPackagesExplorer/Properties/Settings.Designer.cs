@@ -33,5 +33,16 @@ namespace DebianPackagesExplorer.Properties {
                 this["LinkHistory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Sources {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Sources"]));
+            }
+            set {
+                this["Sources"] = value;
+            }
+        }
     }
 }
