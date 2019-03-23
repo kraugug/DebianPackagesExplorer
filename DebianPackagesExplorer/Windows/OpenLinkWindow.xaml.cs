@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -20,11 +21,14 @@ namespace DebianPackagesExplorer.Windows
 	{
 		#region Fileds
 
+		public static readonly RoutedCommand CommandClear = new RoutedCommand();
 		public static readonly RoutedCommand CommandOk = new RoutedCommand();
 
 		#endregion
 
 		#region Properties
+
+		public ObservableCollection<string> History { get; }
 
 		public string Link { get; set; }
 
@@ -32,18 +36,32 @@ namespace DebianPackagesExplorer.Windows
 
 		#region Methods
 
-		private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		private void CommandClear_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = History.Count > 0;
+		}
+
+		private void CommandClear_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			History.Clear();
+		}
+
+		private void CommandOk_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			e.CanExecute = !string.IsNullOrEmpty(Link);
 		}
 
-		private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			Uri testUri;
 			if (Uri.TryCreate(Link, UriKind.Absolute, out testUri))
+			{
+				Properties.Settings.Default.LinkHistory.Clear();
+				Properties.Settings.Default.LinkHistory.AddRange(History.ToArray());
 				DialogResult = true;
+			}
 			else
-				MessageBox.Show(App.Current.GetResource<string>(Properties.Resources.ResKey_String_InvalidLink), Title, MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show(App.GetResource<string>(Properties.Resources.ResKey_String_InvalidLink), Title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		#endregion
@@ -53,6 +71,9 @@ namespace DebianPackagesExplorer.Windows
 		public OpenLinkWindow()
 		{
 			DataContext = this;
+			string[] history = new string[Properties.Settings.Default.LinkHistory.Count];
+			Properties.Settings.Default.LinkHistory.CopyTo(history, 0);
+			History = new ObservableCollection<string>(history);
 			Owner = App.MainWindow;
 			InitializeComponent();
 		}

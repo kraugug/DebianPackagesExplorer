@@ -81,6 +81,16 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DownloadPackage {
+            get {
+                object obj = ResourceManager.GetObject("DownloadPackage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Localisation collection instance already created..
         /// </summary>
         internal static string Exception_LocalisationAlreadyCreated {
@@ -118,6 +128,26 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OpenLink {
+            get {
+                object obj = ResourceManager.GetObject("OpenLink", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Options {
+            get {
+                object obj = ResourceManager.GetObject("Options", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pack://application:,,,/{0};component/Localisation/Localisation.xaml.
         /// </summary>
         internal static string PackString_Localisation {
@@ -127,11 +157,47 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to architectures.
+        /// </summary>
+        internal static string RegEx_GroupName_Architectures {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_Architectures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to codename.
+        /// </summary>
+        internal static string RegEx_GroupName_CodeName {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_CodeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to components.
+        /// </summary>
+        internal static string RegEx_GroupName_Components {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to \s*(?&lt;name&gt;[a-zA-Z0-9-]*):(?&lt;value&gt;.*).
         /// </summary>
-        internal static string RegExPattern_PackageInfo {
+        internal static string RegEx_Pattern_PackageInfo {
             get {
-                return ResourceManager.GetString("RegExPattern_PackageInfo", resourceCulture);
+                return ResourceManager.GetString("RegEx_Pattern_PackageInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (?&lt;name&gt;\w+)(: +)(?&lt;value&gt;.*)\s.
+        /// </summary>
+        internal static string RegEx_Pattern_ReleaseFile {
+            get {
+                return ResourceManager.GetString("RegEx_Pattern_ReleaseFile", resourceCulture);
             }
         }
         
@@ -172,6 +238,15 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String_DownloadCompleted.
+        /// </summary>
+        internal static string ResKey_String_DownloadCompleted {
+            get {
+                return ResourceManager.GetString("ResKey_String_DownloadCompleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String_DownloadingFile_Formatted.
         /// </summary>
         internal static string ResKey_String_DownloadingFile_Formatted {
@@ -186,6 +261,15 @@ namespace DebianPackagesExplorer.Properties {
         internal static string ResKey_String_InvalidLink {
             get {
                 return ResourceManager.GetString("ResKey_String_InvalidLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_NothingFound.
+        /// </summary>
+        internal static string ResKey_String_NothingFound {
+            get {
+                return ResourceManager.GetString("ResKey_String_NothingFound", resourceCulture);
             }
         }
         

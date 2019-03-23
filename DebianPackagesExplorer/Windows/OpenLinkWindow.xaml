@@ -7,12 +7,14 @@
         xmlns:properties="clr-namespace:DebianPackagesExplorer.Properties"
         Title="Open Link"
         MinWidth="640"
+        Icon="/Resources/OpenLink.png"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
 	<Window.CommandBindings>
-		<CommandBinding CanExecute="CommandBinding_CanExecute" Command="local:OpenLinkWindow.CommandOk" Executed="CommandBinding_Executed" />
+		<CommandBinding CanExecute="CommandClear_CanExecute" Command="local:OpenLinkWindow.CommandClear" Executed="CommandClear_Executed" />
+		<CommandBinding CanExecute="CommandOk_CanExecute" Command="local:OpenLinkWindow.CommandOk" Executed="CommandOk_Executed" />
 	</Window.CommandBindings>
 	<Grid Margin="5">
 		<Grid.RowDefinitions>
@@ -21,15 +23,22 @@
 		</Grid.RowDefinitions>
 		<!--  Link  -->
 		<ComboBox Grid.Row="0" Margin="5" IsEditable="True"
-		          ItemsSource="{Binding Source={x:Static properties:Settings.Default}, Path=LinkHistory}"
+		          ItemsSource="{Binding History}"
 		          Text="{Binding Link, UpdateSourceTrigger=PropertyChanged}" />
 
 		<!--  Buttons  -->
-		<StackPanel Grid.Row="1" Margin="5" HorizontalAlignment="Right" Orientation="Horizontal">
-			<Button Width="60" Content="{DynamicResource LinkWindow_Button_Content_Cancel}" IsCancel="True" />
-			<Button Width="60" Margin="5,0,0,0" Command="local:OpenLinkWindow.CommandOk"
+		<Grid Grid.Row="1" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="60" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="60" />
+				<ColumnDefinition Width="60" />
+			</Grid.ColumnDefinitions>
+			<Button Grid.Column="0" Command="local:OpenLinkWindow.CommandClear" Content="{DynamicResource LinkWindow_Button_Content_Clear}" />
+			<Button Grid.Column="2" Content="{DynamicResource LinkWindow_Button_Content_Cancel}" IsCancel="True" />
+			<Button Grid.Column="3" Margin="5,0,0,0" Command="local:OpenLinkWindow.CommandOk"
 			        Content="{DynamicResource LinkWindow_Button_Content_Ok}"
 			        IsDefault="True" />
-		</StackPanel>
+		</Grid>
 	</Grid>
 </Window>

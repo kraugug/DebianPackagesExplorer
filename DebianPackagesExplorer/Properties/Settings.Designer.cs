@@ -36,12 +36,39 @@ namespace DebianPackagesExplorer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>http://archive.debian.org/debian/</string>\r\n</ArrayOfString>")]
         public global::System.Collections.Specialized.StringCollection Sources {
             get {
                 return ((global::System.Collections.Specialized.StringCollection)(this["Sources"]));
             }
             set {
                 this["Sources"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseDefaultDownloadsFolder {
+            get {
+                return ((bool)(this["UseDefaultDownloadsFolder"]));
+            }
+            set {
+                this["UseDefaultDownloadsFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DefaultDownloadsFolder {
+            get {
+                return ((string)(this["DefaultDownloadsFolder"]));
+            }
+            set {
+                this["DefaultDownloadsFolder"] = value;
             }
         }
     }

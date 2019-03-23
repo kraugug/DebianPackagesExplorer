@@ -124,6 +124,9 @@
   <data name="DebianLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DebianLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DownloadPackage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DownloadPackage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Exception_LocalisationAlreadyCreated" xml:space="preserve">
     <value>Localisation collection instance already created.</value>
   </data>
@@ -136,11 +139,29 @@
   <data name="Info" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OpenLink" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OpenLink.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Options" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="PackString_Localisation" xml:space="preserve">
     <value>pack://application:,,,/{0};component/Localisation/Localisation.xaml</value>
   </data>
-  <data name="RegExPattern_PackageInfo" xml:space="preserve">
+  <data name="RegEx_GroupName_Architectures" xml:space="preserve">
+    <value>architectures</value>
+  </data>
+  <data name="RegEx_GroupName_CodeName" xml:space="preserve">
+    <value>codename</value>
+  </data>
+  <data name="RegEx_GroupName_Components" xml:space="preserve">
+    <value>components</value>
+  </data>
+  <data name="RegEx_Pattern_PackageInfo" xml:space="preserve">
     <value>\s*(?&lt;name&gt;[a-zA-Z0-9-]*):(?&lt;value&gt;.*)</value>
+  </data>
+  <data name="RegEx_Pattern_ReleaseFile" xml:space="preserve">
+    <value>(?&lt;name&gt;\w+)(: +)(?&lt;value&gt;.*)\s</value>
   </data>
   <data name="ResKey_AboutWindow_GroupBox_LoadedAssemblies_Header" xml:space="preserve">
     <value>AboutWindow_GroupBox_LoadedAssemblies_Header</value>
@@ -154,11 +175,17 @@
   <data name="ResKey_String_DotNetVersionInfo" xml:space="preserve">
     <value>String_DotNetVersionInfo</value>
   </data>
+  <data name="ResKey_String_DownloadCompleted" xml:space="preserve">
+    <value>String_DownloadCompleted</value>
+  </data>
   <data name="ResKey_String_DownloadingFile_Formatted" xml:space="preserve">
     <value>String_DownloadingFile_Formatted</value>
   </data>
   <data name="ResKey_String_InvalidLink" xml:space="preserve">
     <value>String_InvalidLink</value>
+  </data>
+  <data name="ResKey_String_NothingFound" xml:space="preserve">
+    <value>String_NothingFound</value>
   </data>
   <data name="ResKey_String_OpenFileDialogFilter" xml:space="preserve">
     <value>String_OpenFileDialogFilter</value>

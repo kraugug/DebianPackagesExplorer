@@ -6,12 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:windows="clr-namespace:DebianPackagesExplorer.Windows"
         Width="800"
-        Height="450"
+        Height="640"
         Icon="/Resources/DebianLogo.png"
         Loaded="Window_Loaded"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
 	<Window.CommandBindings>
+		<CommandBinding CanExecute="CommandDownloadPackage_CanExecute" Command="local:MainWindow.CommandDownloadPackage" Executed="CommandDownloadPackage_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileBrowseDebianSources" Executed="CommandFileBrowseDebianSources_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileExit" Executed="CommandFileExit_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenFile" Executed="CommandFileOpenFile_Executed" />
@@ -35,27 +36,45 @@
 		<Menu Grid.Row="0" Background="Transparent">
 			<MenuItem Header="{DynamicResource MainWindow_MenuItem_Header_File}">
 				<MenuItem Command="local:MainWindow.CommandFileOpenFile" Header="{DynamicResource MainWindow_MenuItem_Header_File_OpenFile}" />
-				<MenuItem Command="local:MainWindow.CommandFileOpenLink" Header="{DynamicResource MainWindow_MenuItem_Header_File_OpenLink}" />
+				<MenuItem Command="local:MainWindow.CommandFileOpenLink" Header="{DynamicResource MainWindow_MenuItem_Header_File_OpenLink}">
+					<MenuItem.Icon>
+						<Image Height="16" Source="/Resources/OpenLink.png" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<Separator />
-				<MenuItem Command="local:MainWindow.CommandFileBrowseDebianSources" Header="{DynamicResource MainWindow_MenuItem_Header_File_BrowseDebianSources}" />
+				<MenuItem Command="local:MainWindow.CommandFileBrowseDebianSources" Header="{DynamicResource MainWindow_MenuItem_Header_File_BrowseDebianSources}">
+					<MenuItem.Icon>
+						<Image Height="16" Source="/Resources/Application_x_deb.png" />
+					</MenuItem.Icon>
+				</MenuItem>
 				<Separator />
 				<MenuItem Command="local:MainWindow.CommandFileExit" Header="{DynamicResource MainWindow_MenuItem_Header_File_Exit}" />
 			</MenuItem>
 			<MenuItem Header="{DynamicResource MainWindow_MenuItem_Header_Tools}">
-				<MenuItem Command="local:MainWindow.CommandToolsOptions" Header="{DynamicResource MainWindow_MenuItem_Header_Tools_Options}" />
+				<MenuItem Command="local:MainWindow.CommandToolsOptions" Header="{DynamicResource MainWindow_MenuItem_Header_Tools_Options}">
+					<MenuItem.Icon>
+						<Image Height="16" Source="/Resources/Options.png" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="{DynamicResource MainWindow_MenuItem_Header_Help}">
-				<MenuItem Command="local:MainWindow.CommandHelpAbout" Header="{DynamicResource MainWindow_MenuItem_Header_Help_About}" />
+				<MenuItem Command="local:MainWindow.CommandHelpAbout" Header="{DynamicResource MainWindow_MenuItem_Header_Help_About}">
+					<MenuItem.Icon>
+						<Image Height="16" Source="/Resources/Info.png" />
+					</MenuItem.Icon>
+				</MenuItem>
 			</MenuItem>
 		</Menu>
 
 		<!--  Content  -->
 		<Grid Grid.Row="1">
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
-			          Background="Transparent" HeadersVisibility="Column"
+			          Background="Transparent" EnableColumnVirtualization="True"
+			          EnableRowVirtualization="True" HeadersVisibility="Column"
+			          IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
 			          ItemsSource="{Binding Packages}"
 			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent"
-			          SelectionMode="Single" SelectionUnit="FullRow">
+			          SelectionMode="Single" SelectionUnit="FullRow" TextSearch.TextPath="Name">
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
 					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Architecture}" />
@@ -138,7 +157,7 @@
 
 						<!--  Filename  -->
 						<TextBlock Grid.Row="7" Grid.Column="0" Text="Filename" />
-						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Filename, Mode=OneWay}" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding FileNameWithPath, Mode=OneWay}" />
 
 						<!--  Suggests  -->
 						<TextBlock Grid.Row="8" Grid.Column="0" Text="Suggests" />
@@ -169,15 +188,16 @@
 				</Grid>
 
 				<!--  Tolbar  -->
-				<Border Grid.Column="1" Margin="2,0,2,2" Background="AliceBlue" BorderBrush="LightGray"
-				        BorderThickness="1" CornerRadius="2">
-					<StackPanel Margin="5">
-						<Button Style="{DynamicResource ToolButton}" />
-						<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton}" />
-						<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton}" />
-						<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton}" />
-					</StackPanel>
-				</Border>
+				<StackPanel Grid.Column="1" Margin="2,-2,0,2">
+					<Button Command="local:MainWindow.CommandDownloadPackage" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
+						<Image Source="/Resources/DownloadPackage.png" Style="{DynamicResource ToolButtonImage}" />
+					</Button>
+					<!--
+					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
+					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
+					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
+					-->
+				</StackPanel>
 			</Grid>
 		</GroupBox>
 

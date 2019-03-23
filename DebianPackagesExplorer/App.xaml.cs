@@ -37,9 +37,9 @@ namespace DebianPackagesExplorer
 			e.Handled = true;
 		}
 
-		public TType GetResource<TType>(string resourceKey)
+		public static TType GetResource<TType>(string resourceKey)
 		{
-			return (TType)Resources[resourceKey];
+			return (TType)Application.Current.Resources[resourceKey];
 		}
 
 		protected override void OnExit(ExitEventArgs e)

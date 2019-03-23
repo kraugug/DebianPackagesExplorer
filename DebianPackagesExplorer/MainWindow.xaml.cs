@@ -22,6 +22,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
+
 namespace DebianPackagesExplorer
 {
 	/// <summary>
@@ -31,6 +33,7 @@ namespace DebianPackagesExplorer
 	{
 		#region Fields
 
+		public static readonly RoutedCommand CommandDownloadPackage = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileBrowseDebianSources = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileExit = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileOpenFile = new RoutedCommand();
@@ -42,13 +45,32 @@ namespace DebianPackagesExplorer
 
 		#region Properties
 
+		public bool IsDownloading { get; set; }
+
 		public PackagesCollection Packages { get; private set; }
+
+		public PackageInfo SelectedPackage { get { return DataGridPackages.SelectedItem as PackageInfo; } }
 
 		#endregion
 
 		#region Methods
 
 		#region Commands
+
+		private void CommandDownloadPackage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.CanExecute = !string.IsNullOrEmpty(Packages.GetPackageDownloadLink(SelectedPackage)) && !IsDownloading;
+		}
+
+		private void CommandDownloadPackage_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			FolderBrowserDialog dialog = new FolderBrowserDialog();
+			if (Properties.Settings.Default.UseDefaultDownloadsFolder)
+				DownloadPackage(Packages.GetPackageDownloadLink(SelectedPackage), System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder, SelectedPackage.FileName));
+			else
+				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+					DownloadPackage(Packages.GetPackageDownloadLink(SelectedPackage), System.IO.Path.Combine(dialog.SelectedPath, SelectedPackage.FileName));
+		}
 
 		private void CommandFileExit_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
@@ -60,7 +82,8 @@ namespace DebianPackagesExplorer
 			PackagesSourcesWindow dialog = new PackagesSourcesWindow();
 			if (dialog.ShowDialog().Value)
 			{
-
+				Packages.Clear();
+				OpenRemotePackagesFile(dialog.PackagesFileName);
 			}
 		}
 
@@ -68,48 +91,19 @@ namespace DebianPackagesExplorer
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
 			dialog.CheckFileExists = true;
-			dialog.Filter = App.Current.GetResource<string>(Properties.Resources.ResKey_String_OpenFileDialogFilter);
+			dialog.Filter = App.GetResource<string>(Properties.Resources.ResKey_String_OpenFileDialogFilter);
 			if (dialog.ShowDialog().Value)
+			{
+				Packages.Source = null;
 				ParseList(PackagesCollection.ParseArchive(dialog.FileName));
+			}
 		}
 
 		private void CommandFileOpenLink_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			OpenLinkWindow dialog = new OpenLinkWindow();
 			if (dialog.ShowDialog().Value)
-			{
-				string tempFile = System.IO.Path.GetTempFileName();
-				using (WebClient webClient = new WebClient())
-				{
-					ProgressBarStatus.Value = 0;
-					ProgressBarStatus.IsIndeterminate = true;
-					TextBlockStatus.Text = string.Format(App.Current.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), dialog.Link);
-					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
-					{
-						ProgressBarStatus.Value = 0;
-						TextBlockStatus.Text = App.Current.GetResource<string>(Properties.Resources.ResKey_String_ParsingFile);
-						if (e1.Error == null)
-						{
-							if (!e1.Cancelled)
-								ParseList(PackagesCollection.ParseArchive(tempFile));
-							TextBlockStatus.Text = App.Current.GetResource<string>(Properties.Resources.ResKey_String_Ready);
-							if (!Properties.Settings.Default.LinkHistory.Contains(dialog.Link))
-								Properties.Settings.Default.LinkHistory.Add(dialog.Link);
-						}
-						else
-							MessageBox.Show(this, TextBlockStatus.Text =  e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-						ProgressBarStatus.IsIndeterminate = false;
-						TextBlockStatus.Text = null;
-					};
-					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
-					{
-						if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
-							ProgressBarStatus.IsIndeterminate = false;
-						ProgressBarStatus.Value = e1.ProgressPercentage;
-					};
-					webClient.DownloadFileAsync(new Uri(dialog.Link), tempFile);
-				}
-			}
+				OpenRemotePackagesFile(dialog.Link);
 		}
 
 		private void CommandHelpAbout_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -140,6 +134,79 @@ namespace DebianPackagesExplorer
 				
 		}
 
+		public void DownloadPackage(string url, string fileName)
+		{
+			using (WebClient webClient = new WebClient())
+			{
+				ProgressBarStatus.Value = 0;
+				ProgressBarStatus.IsIndeterminate = true;
+				TextBlockStatus.Text = string.Format(App.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), url);
+				IsDownloading = true;
+				webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
+				{
+					ProgressBarStatus.Value = 0;
+					if (e1.Error == null)
+					{
+						TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_DownloadCompleted);
+						ProgressBarStatus.IsIndeterminate = false;
+						IsDownloading = false;
+						CommandManager.InvalidateRequerySuggested();
+					}
+					else
+					{
+						ProgressBarStatus.IsIndeterminate = false;
+						MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+					}
+				};
+				webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
+				{
+					if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
+						ProgressBarStatus.IsIndeterminate = false;
+					ProgressBarStatus.Value = e1.ProgressPercentage;
+				};
+				webClient.DownloadFileAsync(new Uri(url), fileName);
+			}
+		}
+
+		public void OpenRemotePackagesFile(string url)
+		{
+			string tempFile = System.IO.Path.GetTempFileName();
+			Packages.Source = url.Substring(0, url.IndexOf("dists"));
+			using (WebClient webClient = new WebClient())
+			{
+				ProgressBarStatus.Value = 0;
+				ProgressBarStatus.IsIndeterminate = true;
+				TextBlockStatus.Text = string.Format(App.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), url);
+				webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
+				{
+					ProgressBarStatus.Value = 0;
+					ProgressBarStatus.IsIndeterminate = true;
+					TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_ParsingFile);
+					if (e1.Error == null)
+					{
+						if (!e1.Cancelled)
+						{
+							ParseList(PackagesCollection.ParseArchive(tempFile));
+							if (!Properties.Settings.Default.LinkHistory.Contains(url))
+								Properties.Settings.Default.LinkHistory.Add(url);
+						}
+					}
+					else
+					{
+						ProgressBarStatus.IsIndeterminate = false;
+						MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+					}
+				};
+				webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
+				{
+					if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
+						ProgressBarStatus.IsIndeterminate = false;
+					ProgressBarStatus.Value = e1.ProgressPercentage;
+				};
+				webClient.DownloadFileAsync(new Uri(url), tempFile);
+			}
+		}
+
 		private void ParseList(IEnumerable<string> list)
 		{
 			Task.Factory.StartNew(() =>
@@ -147,6 +214,13 @@ namespace DebianPackagesExplorer
 				Dispatcher.BeginInvoke(new Action(() =>
 				{
 					Packages.ParseListParallel(list);
+				}));
+			}).ContinueWith((task) =>
+			{
+				Dispatcher.BeginInvoke(new Action(() =>
+				{
+					TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_Ready);
+					ProgressBarStatus.IsIndeterminate = false;
 				}));
 			});
 		}
@@ -169,6 +243,14 @@ namespace DebianPackagesExplorer
 
 		public MainWindow()
 		{
+			if (string.IsNullOrEmpty(Properties.Settings.Default.DefaultDownloadsFolder))
+			{
+				
+				Properties.Settings.Default.DefaultDownloadsFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+					System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location));
+				if (!Directory.Exists(Properties.Settings.Default.DefaultDownloadsFolder))
+					Directory.CreateDirectory(Properties.Settings.Default.DefaultDownloadsFolder);
+			}
 			DataContext = this;
 			Packages = new PackagesCollection();
 			InitializeComponent();

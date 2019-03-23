@@ -4,12 +4,62 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DebianPackagesExplorer.Windows"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:DebianPackagesExplorer.Properties"
         Title="OptionsWindow"
         Width="800"
-        Height="450"
+        Icon="/Resources/Options.png"
+        SizeToContent="Height"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
-	<Grid>
+	<Grid Margin="5,10,5,5">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="320" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 
+		<Border Grid.Row="0" Margin="0,0,0,10" BorderBrush="Gray" BorderThickness="0,0,0,1">
+			<Grid Margin="0,0,0,10">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<StackPanel Grid.Column="0">
+					<TextBlock FontSize="16" FontWeight="SemiBold" Text="Options" />
+					<TextBlock Margin="40,5,0,0" Text="..." />
+				</StackPanel>
+				<Image Grid.Column="1" Source="/Resources/Options.png" />
+			</Grid>
+		</Border>
+
+		<TabControl Grid.Row="1">
+			<TabItem Header="Downloads">
+				<Grid Margin="5">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<GroupBox Grid.Row="0" Padding="3,8,3,3">
+						<GroupBox.Header>
+							<CheckBox Content="Use default folder for downloads instead of the folder dialog" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UseDefaultDownloadsFolder}" />
+						</GroupBox.Header>
+						<Grid IsEnabled="{Binding Source={x:Static p:Settings.Default}, Path=UseDefaultDownloadsFolder}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<TextBox Grid.Column="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=DefaultDownloadsFolder}" />
+							<Button Grid.Column="1" Margin="5,0,0,0" Content="..." Style="{DynamicResource ToolButton24}" />
+						</Grid>
+					</GroupBox>
+				</Grid>
+			</TabItem>
+		</TabControl>
+
+		<Border Grid.Row="2" Margin="0,10,0,0" BorderBrush="Gray" BorderThickness="0,1,0,0">
+			<StackPanel Grid.Row="2" Margin="10,10,5,5" HorizontalAlignment="Right" Orientation="Horizontal">
+				<Button Width="80" Content="{DynamicResource PackagesSourcesWindow_Button_Content_Cancel}" IsCancel="True" Style="{DynamicResource ToolButton}" />
+				<Button Width="80" Margin="5,0,0,0" Content="{DynamicResource PackagesSourcesWindow_Button_Content_Ok}" Style="{DynamicResource ToolButton}" />
+			</StackPanel>
+		</Border>
 	</Grid>
 </Window>

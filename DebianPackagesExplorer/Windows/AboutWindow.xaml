@@ -73,9 +73,11 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="90" />
 			</Grid.ColumnDefinitions>
-			<Button Grid.Column="0" Margin="0,0,5,0" Command="local:AboutWindow.CommandCopyInfo" Content="{DynamicResource AboutWindow_Button_Content_CopyInfo}" />
-			<Button Grid.Column="1" Command="local:AboutWindow.CommandSystemInfo" Content="{DynamicResource AboutWindow_Button_Content_SystemInfo}" />
-			<Button Grid.Column="3" Command="local:AboutWindow.CommandOk" Content="{DynamicResource AboutWindow_Button_Content_Ok}" />
+			<Button Grid.Column="0" Margin="0,0,5,0" Command="local:AboutWindow.CommandCopyInfo"
+			        Content="{DynamicResource AboutWindow_Button_Content_CopyInfo}"
+			        Style="{DynamicResource ToolButton}" />
+			<Button Grid.Column="1" Command="local:AboutWindow.CommandSystemInfo" Content="{DynamicResource AboutWindow_Button_Content_SystemInfo}" Style="{DynamicResource ToolButton}" />
+			<Button Grid.Column="3" Command="local:AboutWindow.CommandOk" Content="{DynamicResource AboutWindow_Button_Content_Ok}" Style="{DynamicResource ToolButton}" />
 		</Grid>
 	</Grid>
 </Window>

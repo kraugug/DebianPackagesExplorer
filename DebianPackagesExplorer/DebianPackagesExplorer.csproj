@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -74,8 +75,14 @@
     <Compile Include="Converters\Generic\BoolToValueConverter.cs" />
     <Compile Include="Converters\Generic\MarkupConverter.cs" />
     <Compile Include="Converters\ObjectToFormattedTextConverter.cs" />
+    <Compile Include="Debian\ArchitectureInfo.cs" />
+    <Compile Include="Debian\ComponentInfo.cs" />
     <Compile Include="Debian\PackageInfo.cs" />
     <Compile Include="Debian\PackagesCollection.cs" />
+    <Compile Include="Debian\SiteInfoCollection.cs" />
+    <Compile Include="Debian\CodeNameInfo.cs" />
+    <Compile Include="Extensions\MatchCollectionExtensions.cs" />
+    <Compile Include="IgnoreAttribute.cs" />
     <Compile Include="StringCollection.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
@@ -150,6 +157,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Application_x_deb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\OpenLink.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DownloadPackage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

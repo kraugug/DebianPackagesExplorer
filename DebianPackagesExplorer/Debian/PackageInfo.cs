@@ -25,7 +25,18 @@ namespace DebianPackagesExplorer.Debian
 
 		public string Description { get; private set; }
 
-		public string Filename { get; private set; }
+		[Ignore]
+		public string FileName
+		{
+			get
+			{
+				int index = FileNameWithPath.LastIndexOf('/');
+				return FileNameWithPath.Substring(index + 1, FileNameWithPath.Length - index - 1);
+			}
+		}
+
+		[RealName("Filename")]
+		public string FileNameWithPath { get; private set; }
 
 		public string Homepage { get; private set; }
 
@@ -68,7 +79,7 @@ namespace DebianPackagesExplorer.Debian
 		{
 			if (string.IsNullOrEmpty(str))
 				return null;
-			MatchCollection matches = Regex.Matches(str, Properties.Resources.RegExPattern_PackageInfo);
+			MatchCollection matches = Regex.Matches(str, Properties.Resources.RegEx_Pattern_PackageInfo);
 			if (matches.Count > 0)
 			{
 				PackageInfo info = new PackageInfo();
@@ -80,6 +91,8 @@ namespace DebianPackagesExplorer.Debian
 					UseParseFunctionAttribute useParseFunction = property.GetCustomAttribute<UseParseFunctionAttribute>();
 					foreach (Match match in matches)
 					{
+						if (property.GetCustomAttribute<IgnoreAttribute>() != null)
+							continue;
 						if (match.Groups["name"].Value.ToUpperInvariant().CompareTo(propertyName) == 0)
 						{
 							if (useParseFunction != null)

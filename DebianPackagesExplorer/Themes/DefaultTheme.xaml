@@ -2,8 +2,34 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DebianPackagesExplorer.Themes">
 	<Style x:Key="ToolButton" TargetType="Button">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderBrush" Value="LightGray" />
+		<Setter Property="Focusable" Value="False" />
+		<Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+	</Style>
+
+	<Style x:Key="ToolButton24" BasedOn="{StaticResource ToolButton}" TargetType="Button">
 		<Setter Property="Height" Value="24" />
 		<Setter Property="Width" Value="24" />
+	</Style>
+
+	<Style x:Key="ToolButton28" BasedOn="{StaticResource ToolButton}" TargetType="Button">
+		<Setter Property="Height" Value="28" />
+		<Setter Property="Width" Value="28" />
+	</Style>
+
+	<Style x:Key="ToolButton32" BasedOn="{StaticResource ToolButton}" TargetType="Button">
+		<Setter Property="Height" Value="32" />
+		<Setter Property="Width" Value="32" />
+	</Style>
+
+	<Style x:Key="ToolButtonImage" TargetType="Image">
+		<Setter Property="Opacity" Value="1.0" />
+		<Style.Triggers>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Opacity" Value="0.3" />
+			</Trigger>
+		</Style.Triggers>
 	</Style>
 
 	<Style x:Key="StyleTextBoxInfo" TargetType="TextBox">

@@ -24,7 +24,20 @@ namespace DebianPackagesExplorer.Debian
 
 		#endregion
 
+		#region Properties
+
+		public string Source { get; set; }
+
+		#endregion
+
 		#region Methods
+
+		public string GetPackageDownloadLink(PackageInfo package)
+		{
+			if (string.IsNullOrEmpty(Source) || package == null)
+				return null;
+			return string.Format("{0}/{1}", Source, package.FileNameWithPath);
+		}
 
 		public static IEnumerable<string> ParseString(string str)
 		{

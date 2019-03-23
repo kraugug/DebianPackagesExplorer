@@ -10,10 +10,12 @@
 	<mscore:String x:Key="AboutWindow_GroupBox_LoadedAssemblies_Header">Loaded assemblies</mscore:String>
 
 	<!--  Link Window  -->
-	<mscore:String x:Key="LinkWindow_Button_Content_Cancel">Cancel</mscore:String>
-	<mscore:String x:Key="LinkWindow_Button_Content_Ok">OK</mscore:String>
+	<mscore:String x:Key="LinkWindow_Button_Content_Cancel">_Cancel</mscore:String>
+	<mscore:String x:Key="LinkWindow_Button_Content_Clear">C_lear</mscore:String>
+	<mscore:String x:Key="LinkWindow_Button_Content_Ok">_Ok</mscore:String>
 
 	<!--  Main Window  -->
+	<mscore:String x:Key="MainWindow_Button_ToolTip_DownloadPackage">Download Package</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architecture</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Description</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_InstalledSize">Installed Size (Bytes)</mscore:String>
@@ -39,6 +41,7 @@
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Cancel">_Cancel</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Ok">_Ok</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">_Refresh</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Remove">_Remove</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_WorkWith">Work with:</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Title">Packages Sources</mscore:String>
 
@@ -46,7 +49,9 @@
 	<mscore:String x:Key="String_AllRightsReserved">All rights reserved.</mscore:String>
 	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
 	<mscore:String x:Key="String_DownloadingFile_Formatted">Downloaing file {0}</mscore:String>
+	<mscore:String x:Key="String_DownloadCompleted">Download completed</mscore:String>
 	<mscore:String x:Key="String_InvalidLink">Invalid link!</mscore:String>
+	<mscore:String x:Key="String_NothingFound">Nothing found</mscore:String>
 	<mscore:String x:Key="String_OpenFileDialogFilter">Archives|*.gz|Text files|*.txt</mscore:String>
 	<mscore:String x:Key="String_ParsingFile">Parsing file ...</mscore:String>
 	<mscore:String x:Key="String_Ready">Ready</mscore:String>
