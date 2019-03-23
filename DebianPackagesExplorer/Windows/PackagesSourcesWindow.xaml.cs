@@ -37,7 +37,7 @@ namespace DebianPackagesExplorer.Windows
 
 		public bool IsRefreshing { get; private set; }
 
-		public string PackagesFileName { get; private set; }
+		public SelectedSourcePackageInfo SelectedPackagesSource { get; private set; }
 
 		public SiteInfoCollection SiteInfo { get; }
 
@@ -64,7 +64,7 @@ namespace DebianPackagesExplorer.Windows
 
 		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			PackagesFileName = (TreeViewBrowser.SelectedItem as ComponentInfo).Url;
+			SelectedPackagesSource = new SelectedSourcePackageInfo(TreeViewBrowser.SelectedItem as ComponentInfo);
 			Properties.Settings.Default.Sources.Clear();
 			Properties.Settings.Default.Sources.AddRange(Sources.ToArray());
 			DialogResult = true;

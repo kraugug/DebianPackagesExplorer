@@ -64,12 +64,18 @@ namespace DebianPackagesExplorer
 
 		private void CommandDownloadPackage_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			FolderBrowserDialog dialog = new FolderBrowserDialog();
 			if (Properties.Settings.Default.UseDefaultDownloadsFolder)
-				DownloadPackage(Packages.GetPackageDownloadLink(SelectedPackage), System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder, SelectedPackage.FileName));
+			{
+				DownloadPackage(Packages.GetPackageDownloadLink(SelectedPackage),
+					System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
+					System.IO.Path.Combine(Packages.SourceInfo.CodeName, Packages.SourceInfo.Component, Packages.SourceInfo.Architecture, SelectedPackage.FileName)));
+			}
 			else
+			{
+				FolderBrowserDialog dialog = new FolderBrowserDialog();
 				if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 					DownloadPackage(Packages.GetPackageDownloadLink(SelectedPackage), System.IO.Path.Combine(dialog.SelectedPath, SelectedPackage.FileName));
+			}
 		}
 
 		private void CommandFileExit_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -83,7 +89,7 @@ namespace DebianPackagesExplorer
 			if (dialog.ShowDialog().Value)
 			{
 				Packages.Clear();
-				OpenRemotePackagesFile(dialog.PackagesFileName);
+				OpenRemotePackagesFile(dialog.SelectedPackagesSource);
 			}
 		}
 
@@ -94,7 +100,7 @@ namespace DebianPackagesExplorer
 			dialog.Filter = App.GetResource<string>(Properties.Resources.ResKey_String_OpenFileDialogFilter);
 			if (dialog.ShowDialog().Value)
 			{
-				Packages.Source = null;
+				Packages.SourceInfo = null;
 				ParseList(PackagesCollection.ParseArchive(dialog.FileName));
 			}
 		}
@@ -164,14 +170,21 @@ namespace DebianPackagesExplorer
 						ProgressBarStatus.IsIndeterminate = false;
 					ProgressBarStatus.Value = e1.ProgressPercentage;
 				};
+				if (!Directory.Exists(System.IO.Path.GetDirectoryName(fileName)))
+					Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fileName));
 				webClient.DownloadFileAsync(new Uri(url), fileName);
 			}
+		}
+
+		public void OpenRemotePackagesFile(SelectedSourcePackageInfo sourceInfo)
+		{
+			Packages.SourceInfo = sourceInfo;
+			OpenRemotePackagesFile(sourceInfo.Url);
 		}
 
 		public void OpenRemotePackagesFile(string url)
 		{
 			string tempFile = System.IO.Path.GetTempFileName();
-			Packages.Source = url.Substring(0, url.IndexOf("dists"));
 			using (WebClient webClient = new WebClient())
 			{
 				ProgressBarStatus.Value = 0;

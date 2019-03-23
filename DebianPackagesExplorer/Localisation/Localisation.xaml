@@ -24,6 +24,7 @@
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Section">Section</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Size">Size (Bytes)</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Version">Version</mscore:String>
+	<mscore:String x:Key="MainWindow_GroupBox_Header_Description">Description</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File">_File</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_BrowseDebianSources">_Browse Debian Sources</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_File_Exit">_Exit</mscore:String>
@@ -33,8 +34,25 @@
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Help_About">_About</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools">_Tools</mscore:String>
 	<mscore:String x:Key="MainWindow_MenuItem_Header_Tools_Options">_Options</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Author">Author</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Depends">Depends</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_FileName">Filename</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Homepage">Homepage</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Maintainer">Maintainer</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Md5">MD5</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha1">SHA1</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha256">SHA256</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Suggests">Suggests</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Tags">Tags</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_">Ar</mscore:String>
 
 	<!--  Options Window  -->
+	<mscore:String x:Key="OptionsWindow_Button_Content_Ok">_Ok</mscore:String>
+	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Use default folder for downloads instead of the browse folder dialog</mscore:String>
+	<mscore:String x:Key="OptionsWindow_TabItem_Header_Downloads">Downloads</mscore:String>
+	<mscore:String x:Key="OptionsWindow_TextBlock_Text_Options">Options</mscore:String>
+	<mscore:String x:Key="OptionsWindow_TextBlock_Text_OptionsDescription">...</mscore:String>
+	<mscore:String x:Key="OptionsWindow_Title">Options</mscore:String>
 
 	<!--  Packages Sources Window  -->
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Add">_Add...</mscore:String>
@@ -42,6 +60,8 @@
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Ok">_Ok</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">_Refresh</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Remove">_Remove</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_Packages">Packages Sources</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_PackagesDescription">Select a site or enter the location of a site.</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_WorkWith">Work with:</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Title">Packages Sources</mscore:String>
 

@@ -14,6 +14,8 @@ namespace DebianPackagesExplorer.Debian
 
 		public string Name { get; }
 
+		public ArchitectureInfo Parent { get; }
+
 		public string Url { get; }
 
 		#endregion
@@ -29,10 +31,11 @@ namespace DebianPackagesExplorer.Debian
 
 		#region Constructrors
 
-		public ComponentInfo(string baseUrl, string architecture, string name)
+		public ComponentInfo(ArchitectureInfo parent, string baseUrl, string architecture, string name)
 		{
 			BaseUrl = baseUrl;
 			Name = name;
+			Parent = parent;
 			Url = string.Format("{0}/{1}/binary-{2}/Packages.gz", baseUrl, name, architecture);
 		}
 

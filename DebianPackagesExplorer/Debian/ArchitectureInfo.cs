@@ -16,6 +16,8 @@ namespace DebianPackagesExplorer.Debian
 
 		public string Name { get; }
 
+		public CodeNameInfo Parent { get; }
+
 		#endregion
 
 		#region Methods
@@ -29,13 +31,14 @@ namespace DebianPackagesExplorer.Debian
 
 		#region Constructrors
 
-		public ArchitectureInfo(string baseUrl, string[] components, string name)
+		public ArchitectureInfo(CodeNameInfo parent, string baseUrl, string[] components, string name)
 		{
 			Components = new ObservableCollection<ComponentInfo>();
-			Name = name;
 			BaseUrl = baseUrl;
+			Name = name;
+			Parent = parent;
 			foreach (string component in components)
-				Components.Add(new ComponentInfo(baseUrl, Name, component));
+				Components.Add(new ComponentInfo(this, baseUrl, Name, component));
 		}
 
 		#endregion

@@ -18,6 +18,21 @@ namespace DebianPackagesExplorer.Windows
     /// </summary>
     public partial class OptionsWindow : Window
     {
+		#region Fileds
+
+		public static readonly RoutedCommand CommandOk = new RoutedCommand();
+
+		#endregion
+
+		#region Methods
+
+		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			DialogResult = true;
+		}
+
+		#endregion
+
 		#region Constructor
 
 		public OptionsWindow()

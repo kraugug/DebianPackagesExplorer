@@ -10,6 +10,7 @@
         Width="800"
         Height="450"
         Icon="/Resources/Application_x_deb.png"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
 	<Window.CommandBindings>
@@ -38,8 +39,8 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<StackPanel Grid.Column="0">
-					<TextBlock FontSize="16" FontWeight="SemiBold" Text="Packages Sources" />
-					<TextBlock Margin="40,5,0,0" Text="Select a site or enter the location of a site." />
+					<TextBlock FontSize="16" FontWeight="SemiBold" Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_Packages}" />
+					<TextBlock Margin="40,5,0,0" Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_PackagesDescription}" />
 				</StackPanel>
 				<Image Grid.Column="1" Source="/Resources/Application_x_deb.png" />
 			</Grid>

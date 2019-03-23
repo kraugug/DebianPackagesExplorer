@@ -31,8 +31,6 @@ namespace DebianPackagesExplorer.Debian
 
 		public string Origin { get; }
 
-		//public string Url { get; }
-
 		public string Suite { get; }
 
 		public string Version { get; }
@@ -81,13 +79,12 @@ namespace DebianPackagesExplorer.Debian
 						Label = matches.GetByGroupName(nameof(Label).ToLower());
 						Name = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_CodeName);
 						Origin = matches.GetByGroupName(nameof(Origin).ToLower());
-						//Url = string.Format("{0}/Release", baseUrl);
 						Suite = matches.GetByGroupName(nameof(Suite).ToLower());
 						Version = matches.GetByGroupName(nameof(Version).ToLower());
 						string[] architectures = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Architectures).Split(' ');
 						string[] components = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Components).Split(' ');
 						foreach (string architecture in matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Architectures).Split(' '))
-							Architectures.Add(new ArchitectureInfo(baseUrl, components, architecture));
+							Architectures.Add(new ArchitectureInfo(this, baseUrl, components, architecture));
 					}
 				}
 			}

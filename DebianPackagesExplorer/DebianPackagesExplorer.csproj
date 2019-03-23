@@ -79,6 +79,7 @@
     <Compile Include="Debian\ComponentInfo.cs" />
     <Compile Include="Debian\PackageInfo.cs" />
     <Compile Include="Debian\PackagesCollection.cs" />
+    <Compile Include="Debian\SelectedSourcePackageInfo.cs" />
     <Compile Include="Debian\SiteInfoCollection.cs" />
     <Compile Include="Debian\CodeNameInfo.cs" />
     <Compile Include="Extensions\MatchCollectionExtensions.cs" />

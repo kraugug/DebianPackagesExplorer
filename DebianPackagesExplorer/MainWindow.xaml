@@ -9,6 +9,7 @@
         Height="640"
         Icon="/Resources/DebianLogo.png"
         Loaded="Window_Loaded"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
 	<Window.CommandBindings>
@@ -124,15 +125,15 @@
 						</Grid.RowDefinitions>
 
 						<!--  Author  -->
-						<TextBlock Grid.Row="0" Grid.Column="0" Text="Author" />
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Author}" />
 						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Author, Mode=OneWay}" />
 
 						<!--  Maintainer  -->
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="Maintainer" />
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Maintainer}" />
 						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Maintainer, Mode=OneWay}" />
 
 						<!--  Homepage  -->
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="Homepage" />
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Homepage}" />
 						<TextBox Name="TextBoxHomepage" Grid.Row="2" Grid.Column="1" Cursor="Hand"
 						         Foreground="Blue" PreviewMouseDown="TextBoxHomepage_MouseDown"
 						         Style="{DynamicResource StyleTextBoxInfo}"
@@ -140,47 +141,42 @@
 						         TextDecorations="Underline" />
 
 						<!--  Depends  -->
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="Depends" />
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
 						<TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Depends, Mode=OneWay}" />
 
 						<!--  Suggets  -->
-						<TextBlock Grid.Row="4" Grid.Column="0" Text="MD5" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Md5}" />
 						<TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
 
 						<!--  SHA1  -->
-						<TextBlock Grid.Row="5" Grid.Column="0" Text="SHA1" />
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha1}" />
 						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
 
 						<!--  SHA256  -->
-						<TextBlock Grid.Row="6" Grid.Column="0" Text="SHA256" />
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha256}" />
 						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
 						<!--  Filename  -->
-						<TextBlock Grid.Row="7" Grid.Column="0" Text="Filename" />
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_FileName}" />
 						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding FileNameWithPath, Mode=OneWay}" />
 
 						<!--  Suggests  -->
-						<TextBlock Grid.Row="8" Grid.Column="0" Text="Suggests" />
+						<TextBlock Grid.Row="8" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
 						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
 
 						<!--  Tags  -->
-						<TextBlock Grid.Row="9" Grid.Column="0" Text="Tags" />
+						<TextBlock Grid.Row="9" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
 						<TextBox Grid.Row="9" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
 
-						<!--    -->
+						<!--  Template  -->
 						<!--
 						<TextBlock Grid.Row="7" Grid.Column="0" Text="" />
 						<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Tags, Mode=OneWay}" Style="{DynamicResource StyleTextBoxInfo}" />
-
 						-->
-						<!--    -->
-						<!--
-						<TextBlock Grid.Row="8" Grid.Column="0" Text="" />
-						<TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Tags, Mode=OneWay}" Style="{DynamicResource StyleTextBoxInfo}"/>-->
 					</Grid>
 
 					<!--  Package description  -->
-					<GroupBox Grid.Row="1" Margin="5" Padding="5" Header="Description">
+					<GroupBox Grid.Row="1" Margin="5" Padding="5" Header="{DynamicResource MainWindow_GroupBox_Header_Description}">
 						<TextBox Name="TextBoxPackageDescription" Background="Transparent" BorderThickness="0"
 						         IsReadOnly="True"
 						         Text="{Binding Description, Mode=OneWay}" />

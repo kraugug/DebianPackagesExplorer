@@ -61,7 +61,7 @@ namespace DebianPackagesExplorer
 			Localisation.LocalisationAssemblyCollection loc = new Localisation.LocalisationAssemblyCollection();
 			//loc.AddDefault("English");
 			//loc.Apply("English");
-			loc.Apply("Czech");
+			//loc.Apply("Czech");
 		}
 
 		#endregion
