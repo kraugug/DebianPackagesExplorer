@@ -20,6 +20,12 @@ namespace DebianPackagesExplorer
 
 		#endregion
 
+		#region Properties
+
+		public string Joined { get { return this; } }
+
+		#endregion
+
 		#region Methods
 
 		public static StringCollection Parse(string str)
@@ -34,12 +40,12 @@ namespace DebianPackagesExplorer
 
 		public override string ToString()
 		{
-			return string.Join(string.Format("{0} ", DefaultDelimiter), this);
+			return string.Join(string.Format("{0} ", DefaultDelimiter), this.Items);
 		}
 
 		public string ToString(string delimiter)
 		{
-			return string.Join(string.Format("{0} ", delimiter), this);
+			return string.Join(string.Format("{0} ", delimiter), this.Items);
 		}
 
 		#endregion
@@ -56,6 +62,11 @@ namespace DebianPackagesExplorer
 		public static implicit operator StringCollection(string str)
 		{
 			return Parse(str, DefaultDelimiter);
+		}
+
+		public static implicit operator string(StringCollection obj)
+		{
+			return obj.ToString(DefaultDelimiter);
 		}
 
 		#endregion

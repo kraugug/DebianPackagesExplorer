@@ -1,16 +1,18 @@
 ﻿<Window x:Class="DebianPackagesExplorer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="clr-namespace:DebianPackagesExplorer.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:DebianPackagesExplorer"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:DebianPackagesExplorer.Properties"
         xmlns:windows="clr-namespace:DebianPackagesExplorer.Windows"
         Width="800"
         Height="640"
+        Closed="Window_Closed"
         Icon="/Resources/DebianLogo.png"
         Loaded="Window_Loaded"
         ResizeMode="CanResizeWithGrip"
-        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
 	<Window.CommandBindings>
 		<CommandBinding CanExecute="CommandDownloadPackage_CanExecute" Command="local:MainWindow.CommandDownloadPackage" Executed="CommandDownloadPackage_Executed" />
@@ -109,71 +111,89 @@
 					<Grid Grid.Row="0" Margin="5">
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="Auto" MinWidth="90" />
-							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
 						</Grid.RowDefinitions>
 
+						<!--  Name  -->
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Package}" />
+						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Name, Mode=OneWay}" />
+
 						<!--  Author  -->
-						<TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Author}" />
-						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Author, Mode=OneWay}" />
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Author}" />
+						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Author, Mode=OneWay}" />
 
 						<!--  Maintainer  -->
-						<TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Maintainer}" />
-						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Maintainer, Mode=OneWay}" />
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Maintainer}" />
+						<TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Maintainer, Mode=OneWay}" />
 
 						<!--  Homepage  -->
-						<TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Homepage}" />
-						<TextBox Name="TextBoxHomepage" Grid.Row="2" Grid.Column="1" Cursor="Hand"
-						         Foreground="Blue" PreviewMouseDown="TextBoxHomepage_MouseDown"
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Homepage}" />
+						<TextBox Name="TextBoxHomepage" Grid.Row="3" Grid.Column="1" Width="Auto"
+						         HorizontalAlignment="Left" Cursor="Hand" Foreground="Blue"
+						         PreviewMouseDown="TextBoxHomepage_MouseDown"
 						         Style="{DynamicResource StyleTextBoxInfo}"
 						         Text="{Binding Homepage, Mode=OneWay}"
 						         TextDecorations="Underline" />
 
 						<!--  Depends  -->
-						<TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
-						<TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Depends, Mode=OneWay}" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
+						<ComboBox Grid.Row="4" Grid.Column="1"
+						          ItemsSource="{Binding Depends}"
+						          SelectionChanged="ComboBoxPackageInfo_SelectionChanged"
+						          Style="{DynamicResource StyleComboBoxPackageInfo}"
+						          Text="{Binding Depends.Joined, Mode=OneWay}"
+						          Visibility="{Binding Depends, Converter={c:StringCollectionToVisibilityConverter}}" />
 
-						<!--  Suggets  -->
-						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Md5}" />
-						<TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
+						<!--  MD5SUm  -->
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Md5}" />
+						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
 
 						<!--  SHA1  -->
-						<TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha1}" />
-						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha1}" />
+						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
 
 						<!--  SHA256  -->
-						<TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha256}" />
-						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha256}" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
 						<!--  Filename  -->
-						<TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_FileName}" />
-						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding FileNameWithPath, Mode=OneWay}" />
+						<TextBlock Grid.Row="8" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_FileName}" />
+						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding FileNameWithPath, Mode=OneWay}" />
 
 						<!--  Suggests  -->
-						<TextBlock Grid.Row="8" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
-						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Suggests, Mode=OneWay}" />
+						<TextBlock Grid.Row="9" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
+						<ComboBox Grid.Row="9" Grid.Column="1"
+						          ItemsSource="{Binding Suggests}"
+						          Style="{DynamicResource StyleComboBoxPackageInfo}"
+						          Text="{Binding Suggests.Joined, Mode=OneWay}"
+						          Visibility="{Binding Suggests, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  Tags  -->
-						<TextBlock Grid.Row="9" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
-						<TextBox Grid.Row="9" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Tags, Mode=OneWay}" />
+						<TextBlock Grid.Row="10" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
+						<ComboBox Grid.Row="10" Grid.Column="1"
+						          ItemsSource="{Binding Tags}"
+						          Style="{DynamicResource StyleComboBoxPackageInfo}"
+						          Text="{Binding Tags.Joined, Mode=OneWay}"
+						          Visibility="{Binding Tags, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  Template  -->
 						<!--
-						<TextBlock Grid.Row="7" Grid.Column="0" Text="" />
-						<TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Tags, Mode=OneWay}" Style="{DynamicResource StyleTextBoxInfo}" />
+						<TextBlock Grid.Row="?" Grid.Column="0" Text="" />
+						<TextBox Grid.Row="?" Grid.Column="1" Text="{Binding Tags, Mode=OneWay}" Style="{DynamicResource StyleTextBoxInfo}" />
 						-->
 					</Grid>
 

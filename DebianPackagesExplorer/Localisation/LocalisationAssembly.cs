@@ -24,9 +24,13 @@ namespace DebianPackagesExplorer.Localisation
 
 		#region Properties
 
+		public string Author { get; }
+
 		public string FileName { get; }
 
-		public string FileNameWithoutExtension { get { return System.IO.Path.GetFileName(FileName); } }
+		public string FileNameWithoutExtension { get { return System.IO.Path.GetFileNameWithoutExtension(FileName); } }
+
+		public string FileNameWithoutPath { get { return System.IO.Path.GetFileName(FileName); } }
 
 		public string Name { get { return string.IsNullOrEmpty(m_Name) ? m_AssemblyName.Name : m_Name; } }
 

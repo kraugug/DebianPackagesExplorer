@@ -74,6 +74,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\Generic\BoolToValueConverter.cs" />
     <Compile Include="Converters\Generic\MarkupConverter.cs" />
+    <Compile Include="Converters\StringCollectionToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectToFormattedTextConverter.cs" />
     <Compile Include="Debian\ArchitectureInfo.cs" />
     <Compile Include="Debian\ComponentInfo.cs" />

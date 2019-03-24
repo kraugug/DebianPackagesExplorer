@@ -40,6 +40,7 @@
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Homepage">Webová stránka</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Maintainer">Správce</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Md5">MD5</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Package">Balíček</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha1">SHA1</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha256">SHA256</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Suggests">Doporučení</mscore:String>
@@ -50,6 +51,8 @@
 	<mscore:String x:Key="OptionsWindow_Button_Content_Ok">_Ok</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_ConfirmFileOverwrite">Potvrdit přepsání existujícího souboru</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Použít společnout složku pro stažení místo dialogu pro výběr složky</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Author">Tvůrce</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_FileName">Soubor</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Name">Jazyk</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Version">Verze</mscore:String>
 	<mscore:String x:Key="OptionsWindow_TabItem_Header_Downloads">Možnosti Stažení</mscore:String>
@@ -62,8 +65,8 @@
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Add">_Přidat...</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Cancel">_Zrušit</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Ok">_Ok</mscore:String>
-	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">_Obnovit</mscore:String>
-	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Remove">Odstranit</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">Obno_vit</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Remove">O_dstranit</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_Packages">Zdroj Balíčků</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_PackagesDescription">Vyber zdroj nebo vlož nový zdroj</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_WorkWith">Použít Zdroj:</mscore:String>

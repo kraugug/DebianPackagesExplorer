@@ -77,8 +77,10 @@
 						<ListView.View>
 							<GridView>
 								<GridView.Columns>
-									<GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Name}" />
-									<GridViewColumn DisplayMemberBinding="{Binding Version}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Version}" />
+									<GridViewColumn Width="100" DisplayMemberBinding="{Binding Name}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Name}" />
+									<GridViewColumn Width="200" DisplayMemberBinding="{Binding FileNameWithoutPath}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_FileName}" />
+									<GridViewColumn Width="100" DisplayMemberBinding="{Binding Version}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Version}" />
+									<!--<GridViewColumn DisplayMemberBinding="{Binding Author}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Author}" />-->
 								</GridView.Columns>
 							</GridView>
 						</ListView.View>

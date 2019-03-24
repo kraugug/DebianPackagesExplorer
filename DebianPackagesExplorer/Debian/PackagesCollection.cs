@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -103,6 +104,18 @@ namespace DebianPackagesExplorer.Debian
 		{
 			foreach (string item in source)
 				Add(PackageInfo.Parse(item));
+		}
+
+		#endregion
+
+		#region Indexers
+
+		public PackageInfo this[string name]
+		{
+			get
+			{
+				return this.Where(p => p.Name.Contains(name)).FirstOrDefault();
+			}
 		}
 
 		#endregion

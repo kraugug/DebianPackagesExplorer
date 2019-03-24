@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,6 +57,20 @@ namespace DebianPackagesExplorer
 		#region Methods
 
 		#region Commands
+
+		private void ComboBoxPackageInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			ComboBox comboBox = sender as ComboBox;
+			if (comboBox != null && comboBox.SelectedItem != null)
+			{
+				Match match = Regex.Match(comboBox.SelectedItem as string, @"(?<name>.*)\s+\((?<mode>[><=]+)\s+(?<version>[0-9.]+)\)");
+				if (match != null && match.Success)
+				{
+					PackageInfo package = Packages[match.Groups["name"].Value];
+					MessageBox.Show(string.Format("Package: {0}\nVersion: {1}\nComparison: {2}", match.Groups["name"].Value, match.Groups["version"].Value, match.Groups["mode"].Value));
+				}
+			}
+		}
 
 		private void CommandDownloadPackage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
@@ -267,8 +282,25 @@ namespace DebianPackagesExplorer
 			Packages = new PackagesCollection();
 			InitializeComponent();
 			Title = Assembly.GetExecutingAssembly().GetAttributeValue(AssemblyExtensions.AssemblyAttribute.Description);
+			Height = Properties.Settings.Default.MainWindowHeight;
+			Left = Properties.Settings.Default.MainWindowLeft;
+			if (Properties.Settings.Default.MainWindowMaximized)
+				WindowState = WindowState.Maximized;
+			Top = Properties.Settings.Default.MainWindowTop;
+			Width = Properties.Settings.Default.MainWindowWidth;
+			if (Top == 0 && Left == 0)
+				WindowStartupLocation = WindowStartupLocation.CenterOwner;
 		}
 
 		#endregion
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.MainWindowHeight = Height;
+			Properties.Settings.Default.MainWindowLeft = Left;
+			Properties.Settings.Default.MainWindowMaximized = WindowState == WindowState.Maximized;
+			Properties.Settings.Default.MainWindowTop = Top;
+			Properties.Settings.Default.MainWindowWidth = Width;
+		}
 	}
 }

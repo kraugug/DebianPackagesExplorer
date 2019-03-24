@@ -40,6 +40,7 @@
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Homepage">Homepage</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Maintainer">Maintainer</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Md5">MD5</mscore:String>
+	<mscore:String x:Key="MainWindow_TextBlock_Text_Package">Package</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha1">SHA1</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Sha256">SHA256</mscore:String>
 	<mscore:String x:Key="MainWindow_TextBlock_Text_Suggests">Suggests</mscore:String>
@@ -50,6 +51,8 @@
 	<mscore:String x:Key="OptionsWindow_Button_Content_Ok">_Ok</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_ConfirmFileOverwrite">Confirm existing file overwrite</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Use default downloads folder instead of the browse folder dialog</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Author">Author</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_FileName">Filename</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Name">Language</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Version">Version</mscore:String>
 	<mscore:String x:Key="OptionsWindow_TabItem_Header_Downloads">Downloads</mscore:String>
