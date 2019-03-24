@@ -73,7 +73,7 @@ namespace DebianPackagesExplorer.Localisation
 				}
 			}
 			m_ResourceSourceString = string.Format(Properties.Resources.PackString_Localisation, name);
-			ResourceSource = new Uri(m_ResourceSourceString);
+			ResourceSource = new Uri(m_ResourceSourceString, UriKind.RelativeOrAbsolute);
 		}
 
 		public LocalisationAssembly(string name, string fileName) : this(fileName)

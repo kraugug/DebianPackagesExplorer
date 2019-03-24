@@ -71,5 +71,29 @@ namespace DebianPackagesExplorer.Properties {
                 this["DefaultDownloadsFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ConfirmFileOverwrite {
+            get {
+                return ((bool)(this["ConfirmFileOverwrite"]));
+            }
+            set {
+                this["ConfirmFileOverwrite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Localisation {
+            get {
+                return ((string)(this["Localisation"]));
+            }
+            set {
+                this["Localisation"] = value;
+            }
+        }
     }
 }

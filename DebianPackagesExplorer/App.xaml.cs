@@ -6,12 +6,15 @@
  */
 
 using DebianPackagesExplorer.Debian;
+using DebianPackagesExplorer.Localisation;
 using DebianPackagesExplorer.Windows;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace DebianPackagesExplorer
@@ -24,6 +27,8 @@ namespace DebianPackagesExplorer
 		#region Properties
 
 		public static new App Current { get { return (App)Application.Current; } }
+
+		public static LocalisationAssemblyCollection Localisations { get; private set; }
 
 		public static new MainWindow MainWindow { get { return (MainWindow)Application.Current.MainWindow; } }
 
@@ -48,6 +53,14 @@ namespace DebianPackagesExplorer
 			base.OnExit(e);
 		}
 
+		protected override void OnStartup(StartupEventArgs e)
+		{
+			base.OnStartup(e);
+			Localisations = new LocalisationAssemblyCollection();
+			Localisations.AddDefault("English");
+			Localisations.Apply(DebianPackagesExplorer.Properties.Settings.Default.Localisation);
+		}
+
 		#endregion
 
 		#region Constructor
@@ -58,10 +71,13 @@ namespace DebianPackagesExplorer
 				DebianPackagesExplorer.Properties.Settings.Default.LinkHistory = new System.Collections.Specialized.StringCollection();
 			if (DebianPackagesExplorer.Properties.Settings.Default.Sources == null)
 				DebianPackagesExplorer.Properties.Settings.Default.Sources = new System.Collections.Specialized.StringCollection();
-			Localisation.LocalisationAssemblyCollection loc = new Localisation.LocalisationAssemblyCollection();
-			//loc.AddDefault("English");
-			//loc.Apply("English");
-			//loc.Apply("Czech");
+			if (string.IsNullOrEmpty(DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder))
+			{
+				DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+					Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location));
+				if (!Directory.Exists(DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder))
+					Directory.CreateDirectory(DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder);
+			}
 		}
 
 		#endregion

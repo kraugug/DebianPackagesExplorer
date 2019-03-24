@@ -48,8 +48,12 @@
 
 	<!--  Options Window  -->
 	<mscore:String x:Key="OptionsWindow_Button_Content_Ok">_Ok</mscore:String>
-	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Use default folder for downloads instead of the browse folder dialog</mscore:String>
+	<mscore:String x:Key="OptionsWindow_CheckBox_Content_ConfirmFileOverwrite">Confirm existing file overwrite</mscore:String>
+	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Use default downloads folder instead of the browse folder dialog</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Name">Language</mscore:String>
+	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Version">Version</mscore:String>
 	<mscore:String x:Key="OptionsWindow_TabItem_Header_Downloads">Downloads</mscore:String>
+	<mscore:String x:Key="OptionsWindow_TabItem_Header_Localisations">Localisations</mscore:String>
 	<mscore:String x:Key="OptionsWindow_TextBlock_Text_Options">Options</mscore:String>
 	<mscore:String x:Key="OptionsWindow_TextBlock_Text_OptionsDescription">...</mscore:String>
 	<mscore:String x:Key="OptionsWindow_Title">Options</mscore:String>
@@ -61,7 +65,7 @@
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Refresh">_Refresh</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Button_Content_Remove">_Remove</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_Packages">Packages Sources</mscore:String>
-	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_PackagesDescription">Select a site or enter the location of a site.</mscore:String>
+	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_PackagesDescription">Select a site or enter the location of a site</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_TextBlock_Text_WorkWith">Work with:</mscore:String>
 	<mscore:String x:Key="PackagesSourcesWindow_Title">Packages Sources</mscore:String>
 

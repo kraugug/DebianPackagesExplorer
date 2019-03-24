@@ -5,6 +5,7 @@
         xmlns:local="clr-namespace:DebianPackagesExplorer.Windows"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:DebianPackagesExplorer.Properties"
+        xmlns:root="clr-namespace:DebianPackagesExplorer"
         Title="{DynamicResource OptionsWindow_Title}"
         Width="800"
         Icon="/Resources/Options.png"
@@ -36,6 +37,7 @@
 		</Border>
 
 		<TabControl Grid.Row="1">
+			<!--  Downloads  -->
 			<TabItem Header="{DynamicResource OptionsWindow_TabItem_Header_Downloads}">
 				<Grid Margin="5">
 					<Grid.RowDefinitions>
@@ -43,17 +45,44 @@
 					</Grid.RowDefinitions>
 					<GroupBox Grid.Row="0" Padding="3,8,3,3">
 						<GroupBox.Header>
-							<CheckBox Content="{DynamicResource OptionsWindow_CheckBox_Content_UseDefaultFolder}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UseDefaultDownloadsFolder}" />
+							<StackPanel Orientation="Horizontal">
+								<CheckBox Content="{DynamicResource OptionsWindow_CheckBox_Content_UseDefaultFolder}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=UseDefaultDownloadsFolder}" />
+								<CheckBox Margin="10,0,0,0" Content="{DynamicResource OptionsWindow_CheckBox_Content_ConfirmFileOverwrite}" IsChecked="{Binding Source={x:Static p:Settings.Default}, Path=ConfirmFileOverwrite}" />
+							</StackPanel>
 						</GroupBox.Header>
 						<Grid IsEnabled="{Binding Source={x:Static p:Settings.Default}, Path=UseDefaultDownloadsFolder}">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="*" />
 								<ColumnDefinition Width="Auto" />
 							</Grid.ColumnDefinitions>
-							<TextBox Grid.Column="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=DefaultDownloadsFolder}" />
-							<Button Grid.Column="1" Margin="5,0,0,0" Content="..." Style="{DynamicResource ToolButton24}" />
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Source={x:Static p:Settings.Default}, Path=DefaultDownloadsFolder}" />
+							<Button Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Content="..."
+							        Style="{DynamicResource ToolButton24}" />
 						</Grid>
 					</GroupBox>
+				</Grid>
+			</TabItem>
+			<!--  Localisation  -->
+			<TabItem Header="{DynamicResource OptionsWindow_TabItem_Header_Localisations}">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+					<!--  Languages  -->
+					<ListView Name="ListViewLanguages" Grid.Row="0" ItemsSource="{Binding Source={x:Static root:App.Localisations}, Path=Instance}" MouseDoubleClick="ListViewLanguages_MouseDoubleClick">
+						<ListView.View>
+							<GridView>
+								<GridView.Columns>
+									<GridViewColumn DisplayMemberBinding="{Binding Name}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Name}" />
+									<GridViewColumn DisplayMemberBinding="{Binding Version}" Header="{DynamicResource OptionsWindow_ListView_ColumnHeader_Version}" />
+								</GridView.Columns>
+							</GridView>
+						</ListView.View>
+					</ListView>
 				</Grid>
 			</TabItem>
 		</TabControl>

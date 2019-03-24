@@ -6,6 +6,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -35,6 +36,11 @@ namespace DebianPackagesExplorer.Localisation
 			this[localizationName]?.Apply();
 		}
 
+		public void Apply(LocalisationAssembly localization)
+		{
+			this[localization.Name]?.Apply();
+		}
+
 		#endregion
 
 		#region Constructor(s)
@@ -50,20 +56,16 @@ namespace DebianPackagesExplorer.Localisation
 			// Load available localizations...
 			if (Directory.Exists(localisationsFolder))
 			{
-				string[] files = System.IO.Directory.GetFiles(localisationsFolder);
-				if (files.Length > 0)
+				IEnumerable<string> files = Directory.GetFiles(localisationsFolder).Where(f => f.ToUpper().EndsWith(".DLL"));
+				foreach (var file in files)
 				{
-					var results = files.Where(i => System.IO.Path.GetExtension(i).ToUpper().CompareTo(".DLL") == 0);
-					foreach (var file in results)
+					try
 					{
-						try
-						{
-							Add(new LocalisationAssembly(file));
-						}
-						catch (Exception ex)
-						{
-							Debug.WriteLine("{0}:\n\t{1}: {2}", new object[] { nameof(LocalisationAssemblyCollection), ex.GetType().FullName, ex.Message });
-						}
+						Add(new LocalisationAssembly(file));
+					}
+					catch (Exception ex)
+					{
+						Debug.WriteLine("{0}:\n\t{1}: {2}", new object[] { nameof(LocalisationAssemblyCollection), ex.GetType().FullName, ex.Message });
 					}
 				}
 			}

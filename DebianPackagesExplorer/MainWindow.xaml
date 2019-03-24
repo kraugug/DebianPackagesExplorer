@@ -70,7 +70,8 @@
 		<!--  Content  -->
 		<Grid Grid.Row="1">
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
-			          Background="Transparent" EnableColumnVirtualization="True"
+			          Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False"
+			          CanUserSortColumns="True" EnableColumnVirtualization="True"
 			          EnableRowVirtualization="True" HeadersVisibility="Column"
 			          IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
 			          ItemsSource="{Binding Packages}"
@@ -107,7 +108,8 @@
 					<!--  Package other info  -->
 					<Grid Grid.Row="0" Margin="5">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" MinWidth="100" />
+							<ColumnDefinition Width="Auto" MinWidth="90" />
+							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 						<Grid.RowDefinitions>

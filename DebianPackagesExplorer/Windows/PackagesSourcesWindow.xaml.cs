@@ -77,7 +77,7 @@ namespace DebianPackagesExplorer.Windows
 
 		private void CommandRefresh_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			string url = string.Format("{0}/README", ComboBoxSources.SelectedItem);
+			string url = string.Format("{0}/README", ComboBoxSources.Text);
 			try
 			{
 

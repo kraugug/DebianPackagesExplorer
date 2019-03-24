@@ -157,11 +157,29 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to architecture.
+        /// </summary>
+        internal static string RegEx_GroupName_Architecture {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_Architecture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to architectures.
         /// </summary>
         internal static string RegEx_GroupName_Architectures {
             get {
                 return ResourceManager.GetString("RegEx_GroupName_Architectures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to baseurl.
+        /// </summary>
+        internal static string RegEx_GroupName_BaseUrl {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_BaseUrl", resourceCulture);
             }
         }
         
@@ -175,11 +193,29 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to component.
+        /// </summary>
+        internal static string RegEx_GroupName_Component {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_Component", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to components.
         /// </summary>
         internal static string RegEx_GroupName_Components {
             get {
                 return ResourceManager.GetString("RegEx_GroupName_Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filename.
+        /// </summary>
+        internal static string RegEx_GroupName_FileName {
+            get {
+                return ResourceManager.GetString("RegEx_GroupName_FileName", resourceCulture);
             }
         }
         
@@ -198,6 +234,15 @@ namespace DebianPackagesExplorer.Properties {
         internal static string RegEx_Pattern_ReleaseFile {
             get {
                 return ResourceManager.GetString("RegEx_Pattern_ReleaseFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^(?&lt;baseurl&gt;http.+)/dists/(?&lt;codename&gt;.+)/(?&lt;component&gt;.+)/binary-(?&lt;architecture&gt;.+)/(?&lt;filename&gt;.+)$.
+        /// </summary>
+        internal static string RegEx_Pattern_SourcePackageInfoByLink {
+            get {
+                return ResourceManager.GetString("RegEx_Pattern_SourcePackageInfoByLink", resourceCulture);
             }
         }
         

@@ -148,20 +148,35 @@
   <data name="PackString_Localisation" xml:space="preserve">
     <value>pack://application:,,,/{0};component/Localisation/Localisation.xaml</value>
   </data>
+  <data name="RegEx_GroupName_Architecture" xml:space="preserve">
+    <value>architecture</value>
+  </data>
   <data name="RegEx_GroupName_Architectures" xml:space="preserve">
     <value>architectures</value>
+  </data>
+  <data name="RegEx_GroupName_BaseUrl" xml:space="preserve">
+    <value>baseurl</value>
   </data>
   <data name="RegEx_GroupName_CodeName" xml:space="preserve">
     <value>codename</value>
   </data>
+  <data name="RegEx_GroupName_Component" xml:space="preserve">
+    <value>component</value>
+  </data>
   <data name="RegEx_GroupName_Components" xml:space="preserve">
     <value>components</value>
+  </data>
+  <data name="RegEx_GroupName_FileName" xml:space="preserve">
+    <value>filename</value>
   </data>
   <data name="RegEx_Pattern_PackageInfo" xml:space="preserve">
     <value>\s*(?&lt;name&gt;[a-zA-Z0-9-]*):(?&lt;value&gt;.*)</value>
   </data>
   <data name="RegEx_Pattern_ReleaseFile" xml:space="preserve">
     <value>(?&lt;name&gt;\w+)(: +)(?&lt;value&gt;.*)\s</value>
+  </data>
+  <data name="RegEx_Pattern_SourcePackageInfoByLink" xml:space="preserve">
+    <value>^(?&lt;baseurl&gt;http.+)/dists/(?&lt;codename&gt;.+)/(?&lt;component&gt;.+)/binary-(?&lt;architecture&gt;.+)/(?&lt;filename&gt;.+)$</value>
   </data>
   <data name="ResKey_AboutWindow_GroupBox_LoadedAssemblies_Header" xml:space="preserve">
     <value>AboutWindow_GroupBox_LoadedAssemblies_Header</value>

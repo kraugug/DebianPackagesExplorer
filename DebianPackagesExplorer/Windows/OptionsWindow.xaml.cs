@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DebianPackagesExplorer.Localisation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,12 @@ namespace DebianPackagesExplorer.Windows
 		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			DialogResult = true;
+		}
+
+		private void ListViewLanguages_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+		{
+			Properties.Settings.Default.Localisation = ((sender as ListView).SelectedItem as LocalisationAssembly).Name;
+			App.Localisations.Apply((sender as ListView).SelectedItem as LocalisationAssembly);
 		}
 
 		#endregion

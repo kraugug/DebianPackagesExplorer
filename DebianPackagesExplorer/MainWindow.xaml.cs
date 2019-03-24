@@ -109,7 +109,10 @@ namespace DebianPackagesExplorer
 		{
 			OpenLinkWindow dialog = new OpenLinkWindow();
 			if (dialog.ShowDialog().Value)
+			{
+				Packages.SourceInfo = SelectedSourcePackageInfo.Parse(dialog.Link);
 				OpenRemotePackagesFile(dialog.Link);
+			}
 		}
 
 		private void CommandHelpAbout_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -142,38 +145,42 @@ namespace DebianPackagesExplorer
 
 		public void DownloadPackage(string url, string fileName)
 		{
-			using (WebClient webClient = new WebClient())
-			{
-				ProgressBarStatus.Value = 0;
-				ProgressBarStatus.IsIndeterminate = true;
-				TextBlockStatus.Text = string.Format(App.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), url);
-				IsDownloading = true;
-				webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
+			bool go = true;
+			if (Properties.Settings.Default.ConfirmFileOverwrite && File.Exists(fileName))
+				go = MessageBox.Show("Do wish to overwrite existing file?", "Download Package", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+			if (go)
+				using (WebClient webClient = new WebClient())
 				{
 					ProgressBarStatus.Value = 0;
-					if (e1.Error == null)
+					ProgressBarStatus.IsIndeterminate = true;
+					TextBlockStatus.Text = string.Format(App.GetResource<string>(Properties.Resources.ResKey_String_DownloadingFile_Formatted), url);
+					IsDownloading = true;
+					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
 					{
-						TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_DownloadCompleted);
-						ProgressBarStatus.IsIndeterminate = false;
-						IsDownloading = false;
-						CommandManager.InvalidateRequerySuggested();
-					}
-					else
+						ProgressBarStatus.Value = 0;
+						if (e1.Error == null)
+						{
+							TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_DownloadCompleted);
+							ProgressBarStatus.IsIndeterminate = false;
+							IsDownloading = false;
+							CommandManager.InvalidateRequerySuggested();
+						}
+						else
+						{
+							ProgressBarStatus.IsIndeterminate = false;
+							MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+						}
+					};
+					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
 					{
-						ProgressBarStatus.IsIndeterminate = false;
-						MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-					}
-				};
-				webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
-				{
-					if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
-						ProgressBarStatus.IsIndeterminate = false;
-					ProgressBarStatus.Value = e1.ProgressPercentage;
-				};
-				if (!Directory.Exists(System.IO.Path.GetDirectoryName(fileName)))
-					Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fileName));
-				webClient.DownloadFileAsync(new Uri(url), fileName);
-			}
+						if ((e1.ProgressPercentage > 0) && ProgressBarStatus.IsIndeterminate)
+							ProgressBarStatus.IsIndeterminate = false;
+						ProgressBarStatus.Value = e1.ProgressPercentage;
+					};
+					if (!Directory.Exists(System.IO.Path.GetDirectoryName(fileName)))
+						Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fileName));
+					webClient.DownloadFileAsync(new Uri(url), fileName);
+				}
 		}
 
 		public void OpenRemotePackagesFile(SelectedSourcePackageInfo sourceInfo)
@@ -256,14 +263,6 @@ namespace DebianPackagesExplorer
 
 		public MainWindow()
 		{
-			if (string.IsNullOrEmpty(Properties.Settings.Default.DefaultDownloadsFolder))
-			{
-				
-				Properties.Settings.Default.DefaultDownloadsFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-					System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location));
-				if (!Directory.Exists(Properties.Settings.Default.DefaultDownloadsFolder))
-					Directory.CreateDirectory(Properties.Settings.Default.DefaultDownloadsFolder);
-			}
 			DataContext = this;
 			Packages = new PackagesCollection();
 			InitializeComponent();
