@@ -93,6 +93,7 @@ namespace DebianPackagesExplorer.Debian
 					System.Diagnostics.Debug.WriteLine("{0}", new object[] { item });
 		}
 
+
 		#endregion
 
 		#region Constructor
@@ -112,10 +113,7 @@ namespace DebianPackagesExplorer.Debian
 
 		public PackageInfo this[string name]
 		{
-			get
-			{
-				return this.Where(p => p.Name.Contains(name)).FirstOrDefault();
-			}
+			get { return this.Where(p => p.Name.Contains(name)).FirstOrDefault(); }
 		}
 
 		#endregion

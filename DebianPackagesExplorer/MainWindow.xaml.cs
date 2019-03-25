@@ -4,6 +4,7 @@ using DebianPackagesExplorer.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -173,18 +174,15 @@ namespace DebianPackagesExplorer
 					webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
 					{
 						ProgressBarStatus.Value = 0;
+						ProgressBarStatus.IsIndeterminate = false;
 						if (e1.Error == null)
 						{
 							TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_DownloadCompleted);
-							ProgressBarStatus.IsIndeterminate = false;
 							IsDownloading = false;
 							CommandManager.InvalidateRequerySuggested();
 						}
 						else
-						{
-							ProgressBarStatus.IsIndeterminate = false;
 							MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
-						}
 					};
 					webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>
 					{
@@ -215,7 +213,7 @@ namespace DebianPackagesExplorer
 				webClient.DownloadFileCompleted += (object sender1, AsyncCompletedEventArgs e1) =>
 				{
 					ProgressBarStatus.Value = 0;
-					ProgressBarStatus.IsIndeterminate = true;
+					ProgressBarStatus.IsIndeterminate = false;
 					TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_ParsingFile);
 					if (e1.Error == null)
 					{
@@ -242,22 +240,37 @@ namespace DebianPackagesExplorer
 			}
 		}
 
-		private void ParseList(IEnumerable<string> list)
+		private void ParseList(IEnumerable<string> source)
 		{
-			Task.Factory.StartNew(() =>
+			using (BackgroundWorker parser = new BackgroundWorker())
 			{
-				Dispatcher.BeginInvoke(new Action(() =>
+				int progress = 1;
+				int progressMax = source.Count();
+				parser.DoWork += (object sender, DoWorkEventArgs e) =>
 				{
-					Packages.ParseListParallel(list);
-				}));
-			}).ContinueWith((task) =>
-			{
-				Dispatcher.BeginInvoke(new Action(() =>
+					List<PackageInfo> list = e.Argument as List<PackageInfo>;
+					Parallel.ForEach<string>(source, (string str) =>
+					{
+						parser.ReportProgress((progress++ * 100) / progressMax);
+						list.Add(PackageInfo.Parse(str));
+					});
+					e.Result = list;
+				};
+				parser.ProgressChanged += (object sender, ProgressChangedEventArgs e) => { ProgressBarStatus.Value = e.ProgressPercentage; };
+				parser.RunWorkerCompleted += (object sender, RunWorkerCompletedEventArgs e) =>
 				{
+					Dispatcher.Invoke(new Action(() =>
+					{
+						foreach (PackageInfo info in e.Result as List<PackageInfo>)
+							Packages.Add(info);
+					}));
 					TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_Ready);
-					ProgressBarStatus.IsIndeterminate = false;
-				}));
-			});
+					ProgressBarStatus.Value = 0;
+				};
+				Packages.Clear();
+				parser.WorkerReportsProgress = true;
+				parser.RunWorkerAsync(new List<PackageInfo>());
+			}
 		}
 
 		private void TextBoxHomepage_MouseDown(object sender, MouseButtonEventArgs e)
