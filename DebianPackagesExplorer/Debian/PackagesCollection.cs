@@ -12,8 +12,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Threading;
 
 namespace DebianPackagesExplorer.Debian
 {
@@ -32,6 +30,14 @@ namespace DebianPackagesExplorer.Debian
 		#endregion
 
 		#region Methods
+
+		public new void Add(PackageInfo item)
+		{
+			if (item != null)
+				base.Add(item);
+			else
+				System.Diagnostics.Debug.WriteLine("PackagesCollection.Add <= {0}", new object[] { item });
+		}
 
 		public string GetPackageDownloadLink(PackageInfo package)
 		{
@@ -87,10 +93,7 @@ namespace DebianPackagesExplorer.Debian
 				collection.Add(PackageInfo.Parse(str));
 			});
 			foreach (var item in collection)
-				if (item != null)
-					Add(item);
-				else
-					System.Diagnostics.Debug.WriteLine("{0}", new object[] { item });
+				Add(item);
 		}
 
 
@@ -113,7 +116,7 @@ namespace DebianPackagesExplorer.Debian
 
 		public PackageInfo this[string name]
 		{
-			get { return this.Where(p => p.Name.Contains(name)).FirstOrDefault(); }
+			get { return this.Where(p => p != null && p.Name.Contains(name)).FirstOrDefault(); }
 		}
 
 		#endregion

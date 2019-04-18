@@ -44,6 +44,8 @@ namespace DebianPackagesExplorer.Windows
 		private void CommandClear_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			History.Clear();
+			Properties.Settings.Default.LinkHistory.Clear();
+			Properties.Settings.Default.LinkHistory.AddRange(History.ToArray());
 		}
 
 		private void CommandOk_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -56,8 +58,6 @@ namespace DebianPackagesExplorer.Windows
 			Uri testUri;
 			if (Uri.TryCreate(Link, UriKind.Absolute, out testUri))
 			{
-				Properties.Settings.Default.LinkHistory.Clear();
-				Properties.Settings.Default.LinkHistory.AddRange(History.ToArray());
 				DialogResult = true;
 			}
 			else

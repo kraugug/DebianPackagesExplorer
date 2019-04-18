@@ -49,7 +49,7 @@ namespace DebianPackagesExplorer.Windows
 
 		private void CommandAdd_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = !string.IsNullOrEmpty(ComboBoxSources.Text) && !Sources.Contains(ComboBoxSources.Text);
+			e.CanExecute = !string.IsNullOrEmpty(ComboBoxSources.Text) && !Sources.Contains(ComboBoxSources.Text) && !IsRefreshing;
 		}
 
 		private void CommandAdd_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -77,10 +77,12 @@ namespace DebianPackagesExplorer.Windows
 
 		private void CommandRefresh_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
+			IsRefreshing = true;
+			ProgressBarStatus.IsIndeterminate = true;
+			ProgressBarStatus.Value = 0;
 			string url = string.Format("{0}/README", ComboBoxSources.Text);
 			try
 			{
-
 				WebRequest webRequest = WebRequest.Create(url);
 				{
 					using (Stream stream = webRequest.GetResponse().GetResponseStream())
@@ -90,23 +92,29 @@ namespace DebianPackagesExplorer.Windows
 						MatchCollection matches = Regex.Matches(data, @"(?<name>.*) +is(?<distribution>.*) +(?<version>[0-9.]+)");
 						if (matches.Count > 0)
 						{
-							IsRefreshing = true;
 							SiteInfo.Clear();
 							string baseUrl = ComboBoxSources.SelectedItem as string;
 							List<CodeNameInfo> discovery = new List<CodeNameInfo>();
+							ProgressBarStatus.IsIndeterminate = false;
 							Task.Factory.StartNew(new Action(() =>
 							{
+								Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Maximum = matches.Count; }));								
 								foreach (Match match in matches)
+								{
 									discovery.Add(CodeNameInfo.Parse(match, baseUrl));
+									Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Value++; }));
+								}
 							})).ContinueWith((task) =>
 							{
-								Dispatcher.Invoke(new Action(() => {
+								Dispatcher.Invoke(new Action(() =>
+								{
 									foreach (CodeNameInfo info in discovery)
 										SiteInfo.Add(info);
 									IsRefreshing = false;
+									CommandManager.InvalidateRequerySuggested();
 								}));
 							});
-							
+
 							//foreach (Match match in matches)
 							//{
 							//	CodeNameInfo info = CodeNameInfo.Parse(match, ComboBoxSources.SelectedItem as string);
@@ -122,6 +130,7 @@ namespace DebianPackagesExplorer.Windows
 			}
 			catch(Exception ex)
 			{
+				ProgressBarStatus.IsIndeterminate = false;
 				LabelNothingFound.Content = ex.Message;
 				LabelNothingFound.Visibility = Visibility.Visible;
 			}
@@ -129,7 +138,7 @@ namespace DebianPackagesExplorer.Windows
 
 		private void CommandRemove_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = Sources.Contains(ComboBoxSources.SelectedItem as string);
+			e.CanExecute = Sources.Contains(ComboBoxSources.SelectedItem as string) && !IsRefreshing;
 		}
 
 		private void CommandRemove_Executed(object sender, ExecutedRoutedEventArgs e)

@@ -23,7 +23,12 @@ namespace DebianPackagesExplorer.Debian
 		[UseParseFunction(",")]
 		public StringCollection Depends { get; private set; }
 
-		public string Description { get; private set; }
+		public string Description
+		{
+			get { return m_Description; }
+			private set { m_Description = value.Substring(0, 1).ToUpperInvariant() + value.Substring(1, value.Length - 1); }
+		}
+		private string m_Description;
 
 		[Ignore]
 		public string FileName
@@ -97,7 +102,7 @@ namespace DebianPackagesExplorer.Debian
 						{
 							if (useParseFunction != null)
 							{
-								object value = property.PropertyType.GetMethod("Parse", new Type[] { typeof(string), typeof(string) }).Invoke(property, new object[] { match.Groups["value"].Value.Trim(), useParseFunction.Delimiter });
+								object value = property.PropertyType.GetMethod("Parse", new Type[] { typeof(string), typeof(string) })?.Invoke(property, new object[] { match.Groups["value"].Value.Trim(), useParseFunction.Delimiter });
 								property.SetValue(info, value, null);
 							}
 							else

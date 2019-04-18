@@ -16,6 +16,7 @@
 
 	<!--  Main Window  -->
 	<mscore:String x:Key="MainWindow_Button_ToolTip_DownloadPackage">Download Package</mscore:String>
+	<mscore:String x:Key="MainWindow_Button_ToolTip_ShowInContainingFolder">Open in containing folder</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architecture</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Description</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_InstalledSize">Installed Size (Bytes)</mscore:String>
@@ -49,6 +50,8 @@
 
 	<!--  Options Window  -->
 	<mscore:String x:Key="OptionsWindow_Button_Content_Ok">_Ok</mscore:String>
+	<mscore:String x:Key="OptionsWindow_Button_ToolTip_BrowseForFolder">Browse for folder...</mscore:String>
+	<mscore:String x:Key="OptionsWindow_Button_ToolTip_OpenFolder">Open folder</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_ConfirmFileOverwrite">Confirm existing file overwrite</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Use default downloads folder instead of the browse folder dialog</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Author">Author</mscore:String>

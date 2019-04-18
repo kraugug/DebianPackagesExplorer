@@ -1,16 +1,15 @@
-﻿using DebianPackagesExplorer.Localisation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/*
+ * Copyright(C) 2019, Michal Heczko All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * GNU General Public License v3.0. See the LICENSE file for details.
+ */
+
+using DebianPackagesExplorer.Localisation;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DebianPackagesExplorer.Windows
 {
@@ -21,15 +20,29 @@ namespace DebianPackagesExplorer.Windows
     {
 		#region Fileds
 
+		public static readonly RoutedCommand CommandBrowseForFolder = new RoutedCommand();
 		public static readonly RoutedCommand CommandOk = new RoutedCommand();
+		public static readonly RoutedCommand CommandOpenFolder = new RoutedCommand();
 
 		#endregion
 
 		#region Methods
 
+		private void CommandBrowseForFolder_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
+			if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				Properties.Settings.Default.DefaultDownloadsFolder = dialog.SelectedPath;
+		}
+
 		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			DialogResult = true;
+		}
+
+		private void CommandOpenFolder_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Process.Start(Properties.Settings.Default.DefaultDownloadsFolder);
 		}
 
 		private void ListViewLanguages_MouseDoubleClick(object sender, MouseButtonEventArgs e)

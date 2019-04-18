@@ -16,11 +16,13 @@
         mc:Ignorable="d">
 	<Window.CommandBindings>
 		<CommandBinding CanExecute="CommandDownloadPackage_CanExecute" Command="local:MainWindow.CommandDownloadPackage" Executed="CommandDownloadPackage_Executed" />
+
 		<CommandBinding Command="local:MainWindow.CommandFileBrowseDebianSources" Executed="CommandFileBrowseDebianSources_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileExit" Executed="CommandFileExit_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenFile" Executed="CommandFileOpenFile_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenLink" Executed="CommandFileOpenLink_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandHelpAbout" Executed="CommandHelpAbout_Executed" />
+		<CommandBinding CanExecute="CommandOpenContainingFolder_CanExecute" Command="local:MainWindow.CommandOpenContainingFolder" Executed="CommandOpenContainingFolder_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandToolsOptions" Executed="CommandToolsOptions_Executed" />
 	</Window.CommandBindings>
 	<Grid>
@@ -80,15 +82,55 @@
 			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent"
 			          SelectionMode="Single" SelectionUnit="FullRow" TextSearch.TextPath="Name">
 				<DataGrid.Columns>
-					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
-					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Architecture}" />
-					<DataGridTextColumn Binding="{Binding Version, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Version}" />
-					<DataGridTextColumn Binding="{Binding Priority, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Priority}" />
-					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Section}" />
-					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Size}" />
-					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_InstalledSize}" />
-					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}" Header="{DynamicResource MainWindow_DataGridPackages_Headers_Description}" />
+					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Architecture}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Version, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Version}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Priority, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Priority}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Section, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Section}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding Size, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Size}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Binding="{Binding InstalledSize, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_InstalledSize}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
+					<DataGridTextColumn Width="*" Binding="{Binding Description, Mode=OneWay}">
+						<DataGridTextColumn.Header>
+							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Description}" />
+						</DataGridTextColumn.Header>
+					</DataGridTextColumn>
 				</DataGrid.Columns>
+				<DataGrid.Resources>
+					<SolidColorBrush x:Key="SelectionColorKey" Color="CornflowerBlue" />
+					<Style TargetType="DataGridRow">
+						<Style.Resources>
+							<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{Binding Source={StaticResource SelectionColorKey}, Path=Color}" />
+						</Style.Resources>
+					</Style>
+				</DataGrid.Resources>
 			</DataGrid>
 		</Grid>
 
@@ -153,7 +195,6 @@
 						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
 						<ComboBox Grid.Row="4" Grid.Column="1"
 						          ItemsSource="{Binding Depends}"
-						          SelectionChanged="ComboBoxPackageInfo_SelectionChanged"
 						          Style="{DynamicResource StyleComboBoxPackageInfo}"
 						          Text="{Binding Depends.Joined, Mode=OneWay}"
 						          Visibility="{Binding Depends, Converter={c:StringCollectionToVisibilityConverter}}" />
@@ -210,11 +251,9 @@
 					<Button Command="local:MainWindow.CommandDownloadPackage" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
 						<Image Source="/Resources/DownloadPackage.png" Style="{DynamicResource ToolButtonImage}" />
 					</Button>
-					<!--
-					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
-					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
-					<Button Margin="0,2,0,0" Style="{DynamicResource ToolButton28}" />
-					-->
+					<Button Margin="0,2,0,0" Command="local:MainWindow.CommandOpenContainingFolder" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
+						<Image Source="/Resources/Folder.png" Style="{DynamicResource ToolButtonImage}" />
+					</Button>
 				</StackPanel>
 			</Grid>
 		</GroupBox>

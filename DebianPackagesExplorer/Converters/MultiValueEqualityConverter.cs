@@ -8,20 +8,20 @@
 using DebianPackagesExplorer.Converters.Generic;
 using System;
 using System.Globalization;
-using System.Windows;
+using System.Linq;
 
 namespace DebianPackagesExplorer.Converters
 {
-	public class StringCollectionToVisibilityConverter : MarkupConverter<StringCollectionToVisibilityConverter>
+	public class MultiValueEqualityConverter : MultiValueMarkupConverter<MultiValueEqualityConverter>
 	{
 		#region Methods
 
-		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public override object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
-			return ((StringCollection)value)?.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+			return values?.All(o => o?.Equals(values[0]) == true) == true || values?.All(o => o == null) == true;
 		}
 
-		public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		public override object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
 		{
 			throw new NotImplementedException();
 		}

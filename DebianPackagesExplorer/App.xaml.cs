@@ -38,7 +38,7 @@ namespace DebianPackagesExplorer
 
 		private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
 		{
-			MessageBox.Show(MainWindow, e.Exception.Message, e.Exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+			MessageBox.Show(MainWindow, string.Format("Messasge: {0}\nStactTrace: {1}", e.Exception.Message, e.Exception.StackTrace), e.Exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
 			e.Handled = true;
 		}
 

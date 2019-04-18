@@ -41,6 +41,7 @@ namespace DebianPackagesExplorer
 		public static readonly RoutedCommand CommandFileOpenFile = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileOpenLink = new RoutedCommand();
 		public static readonly RoutedCommand CommandHelpAbout = new RoutedCommand();
+		public static readonly RoutedCommand CommandOpenContainingFolder = new RoutedCommand();
 		public static readonly RoutedCommand CommandToolsOptions = new RoutedCommand();
 
 		#endregion
@@ -57,8 +58,6 @@ namespace DebianPackagesExplorer
 
 		#region Methods
 
-		#region Commands
-
 		private void ComboBoxPackageInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			ComboBox comboBox = sender as ComboBox;
@@ -68,10 +67,17 @@ namespace DebianPackagesExplorer
 				if (match != null && match.Success)
 				{
 					PackageInfo package = Packages[match.Groups["name"].Value];
-					MessageBox.Show(string.Format("Package: {0}\nVersion: {1}\nComparison: {2}", match.Groups["name"].Value, match.Groups["version"].Value, match.Groups["mode"].Value));
+					if (package != null)
+					{
+						Debug.WriteLine(string.Format("Package: {0}\nVersion: {1}\nComparison: {2}", match.Groups["name"].Value, match.Groups["version"].Value, match.Groups["mode"].Value));
+						DataGridPackages.SelectedItem = package;
+						DataGridPackages.ScrollIntoView(package);
+					}
 				}
 			}
 		}
+
+		#region Commands
 
 		private void CommandDownloadPackage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
@@ -136,17 +142,30 @@ namespace DebianPackagesExplorer
 			(new Windows.AboutWindow()).ShowDialog();
 		}
 
-		private void CommandToolsOptions_Executed(object sender, ExecutedRoutedEventArgs e)
+		private void CommandOpenContainingFolder_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			OptionsWindow dialog = new OptionsWindow();
-			if (dialog.ShowDialog().Value)
+			//e.CanExecute = false;
+			if (Properties.Settings.Default.UseDefaultDownloadsFolder)
 			{
-
+				PackageInfo package = DataGridPackages.SelectedItem as PackageInfo;
+				e.CanExecute = ((package != null) && (Packages.SourceInfo != null)) && File.Exists(System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
+					System.IO.Path.Combine(Packages.SourceInfo.CodeName, Packages.SourceInfo.Component, Packages.SourceInfo.Architecture, SelectedPackage.FileName)));
 			}
 		}
 
-		#endregion
+		private void CommandOpenContainingFolder_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
+				System.IO.Path.Combine(Packages.SourceInfo.CodeName, Packages.SourceInfo.Component, Packages.SourceInfo.Architecture, SelectedPackage.FileName)));
+		}
 
+		private void CommandToolsOptions_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			(new OptionsWindow()).ShowDialog();
+		}
+
+		#endregion
+		
 		private void DataGridPackages_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			DataGrid dataGrid = sender as DataGrid;

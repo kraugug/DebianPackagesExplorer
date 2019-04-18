@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DebianPackagesExplorer.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -74,6 +77,8 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\Generic\BoolToValueConverter.cs" />
     <Compile Include="Converters\Generic\MarkupConverter.cs" />
+    <Compile Include="Converters\Generic\MultiValueMarkupConverter.cs" />
+    <Compile Include="Converters\MultiValueEqualityConverter.cs" />
     <Compile Include="Converters\StringCollectionToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectToFormattedTextConverter.cs" />
     <Compile Include="Debian\ArchitectureInfo.cs" />
@@ -168,6 +173,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\DownloadPackage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DebianPackagesExplorer.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
