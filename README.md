@@ -11,4 +11,4 @@
 
 # License
 
-- DebianPackagesExplorer is under the GNU General Public License v3.0 license. See the [LICENSE](https://github.com/kraugug/Socrates/blob/master/LICENSE)
+- DebianPackagesExplorer is under the GNU General Public License v3.0 license. See the [LICENSE](https://github.com/kraugug/DebianPackagesExplorer/blob/master/LICENSE)
