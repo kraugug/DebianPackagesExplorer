@@ -7,11 +7,13 @@
 
 using DebianPackagesExplorer.Extensions;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace DebianPackagesExplorer.Debian
 {
+	[DebuggerDisplay("Package = {Name}")]
 	public class PackageInfo
 	{
 		#region Properties

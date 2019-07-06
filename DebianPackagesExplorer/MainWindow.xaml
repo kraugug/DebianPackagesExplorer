@@ -22,11 +22,14 @@
 		<CommandBinding Command="local:MainWindow.CommandFileOpenFile" Executed="CommandFileOpenFile_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandFileOpenLink" Executed="CommandFileOpenLink_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandHelpAbout" Executed="CommandHelpAbout_Executed" />
+		<CommandBinding CanExecute="CommandHistoryGoNext_CanExecute" Command="local:MainWindow.CommandHistoryGoNext" Executed="CommandHistoryGoNext_Executed" />
+		<CommandBinding CanExecute="CommandHistoryGoPrevious_CanExecute" Command="local:MainWindow.CommandHistoryGoPrevious" Executed="CommandHistoryGoPrevious_Executed" />
 		<CommandBinding CanExecute="CommandOpenContainingFolder_CanExecute" Command="local:MainWindow.CommandOpenContainingFolder" Executed="CommandOpenContainingFolder_Executed" />
 		<CommandBinding Command="local:MainWindow.CommandToolsOptions" Executed="CommandToolsOptions_Executed" />
 	</Window.CommandBindings>
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
@@ -71,8 +74,24 @@
 			</MenuItem>
 		</Menu>
 
+		<!--  Toolbar  -->
+		<StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
+			<Button Command="local:MainWindow.CommandDownloadPackage" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
+				<Image Source="/Resources/DownloadPackage.png" Style="{DynamicResource ToolButtonImage}" />
+			</Button>
+			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandOpenContainingFolder" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
+				<Image Source="/Resources/Folder.png" Style="{DynamicResource ToolButtonImage}" />
+			</Button>
+			<Button Margin="10,0,0,0" Command="local:MainWindow.CommandHistoryGoPrevious" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoPrevious}">
+				<Image Source="/Resources/GoPrevious.png" Style="{DynamicResource ToolButtonImage}" />
+			</Button>
+			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandHistoryGoNext" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoNext}">
+				<Image Source="/Resources/GoNext.png" Style="{DynamicResource ToolButtonImage}" />
+			</Button>
+		</StackPanel>
+
 		<!--  Content  -->
-		<Grid Grid.Row="1">
+		<Grid Grid.Row="2">
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
 			          Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False"
 			          CanUserSortColumns="True" EnableColumnVirtualization="True"
@@ -80,7 +99,8 @@
 			          IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
 			          ItemsSource="{Binding Packages}"
 			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent"
-			          SelectionMode="Single" SelectionUnit="FullRow" TextSearch.TextPath="Name">
+			          SelectionChanged="DataGridPackages_SelectionChanged" SelectionMode="Single"
+			          SelectionUnit="FullRow" TextSearch.TextPath="Name">
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}">
 						<DataGridTextColumn.Header>
@@ -127,7 +147,9 @@
 					<SolidColorBrush x:Key="SelectionColorKey" Color="CornflowerBlue" />
 					<Style TargetType="DataGridRow">
 						<Style.Resources>
-							<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{Binding Source={StaticResource SelectionColorKey}, Path=Color}" />
+							<!--<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{Binding Source={StaticResource SelectionColorKey}, Path=Color}" />-->
+							<SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="{x:Static SystemColors.HighlightColor}" />
+							<SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{x:Static SystemColors.HighlightTextColor}" />
 						</Style.Resources>
 					</Style>
 				</DataGrid.Resources>
@@ -135,7 +157,7 @@
 		</Grid>
 
 		<!--  Package info  -->
-		<GroupBox Grid.Row="2" MinHeight="200" Margin="5,5,5,0" Header="Package Info">
+		<GroupBox Grid.Row="3" MinHeight="200" Margin="5,5,5,0" Header="Package Info">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
@@ -195,6 +217,7 @@
 						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
 						<ComboBox Grid.Row="4" Grid.Column="1"
 						          ItemsSource="{Binding Depends}"
+						          SelectionChanged="ComboBoxPackageInfo_SelectionChanged"
 						          Style="{DynamicResource StyleComboBoxPackageInfo}"
 						          Text="{Binding Depends.Joined, Mode=OneWay}"
 						          Visibility="{Binding Depends, Converter={c:StringCollectionToVisibilityConverter}}" />
@@ -217,19 +240,17 @@
 
 						<!--  Suggests  -->
 						<TextBlock Grid.Row="9" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
-						<ComboBox Grid.Row="9" Grid.Column="1"
-						          ItemsSource="{Binding Suggests}"
-						          Style="{DynamicResource StyleComboBoxPackageInfo}"
-						          Text="{Binding Suggests.Joined, Mode=OneWay}"
-						          Visibility="{Binding Suggests, Converter={c:StringCollectionToVisibilityConverter}}" />
+						<TextBox Grid.Row="9" Grid.Column="1"
+						         Style="{DynamicResource StyleTextBoxInfo}"
+						         Text="{Binding Suggests.Joined, Mode=OneWay}"
+						         Visibility="{Binding Suggests, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  Tags  -->
 						<TextBlock Grid.Row="10" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
-						<ComboBox Grid.Row="10" Grid.Column="1"
-						          ItemsSource="{Binding Tags}"
-						          Style="{DynamicResource StyleComboBoxPackageInfo}"
-						          Text="{Binding Tags.Joined, Mode=OneWay}"
-						          Visibility="{Binding Tags, Converter={c:StringCollectionToVisibilityConverter}}" />
+						<TextBox Grid.Row="10" Grid.Column="1"
+						         Style="{DynamicResource StyleTextBoxInfo}"
+						         Text="{Binding Tags.Joined, Mode=OneWay}"
+						         Visibility="{Binding Tags, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  Template  -->
 						<!--
@@ -259,7 +280,7 @@
 		</GroupBox>
 
 		<!--  Statusbar  -->
-		<StatusBar Grid.Row="3">
+		<StatusBar Grid.Row="4">
 			<StatusBarItem Width="300" HorizontalAlignment="Right">
 				<ProgressBar Name="ProgressBarStatus" Width="290" Height="14" HorizontalAlignment="Stretch"
 				             VerticalAlignment="Stretch" Maximum="100" Minimum="0" />

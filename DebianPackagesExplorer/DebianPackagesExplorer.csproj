@@ -98,6 +98,9 @@
     <Compile Include="Localisation\LocalisationAssemblyCollection.cs" />
     <Compile Include="Localisation\LocalisationException.cs" />
     <Compile Include="RealNameAttribute.cs" />
+    <Compile Include="Tools\HistoryPoolAction.cs" />
+    <Compile Include="Tools\HistoryPoolEventArgs.cs" />
+    <Compile Include="Tools\HistoryPool.cs" />
     <Compile Include="UseParseFunctionAttribute.cs" />
     <Compile Include="Windows\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -179,6 +182,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DebianPackagesExplorer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GoPrevious.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GoNext.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

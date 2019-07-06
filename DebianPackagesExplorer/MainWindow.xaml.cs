@@ -1,5 +1,6 @@
 ﻿using DebianPackagesExplorer.Debian;
 using DebianPackagesExplorer.Extensions;
+using DebianPackagesExplorer.Tools;
 using DebianPackagesExplorer.Windows;
 using Microsoft.Win32;
 using System;
@@ -41,6 +42,8 @@ namespace DebianPackagesExplorer
 		public static readonly RoutedCommand CommandFileOpenFile = new RoutedCommand();
 		public static readonly RoutedCommand CommandFileOpenLink = new RoutedCommand();
 		public static readonly RoutedCommand CommandHelpAbout = new RoutedCommand();
+		public static readonly RoutedCommand CommandHistoryGoNext = new RoutedCommand();
+		public static readonly RoutedCommand CommandHistoryGoPrevious = new RoutedCommand();
 		public static readonly RoutedCommand CommandOpenContainingFolder = new RoutedCommand();
 		public static readonly RoutedCommand CommandToolsOptions = new RoutedCommand();
 
@@ -48,11 +51,13 @@ namespace DebianPackagesExplorer
 
 		#region Properties
 
+		public HistoryPool<PackageInfo> History { get; }
+
 		public bool IsDownloading { get; set; }
 
 		public PackagesCollection Packages { get; private set; }
 
-		public PackageInfo SelectedPackage { get { return DataGridPackages.SelectedItem as PackageInfo; } }
+		public PackageInfo SelectedPackage { get { return DataGridPackages?.SelectedItem as PackageInfo; } }
 
 		#endregion
 
@@ -63,7 +68,7 @@ namespace DebianPackagesExplorer
 			ComboBox comboBox = sender as ComboBox;
 			if (comboBox != null && comboBox.SelectedItem != null)
 			{
-				Match match = Regex.Match(comboBox.SelectedItem as string, @"(?<name>.*)\s+\((?<mode>[><=]+)\s+(?<version>[0-9.]+)\)");
+				Match match = Regex.Match(comboBox.SelectedItem as string, @"(?:^(?<name>.*)\s+\((?<mode>[><=]+)\s+(?<version>[+a-zA-Z0-9.:-]+)\)$)|(?:^(?<name>.*)\s*\|\s*(?<name2>.*)$)|(?:^(?<name>.*)$)");
 				if (match != null && match.Success)
 				{
 					PackageInfo package = Packages[match.Groups["name"].Value];
@@ -72,6 +77,7 @@ namespace DebianPackagesExplorer
 						Debug.WriteLine(string.Format("Package: {0}\nVersion: {1}\nComparison: {2}", match.Groups["name"].Value, match.Groups["version"].Value, match.Groups["mode"].Value));
 						DataGridPackages.SelectedItem = package;
 						DataGridPackages.ScrollIntoView(package);
+						DataGridPackages.Focus();
 					}
 				}
 			}
@@ -79,10 +85,7 @@ namespace DebianPackagesExplorer
 
 		#region Commands
 
-		private void CommandDownloadPackage_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-		{
-			e.CanExecute = !string.IsNullOrEmpty(Packages.GetPackageDownloadLink(SelectedPackage)) && !IsDownloading;
-		}
+		private void CommandDownloadPackage_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = !string.IsNullOrEmpty(Packages.GetPackageDownloadLink(SelectedPackage)) && !IsDownloading;
 
 		private void CommandDownloadPackage_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
@@ -100,10 +103,7 @@ namespace DebianPackagesExplorer
 			}
 		}
 
-		private void CommandFileExit_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-			Close();
-		}
+		private void CommandFileExit_Executed(object sender, ExecutedRoutedEventArgs e) => Close();
 
 		private void CommandFileBrowseDebianSources_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
@@ -137,32 +137,31 @@ namespace DebianPackagesExplorer
 			}
 		}
 
-		private void CommandHelpAbout_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-			(new Windows.AboutWindow()).ShowDialog();
-		}
+		private void CommandHelpAbout_Executed(object sender, ExecutedRoutedEventArgs e) => (new Windows.AboutWindow()).ShowDialog();
+
+		private void CommandHistoryGoNext_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = History.CanGoNext;
+
+		private void CommandHistoryGoNext_Executed(object sender, ExecutedRoutedEventArgs e) => History.Next();
+
+		private void CommandHistoryGoPrevious_CanExecute(object sender, CanExecuteRoutedEventArgs e) => e.CanExecute = History.CanGoPrevious;
+
+		private void CommandHistoryGoPrevious_Executed(object sender, ExecutedRoutedEventArgs e) => History.Previous();
 
 		private void CommandOpenContainingFolder_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
 			//e.CanExecute = false;
 			if (Properties.Settings.Default.UseDefaultDownloadsFolder)
 			{
-				PackageInfo package = DataGridPackages.SelectedItem as PackageInfo;
+				PackageInfo package = DataGridPackages?.SelectedItem as PackageInfo;
 				e.CanExecute = ((package != null) && (Packages.SourceInfo != null)) && File.Exists(System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
 					System.IO.Path.Combine(Packages.SourceInfo.CodeName, Packages.SourceInfo.Component, Packages.SourceInfo.Architecture, SelectedPackage.FileName)));
 			}
 		}
 
-		private void CommandOpenContainingFolder_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-			Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
+		private void CommandOpenContainingFolder_Executed(object sender, ExecutedRoutedEventArgs e) => Process.Start("explorer.exe", "/select," + System.IO.Path.Combine(Properties.Settings.Default.DefaultDownloadsFolder,
 				System.IO.Path.Combine(Packages.SourceInfo.CodeName, Packages.SourceInfo.Component, Packages.SourceInfo.Architecture, SelectedPackage.FileName)));
-		}
 
-		private void CommandToolsOptions_Executed(object sender, ExecutedRoutedEventArgs e)
-		{
-			(new OptionsWindow()).ShowDialog();
-		}
+		private void CommandToolsOptions_Executed(object sender, ExecutedRoutedEventArgs e) => (new OptionsWindow()).ShowDialog();
 
 		#endregion
 		
@@ -176,6 +175,12 @@ namespace DebianPackagesExplorer
 					Process.Start(link);
 			}
 				
+		}
+
+		private void DataGridPackages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (!History.IsBrowsing)
+				History.Add((sender as DataGrid).SelectedItem as PackageInfo);
 		}
 
 		public void DownloadPackage(string url, string fileName)
@@ -299,6 +304,15 @@ namespace DebianPackagesExplorer
 				Process.Start(link);
 		}
 
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.MainWindowHeight = Height;
+			Properties.Settings.Default.MainWindowLeft = Left;
+			Properties.Settings.Default.MainWindowMaximized = WindowState == WindowState.Maximized;
+			Properties.Settings.Default.MainWindowTop = Top;
+			Properties.Settings.Default.MainWindowWidth = Width;
+		}
+
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 
@@ -311,6 +325,12 @@ namespace DebianPackagesExplorer
 		public MainWindow()
 		{
 			DataContext = this;
+			History = new HistoryPool<PackageInfo>();
+			History.Go += (object sender, HistoryPoolEventArgs<PackageInfo> e) =>
+			{
+				DataGridPackages.SelectedItem = e.NewItem;
+				DataGridPackages.ScrollIntoView(e.NewItem);
+			};
 			Packages = new PackagesCollection();
 			InitializeComponent();
 			Title = Assembly.GetExecutingAssembly().GetAttributeValue(AssemblyExtensions.AssemblyAttribute.Description);
@@ -325,14 +345,5 @@ namespace DebianPackagesExplorer
 		}
 
 		#endregion
-
-		private void Window_Closed(object sender, EventArgs e)
-		{
-			Properties.Settings.Default.MainWindowHeight = Height;
-			Properties.Settings.Default.MainWindowLeft = Left;
-			Properties.Settings.Default.MainWindowMaximized = WindowState == WindowState.Maximized;
-			Properties.Settings.Default.MainWindowTop = Top;
-			Properties.Settings.Default.MainWindowWidth = Width;
-		}
 	}
 }

@@ -16,6 +16,8 @@
 
 	<!--  Main Window  -->
 	<mscore:String x:Key="MainWindow_Button_ToolTip_DownloadPackage">Download Package</mscore:String>
+	<mscore:String x:Key="MainWindow_Button_ToolTip_GoPrevious">Go to previous package</mscore:String>
+	<mscore:String x:Key="MainWindow_Button_ToolTip_GoNext">Go to next package</mscore:String>
 	<mscore:String x:Key="MainWindow_Button_ToolTip_ShowInContainingFolder">Open in containing folder</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architecture</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Description</mscore:String>

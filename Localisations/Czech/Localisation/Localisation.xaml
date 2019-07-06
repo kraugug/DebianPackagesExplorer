@@ -16,6 +16,8 @@
 
 	<!--  Main Window  -->
 	<mscore:String x:Key="MainWindow_Button_ToolTip_DownloadPackage">Stáhnout Balíček</mscore:String>
+	<mscore:String x:Key="MainWindow_Button_ToolTip_GoPrevious">Předchozí balíček</mscore:String>
+	<mscore:String x:Key="MainWindow_Button_ToolTip_GoNext">Následující balíček</mscore:String>
 	<mscore:String x:Key="MainWindow_Button_ToolTip_ShowInContainingFolder">Otevřít složku obsahující stažený balíček</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Architecture">Architektura</mscore:String>
 	<mscore:String x:Key="MainWindow_DataGridPackages_Headers_Description">Popis</mscore:String>
@@ -53,7 +55,7 @@
 	<mscore:String x:Key="OptionsWindow_Button_ToolTip_BrowseForFolder">Vybrat složku...</mscore:String>
 	<mscore:String x:Key="OptionsWindow_Button_ToolTip_OpenFolder">Otevřít složku</mscore:String>
 	<mscore:String x:Key="OptionsWindow_CheckBox_Content_ConfirmFileOverwrite">Potvrdit přepsání existujícího souboru</mscore:String>
-	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Použít společnout složku pro stažení místo dialogu pro výběr složky</mscore:String>
+	<mscore:String x:Key="OptionsWindow_CheckBox_Content_UseDefaultFolder">Použít společnou složku pro stažení místo dialogu pro výběr složky</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Author">Tvůrce</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_FileName">Soubor</mscore:String>
 	<mscore:String x:Key="OptionsWindow_ListView_ColumnHeader_Name">Jazyk</mscore:String>
