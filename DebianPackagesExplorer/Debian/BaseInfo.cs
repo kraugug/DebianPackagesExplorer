@@ -5,10 +5,20 @@
  * GNU General Public License v3.0. See the LICENSE file for details.
  */
 
-using System.Collections.ObjectModel;
-
 namespace DebianPackagesExplorer.Debian
 {
-	public class SiteInfoCollection : ObservableCollection<BaseInfo>
-    { }
+	public abstract class BaseInfo
+	{
+		#region Properties
+
+		public virtual string Name { get; protected set; }
+
+		#endregion
+
+		#region Constructor
+
+		public BaseInfo(string name) => Name = name;
+
+		#endregion
+	}
 }

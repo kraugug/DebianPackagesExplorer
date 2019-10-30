@@ -14,13 +14,9 @@ using System.Text.RegularExpressions;
 
 namespace DebianPackagesExplorer.Debian
 {
-	public class CodeNameInfo
+	public class CodeNameInfo : FolderInfo
 	{
 		#region Properties
-
-		public ObservableCollection<ArchitectureInfo> Architectures { get; }
-
-		private string BaseUrl { get; set; }
 
 		public DateTime Date { get; }
 
@@ -29,8 +25,6 @@ namespace DebianPackagesExplorer.Debian
 		public string FullName {  get { return ToString(); } }
 
 		public string Label { get; }
-
-		public string Name { get; }
 
 		public string Origin { get; }
 
@@ -65,10 +59,8 @@ namespace DebianPackagesExplorer.Debian
 
 		#region  Constructor
 
-		private CodeNameInfo(string baseUrl)
+		private CodeNameInfo(string baseUrl) : base(null, baseUrl)
 		{
-			Architectures = new ObservableCollection<ArchitectureInfo>();
-			BaseUrl = baseUrl;
 			WebRequest webRequest = WebRequest.Create(string.Format("{0}/Release", BaseUrl));
 			{
 				using (Stream stream = webRequest.GetResponse().GetResponseStream())
@@ -87,7 +79,7 @@ namespace DebianPackagesExplorer.Debian
 						string[] architectures = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Architectures).Split(' ');
 						string[] components = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Components).Split(' ');
 						foreach (string architecture in matches.GetByGroupName(Properties.Resources.RegEx_GroupName_Architectures).Split(' '))
-							Architectures.Add(new ArchitectureInfo(this, baseUrl, components, architecture));
+							Items.Add(new ArchitectureInfo(this, baseUrl, components, architecture));
 					}
 				}
 			}

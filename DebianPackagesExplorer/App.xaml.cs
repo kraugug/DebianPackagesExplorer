@@ -30,7 +30,7 @@ namespace DebianPackagesExplorer
 
 		public static LocalisationAssemblyCollection Localisations { get; private set; }
 
-		public static new MainWindow MainWindow { get { return (MainWindow)Application.Current.MainWindow; } }
+		public static new MainWindow MainWindow { get { return Application.Current.MainWindow is MainWindow ? (MainWindow)Application.Current.MainWindow : null; } }
 
 		#endregion
 
@@ -59,6 +59,10 @@ namespace DebianPackagesExplorer
 			Localisations = new LocalisationAssemblyCollection();
 			Localisations.AddDefault("English");
 			Localisations.Apply(DebianPackagesExplorer.Properties.Settings.Default.Localisation);
+
+			PackagesSourcesWindow wnd = new PackagesSourcesWindow();
+			wnd.ShowDialog();
+			Shutdown();
 		}
 
 		#endregion

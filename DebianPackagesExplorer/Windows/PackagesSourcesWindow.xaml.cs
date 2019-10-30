@@ -1,7 +1,9 @@
 ﻿using DebianPackagesExplorer.Debian;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -65,8 +67,6 @@ namespace DebianPackagesExplorer.Windows
 		private void CommandOk_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			SelectedPackagesSource = new SelectedSourcePackageInfo(TreeViewBrowser.SelectedItem as ComponentInfo);
-			Properties.Settings.Default.Sources.Clear();
-			Properties.Settings.Default.Sources.AddRange(Sources.ToArray());
 			DialogResult = true;
 		}
 
@@ -83,9 +83,9 @@ namespace DebianPackagesExplorer.Windows
 			string url = string.Format("{0}/README", ComboBoxSources.Text);
 			try
 			{
-				WebRequest webRequest = WebRequest.Create(url);
+				WebRequest request = WebRequest.Create(url);
 				{
-					using (Stream stream = webRequest.GetResponse().GetResponseStream())
+					using (Stream stream = request.GetResponse().GetResponseStream())
 					using (StreamReader reader = new StreamReader(stream))
 					{
 						string data = reader.ReadToEnd();
@@ -110,7 +110,6 @@ namespace DebianPackagesExplorer.Windows
 								{
 									foreach (CodeNameInfo info in discovery)
 										SiteInfo.Add(info);
-									IsRefreshing = false;
 									CommandManager.InvalidateRequerySuggested();
 								}));
 							});
@@ -128,11 +127,14 @@ namespace DebianPackagesExplorer.Windows
 					}
 				}
 			}
-			catch(Exception ex)
+			catch(System.Net.WebException)
+			{
+				ParseRemoteFolder(ComboBoxSources.Text);
+			}
+			finally
 			{
 				ProgressBarStatus.IsIndeterminate = false;
-				LabelNothingFound.Content = ex.Message;
-				LabelNothingFound.Visibility = Visibility.Visible;
+				IsRefreshing = false;
 			}
 		}
 
@@ -146,9 +148,58 @@ namespace DebianPackagesExplorer.Windows
 			Sources.Remove(ComboBoxSources.SelectedItem as string);
 		}
 
+		public void ParseRemoteFolder(string url)
+		{
+			try
+			{
+				HtmlWeb web = new HtmlWeb();
+				HtmlDocument document = web.Load(url);
+				HtmlNode table = document.DocumentNode.SelectNodes("//table").Cast<HtmlNode>().FirstOrDefault();
+				if (table != null)
+				{
+					List<string> folders = new List<string>();
+					IEnumerable<HtmlNode> tableRows = table.SelectNodes("tr").Cast<HtmlNode>();
+					for (int index = 2; index < tableRows.Count(); index++)
+					{
+						HtmlNode tableRow = tableRows.ElementAt(index);
+						if (tableRow.ChildNodes.Count > 1)
+						{
+							string item = tableRow.ChildNodes[1].ChildNodes[0].InnerHtml;
+							if (item.ToUpper().Contains("DISTS") || item.ToUpper().Contains("-PORTS"))
+							{
+								folders.Add(item);
+							}
+						}
+					}
+					Debug.WriteLine(folders.Count.ToString());
+				}
+
+				//FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
+				//{
+				//	request.Method = WebRequestMethods.Ftp.ListDirectory;
+				//	using (Stream stream = request.GetResponse().GetResponseStream())
+				//	using (StreamReader reader = new StreamReader(stream))
+				//	{
+				//		string data = reader.ReadToEnd();
+				//	}
+				//}
+			}
+			catch (Exception ex)
+			{
+				LabelNothingFound.Content = "Nothing found";
+				LabelNothingFound.Visibility = Visibility.Visible;
+			}
+		}
+
 		private void TreeViewBrowser_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			CommandOk.Execute(null, null);
+		}
+
+		private void Window_Closed(object sender, EventArgs e)
+		{
+			Properties.Settings.Default.Sources.Clear();
+			Properties.Settings.Default.Sources.AddRange(Sources.ToArray());
 		}
 
 		#endregion
