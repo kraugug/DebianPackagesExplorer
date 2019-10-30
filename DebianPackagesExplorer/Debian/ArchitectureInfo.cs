@@ -9,15 +9,9 @@ using System.Collections.ObjectModel;
 
 namespace DebianPackagesExplorer.Debian
 {
-    public class ArchitectureInfo
+    public class ArchitectureInfo : FolderInfo
     {
 		#region Properties
-
-		private string BaseUrl { get; set; }
-
-		public ObservableCollection<ComponentInfo> Components { get; }
-
-		public string Name { get; }
 
 		public CodeNameInfo Parent { get; }
 
@@ -34,14 +28,11 @@ namespace DebianPackagesExplorer.Debian
 
 		#region Constructrors
 
-		public ArchitectureInfo(CodeNameInfo parent, string baseUrl, string[] components, string name)
+		public ArchitectureInfo(CodeNameInfo parent, string baseUrl, string[] components, string name) : base(name, baseUrl)
 		{
-			Components = new ObservableCollection<ComponentInfo>();
-			BaseUrl = baseUrl;
-			Name = name;
 			Parent = parent;
 			foreach (string component in components)
-				Components.Add(new ComponentInfo(this, baseUrl, Name, component));
+				Items.Add(new ComponentInfo(this, baseUrl, Name, component));
 		}
 
 		#endregion

@@ -37,6 +37,9 @@
     <ApplicationIcon>DebianPackagesExplorer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.16.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.16\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -82,7 +85,9 @@
     <Compile Include="Converters\StringCollectionToVisibilityConverter.cs" />
     <Compile Include="Converters\ObjectToFormattedTextConverter.cs" />
     <Compile Include="Debian\ArchitectureInfo.cs" />
+    <Compile Include="Debian\BaseInfo.cs" />
     <Compile Include="Debian\ComponentInfo.cs" />
+    <Compile Include="Debian\FolderInfo.cs" />
     <Compile Include="Debian\PackageInfo.cs" />
     <Compile Include="Debian\PackagesCollection.cs" />
     <Compile Include="Debian\SelectedSourcePackageInfo.cs" />
@@ -154,6 +159,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

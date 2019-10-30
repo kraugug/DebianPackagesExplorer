@@ -7,13 +7,9 @@
 
 namespace DebianPackagesExplorer.Debian
 {
-    public class ComponentInfo
-    {
+    public class ComponentInfo : FolderInfo
+	{
 		#region Properties
-
-		public string BaseUrl { get; }
-
-		public string Name { get; }
 
 		public ArchitectureInfo Parent { get; }
 
@@ -23,19 +19,14 @@ namespace DebianPackagesExplorer.Debian
 
 		#region Methods
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name;
 
 		#endregion
 
 		#region Constructrors
 
-		public ComponentInfo(ArchitectureInfo parent, string baseUrl, string architecture, string name)
+		public ComponentInfo(ArchitectureInfo parent, string baseUrl, string architecture, string name) : base(name, baseUrl)
 		{
-			BaseUrl = baseUrl;
-			Name = name;
 			Parent = parent;
 			Url = string.Format("{0}/{1}/binary-{2}/Packages.gz", baseUrl, name, architecture);
 		}

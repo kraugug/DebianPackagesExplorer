@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 namespace DebianPackagesExplorer.Debian
 {
 	[DebuggerDisplay("Package = {Name}")]
-	public class PackageInfo
+	public class PackageInfo : BaseInfo
 	{
 		#region Properties
 
@@ -55,7 +55,7 @@ namespace DebianPackagesExplorer.Debian
 		public string MD5Sum { get; private set; }
 
 		[RealName("Package")]
-		public string Name { get; private set; }
+		public override string Name { get; protected set; }
 
 		public string Priority { get; private set; }
 
@@ -117,6 +117,13 @@ namespace DebianPackagesExplorer.Debian
 			}
 			return null;
 		}
+
+		#endregion
+
+		#region Constructor
+
+		public PackageInfo() : base(null)
+		{ }
 
 		#endregion
 	}
