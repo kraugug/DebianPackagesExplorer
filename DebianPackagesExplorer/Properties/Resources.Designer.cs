@@ -349,6 +349,15 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String_FileNotFound.
+        /// </summary>
+        internal static string ResKey_String_FileNotFound {
+            get {
+                return ResourceManager.GetString("ResKey_String_FileNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String_InvalidLink.
         /// </summary>
         internal static string ResKey_String_InvalidLink {

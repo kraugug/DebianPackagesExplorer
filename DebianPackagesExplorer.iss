@@ -5,14 +5,14 @@
 ; This software may be modified and distributed under the terms
 ; of the BSD license.  See the LICENSE file for details.
 ;
-#define AppId "{F695E440-6561-457C-A81E-F1EEA1372FBC}"
+#define AppId "{A26E3088-177B-4733-8558-FC67EA8BF1A3}"
 #define AppName "Debian Packages Explorer"
-#define AppVersion "1.0.0.0"  
+#define AppVersion "1.1.0.0"
 #define AppPublisher "Michal Heczko"
 #define AppURL "http://dpe.kraugug.net"
 #define AppExeName "DebianPackagesExplorer.exe"
 
-#define PathBinary SourcePath + "\DebianPackagesExplorer\Bin\Release\"
+#define PathBinary SourcePath + "\Bin\Release\"
 
 [Setup]
 AppId={{#AppId}
@@ -29,9 +29,9 @@ Compression=lzma
 DefaultDirName={pf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
-InfoBeforeFile={#SourcePath}\Changelog.txt
+InfoAfterFile={#SourcePath}\Changelog.txt
 LicenseFile={#SourcePath}\LICENSE
-OutputDir=.\
+OutputDir=Bin
 OutputBaseFilename={#AppName} {#AppVersion}
 SetupIconFile={#SourcePath}\DebianPackagesExplorer\DebianPackagesExplorer.ico
 SolidCompression=yes
@@ -44,12 +44,9 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
-[Components]
-Name: "src"; Description: "Source Codes";
-
 [Files]
 ; Files...
-Source: "{#PathBinary}\*"; DestDir: "{app}\Sources\TrayRadio"; Components: "src"; Flags: recursesubdirs; Excludes: "*.pdb";
+Source: "{#PathBinary}\*"; DestDir: "{app}"; Flags: recursesubdirs; Excludes: "*.pdb,*.xml";
 Source: "{#SourcePath}\Changelog.txt"; DestDir: "{app}";
 Source: "{#SourcePath}\LICENSE"; DestDir: "{app}"; DestName: "License.txt";
 
@@ -60,8 +57,8 @@ Name: {group}\License; Filename: {app}\License.txt
 Name: {group}\{cm:UninstallProgram,{#AppName} v{#AppVersion}}; Filename: {uninstallexe}
 Name: {commondesktop}\{#AppName}; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon;
 
-[Registry]
-Root: HKCU; SubKey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: {#AppName}; Flags: dontcreatekey uninsdeletevalue;
+;[Registry]
+;Root: HKCU; SubKey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueName: {#AppName}; Flags: dontcreatekey uninsdeletevalue;
 
 [Run]
 Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(AppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent;
@@ -69,7 +66,7 @@ Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(
 [UninstallDelete]
 Type: dirifempty; Name: "{group}";
 Type: filesandordirs; Name: "{app}";
-Type: filesandordirs; Name: "{localappdata}\Michal_Heczko";
+Type: filesandordirs; Name: "{localappdata}\Michal_Heczko\DebianPackagesExplorer";
 
 [Code]
 function InitializeSetup: Boolean;

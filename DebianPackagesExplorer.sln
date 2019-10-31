@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{37CF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{E6C12B9E-6915-4B0C-B18B-515DBEE1AB15}"
 	ProjectSection(SolutionItems) = preProject
+		Changelog.txt = Changelog.txt
 		DebianPackagesExplorer.iss = DebianPackagesExplorer.iss
 	EndProjectSection
 EndProject

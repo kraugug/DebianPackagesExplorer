@@ -84,6 +84,7 @@
 	<mscore:String x:Key="String_DownloadCompleted">Download completed</mscore:String>
 	<mscore:String x:Key="String_DownloadPackage">Download Package</mscore:String>
 	<mscore:String x:Key="String_EmptyPackagesFile">Packages info file is empty!</mscore:String>
+	<mscore:String x:Key="String_FileNotFound">File not found. {0}</mscore:String>
 	<mscore:String x:Key="String_InvalidLink">Invalid link!</mscore:String>
 	<mscore:String x:Key="String_NothingFound">Nothing found</mscore:String>
 	<mscore:String x:Key="String_OpenFileDialogFilter">Archives|*.gz|Text files|*.txt</mscore:String>

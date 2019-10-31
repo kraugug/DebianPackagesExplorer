@@ -84,6 +84,7 @@
 	<mscore:String x:Key="String_DownloadCompleted">Stažení dokončeno</mscore:String>
 	<mscore:String x:Key="String_DownloadPackage">Stažení Balíčku</mscore:String>
 	<mscore:String x:Key="String_EmptyPackagesFile">Packages info soubor je prázdný!</mscore:String>
+	<mscore:String x:Key="String_FileNotFound">Soubor nebyl nalezen. {0}</mscore:String>
 	<mscore:String x:Key="String_InvalidLink">Neplatný odkaz!</mscore:String>
 	<mscore:String x:Key="String_NothingFound">Nic nenalezeno</mscore:String>
 	<mscore:String x:Key="String_OpenFileDialogFilter">GZ archivy|*.gz|Textové soubory|*.txt</mscore:String>

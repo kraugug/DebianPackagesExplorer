@@ -261,7 +261,9 @@ namespace DebianPackagesExplorer
 					else
 					{
 						ProgressBarStatus.IsIndeterminate = false;
-						MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+						TextBlockStatus.Text = e1.Error.Message;
+						MessageBox.Show(string.Format(App.GetResource<string>(Properties.Resources.ResKey_String_FileNotFound), url), e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
+						//MessageBox.Show(this, TextBlockStatus.Text = e1.Error.Message, e1.Error.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);
 					}
 				};
 				webClient.DownloadProgressChanged += (object sender1, DownloadProgressChangedEventArgs e1) =>

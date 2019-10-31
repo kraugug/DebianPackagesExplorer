@@ -238,4 +238,7 @@
   <data name="String_MainLocalisationFile" xml:space="preserve">
     <value>LOCALISATION.XAML</value>
   </data>
+  <data name="ResKey_String_FileNotFound" xml:space="preserve">
+    <value>String_FileNotFound</value>
+  </data>
 </root>
