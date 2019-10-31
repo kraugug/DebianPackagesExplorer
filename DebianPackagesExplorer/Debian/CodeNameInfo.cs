@@ -24,6 +24,8 @@ namespace DebianPackagesExplorer.Debian
 
 		public string FullName {  get { return ToString(); } }
 
+		public bool IsInDevelopment { get; }
+
 		public string Label { get; }
 
 		public string Origin { get; }
@@ -52,6 +54,8 @@ namespace DebianPackagesExplorer.Debian
 
 		public override string ToString()
 		{
+			if (IsInDevelopment)
+				return string.Format("{0} {1} - {2} (In development)", Label, Version, Name);
 			return string.Format("{0} {1} - {2}", Label, Version, Name);
 		}
 
@@ -59,7 +63,7 @@ namespace DebianPackagesExplorer.Debian
 
 		#region  Constructor
 
-		private CodeNameInfo(string baseUrl) : base(null, baseUrl)
+		public CodeNameInfo(string baseUrl, bool isInDevelopment = false) : base(null, baseUrl)
 		{
 			WebRequest webRequest = WebRequest.Create(string.Format("{0}/Release", BaseUrl));
 			{
@@ -71,6 +75,7 @@ namespace DebianPackagesExplorer.Debian
 					{
 						Date = DateTime.Parse(matches.GetByGroupName(nameof(Date).ToLower()).Replace("UTC", "GMT"));
 						Description = matches.GetByGroupName(nameof(Description).ToLower());
+						IsInDevelopment = isInDevelopment;
 						Label = matches.GetByGroupName(nameof(Label).ToLower());
 						Name = matches.GetByGroupName(Properties.Resources.RegEx_GroupName_CodeName);
 						Origin = matches.GetByGroupName(nameof(Origin).ToLower());

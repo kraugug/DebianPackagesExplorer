@@ -82,9 +82,12 @@
 	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
 	<mscore:String x:Key="String_DownloadingFile_Formatted">Downloaing file {0}</mscore:String>
 	<mscore:String x:Key="String_DownloadCompleted">Download completed</mscore:String>
+	<mscore:String x:Key="String_DownloadPackage">Download Package</mscore:String>
+	<mscore:String x:Key="String_EmptyPackagesFile">Packages info file is empty!</mscore:String>
 	<mscore:String x:Key="String_InvalidLink">Invalid link!</mscore:String>
 	<mscore:String x:Key="String_NothingFound">Nothing found</mscore:String>
 	<mscore:String x:Key="String_OpenFileDialogFilter">Archives|*.gz|Text files|*.txt</mscore:String>
+	<mscore:String x:Key="String_OverwriteFile">Do wish to overwrite existing file?</mscore:String>
 	<mscore:String x:Key="String_ParsingFile">Parsing file ...</mscore:String>
 	<mscore:String x:Key="String_Ready">Ready</mscore:String>
 	<mscore:String x:Key="String_VersionInfo">{0}\nVersion {1}\n{2}\n{3}</mscore:String>

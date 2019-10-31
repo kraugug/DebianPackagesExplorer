@@ -205,6 +205,12 @@
   <data name="ResKey_String_DownloadingFile_Formatted" xml:space="preserve">
     <value>String_DownloadingFile_Formatted</value>
   </data>
+  <data name="ResKey_String_DownloadPackage" xml:space="preserve">
+    <value>String_DownloadPackage</value>
+  </data>
+  <data name="ResKey_String_EmptyPackagesFile" xml:space="preserve">
+    <value>String_EmptyPackagesFile</value>
+  </data>
   <data name="ResKey_String_InvalidLink" xml:space="preserve">
     <value>String_InvalidLink</value>
   </data>
@@ -213,6 +219,9 @@
   </data>
   <data name="ResKey_String_OpenFileDialogFilter" xml:space="preserve">
     <value>String_OpenFileDialogFilter</value>
+  </data>
+  <data name="ResKey_String_OverwriteFile" xml:space="preserve">
+    <value>String_OverwriteFile</value>
   </data>
   <data name="ResKey_String_ParsingFile" xml:space="preserve">
     <value>String_ParsingFile</value>

@@ -60,9 +60,9 @@ namespace DebianPackagesExplorer
 			Localisations.AddDefault("English");
 			Localisations.Apply(DebianPackagesExplorer.Properties.Settings.Default.Localisation);
 
-			PackagesSourcesWindow wnd = new PackagesSourcesWindow();
-			wnd.ShowDialog();
-			Shutdown();
+			//PackagesSourcesWindow wnd = new PackagesSourcesWindow();
+			//wnd.ShowDialog();
+			//Shutdown();
 		}
 
 		#endregion
@@ -74,7 +74,14 @@ namespace DebianPackagesExplorer
 			if (DebianPackagesExplorer.Properties.Settings.Default.LinkHistory == null)
 				DebianPackagesExplorer.Properties.Settings.Default.LinkHistory = new System.Collections.Specialized.StringCollection();
 			if (DebianPackagesExplorer.Properties.Settings.Default.Sources == null)
+			{
 				DebianPackagesExplorer.Properties.Settings.Default.Sources = new System.Collections.Specialized.StringCollection();
+				DebianPackagesExplorer.Properties.Settings.Default.Sources.Add("http://archive.debian.org/debian/");
+				DebianPackagesExplorer.Properties.Settings.Default.Sources.Add("http://ports.ubuntu.com/");
+				DebianPackagesExplorer.Properties.Settings.Default.Sources.Add("http://archive.ubuntu.com/ubuntu/");
+				DebianPackagesExplorer.Properties.Settings.Default.Sources.Add("http://ppa.launchpad.net/xubuntu-dev/experimental/ubuntu/dists/");
+				DebianPackagesExplorer.Properties.Settings.Default.Sources.Add("http://ftp.debian.org/debian/");
+			}
 			if (string.IsNullOrEmpty(DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder))
 			{
 				DebianPackagesExplorer.Properties.Settings.Default.DefaultDownloadsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),

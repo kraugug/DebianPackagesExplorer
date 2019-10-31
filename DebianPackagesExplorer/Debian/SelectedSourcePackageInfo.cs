@@ -11,17 +11,11 @@ namespace DebianPackagesExplorer.Debian
 {
 	public class SelectedSourcePackageInfo
 	{
-		#region Fields
-
-		private string m_BaseUrl;
-
-		#endregion
-
 		#region Properties
 
 		public string Architecture { get; }
 
-		public string BaseUrl { get { return m_BaseUrl; } }
+		public string BaseUrl { get; }
 
 		public string CodeName { get; }
 
@@ -58,13 +52,13 @@ namespace DebianPackagesExplorer.Debian
 			CodeName = componentInfo.Parent.Parent.Name;
 			Component = componentInfo.Name;
 			Url = componentInfo.Url;
-			m_BaseUrl = Url.Substring(0, Url.IndexOf("dists"));
+			BaseUrl = Url.Substring(0, Url.IndexOf("dists"));
 		}
 
 		private SelectedSourcePackageInfo(string architecture, string baseUrl, string codeName, string component, string fileName)
 		{
 			Architecture = architecture;
-			m_BaseUrl = baseUrl;
+			BaseUrl = baseUrl;
 			CodeName = codeName;
 			Component = component;
 			FileName = fileName;

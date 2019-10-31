@@ -66,7 +66,12 @@ namespace DebianPackagesExplorer.Debian
 		public static IEnumerable<string> ParseRawStream(Stream stream)
 		{
 			using (StreamReader reader = new StreamReader(stream))
-				return reader.ReadToEnd()?.Split(new string[] { PackageInfoDelimiter }, StringSplitOptions.None);
+			{
+				string data = reader.ReadToEnd();
+				if (string.IsNullOrEmpty(data))
+					throw new InvalidDataException(App.GetResource<string>(Properties.Resources.ResKey_String_EmptyPackagesFile));
+				return data.Split(new string[] { PackageInfoDelimiter }, StringSplitOptions.None);
+			}
 		}
 
 		public static IEnumerable<string> ParseTextFile(string filename)
@@ -88,10 +93,7 @@ namespace DebianPackagesExplorer.Debian
 			if (clear)
 				Clear();
 			PackagesCollection collection = new PackagesCollection();
-			Parallel.ForEach(source, (string str) =>
-			{
-				collection.Add(PackageInfo.Parse(str));
-			});
+			Parallel.ForEach(source, (string str) => collection.Add(PackageInfo.Parse(str)));
 			foreach (var item in collection)
 				Add(item);
 		}

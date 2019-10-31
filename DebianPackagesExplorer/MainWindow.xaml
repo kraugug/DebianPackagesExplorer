@@ -11,7 +11,6 @@
         Height="640"
         Closed="Window_Closed"
         Icon="/Resources/Application_x_deb.png"
-        Loaded="Window_Loaded"
         ResizeMode="CanResizeWithGrip"
         mc:Ignorable="d">
 	<Window.CommandBindings>
@@ -103,11 +102,20 @@
 			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False" Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False"
 			          CanUserSortColumns="True" EnableColumnVirtualization="True" EnableRowVirtualization="True" HeadersVisibility="Column" IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
 			          ItemsSource="{Binding Packages}"
-			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent" SelectionChanged="DataGridPackages_SelectionChanged" SelectionMode="Single" SelectionUnit="FullRow" TextSearch.TextPath="Name">
+			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent" SelectionChanged="DataGridPackages_SelectionChanged" SelectionMode="Single" SelectionUnit="FullRow">
+				<!--  TextSearch.TextPath="Name"  -->
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}">
 						<DataGridTextColumn.Header>
-							<TextBlock Text="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<TextBlock Grid.Column="0" Margin="0,0,5,0" VerticalAlignment="Center"
+								           Text="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
+								<TextBox Grid.Column="1" Width="220" KeyDown="TextBoxFilterName_KeyDown" TextChanged="TextBoxFilterName_TextChanged" />
+							</Grid>
 						</DataGridTextColumn.Header>
 					</DataGridTextColumn>
 					<DataGridTextColumn Binding="{Binding Architecture, Mode=OneWay}">

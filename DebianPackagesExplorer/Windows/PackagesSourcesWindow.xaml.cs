@@ -37,6 +37,9 @@ namespace DebianPackagesExplorer.Windows
 
 		#region Properties
 
+		public static PackagesSourcesWindow Instance { get { return m_Instance == null ? m_Instance = new PackagesSourcesWindow() : m_Instance; } }
+		private static PackagesSourcesWindow m_Instance;
+
 		public bool IsRefreshing { get; private set; }
 
 		public SelectedSourcePackageInfo SelectedPackagesSource { get; private set; }
@@ -68,6 +71,7 @@ namespace DebianPackagesExplorer.Windows
 		{
 			SelectedPackagesSource = new SelectedSourcePackageInfo(TreeViewBrowser.SelectedItem as ComponentInfo);
 			DialogResult = true;
+			Hide();
 		}
 
 		private void CommandRefresh_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -98,12 +102,15 @@ namespace DebianPackagesExplorer.Windows
 							ProgressBarStatus.IsIndeterminate = false;
 							Task.Factory.StartNew(new Action(() =>
 							{
-								Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Maximum = matches.Count; }));								
+								Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Maximum = matches.Count; }));
 								foreach (Match match in matches)
 								{
-									discovery.Add(CodeNameInfo.Parse(match, baseUrl));
+									CodeNameInfo codeName = CodeNameInfo.Parse(match, baseUrl);
+									if (codeName != null)
+										discovery.Add(codeName);
 									Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Value++; }));
 								}
+								discovery.Sort((CodeNameInfo first, CodeNameInfo second) => first.FullName.CompareTo(second.FullName));
 							})).ContinueWith((task) =>
 							{
 								Dispatcher.Invoke(new Action(() =>
@@ -122,14 +129,15 @@ namespace DebianPackagesExplorer.Windows
 							//}
 						}
 						else
-							LabelNothingFound.Content = App.GetResource<string>(Properties.Resources.ResKey_String_NothingFound);
-						LabelNothingFound.Visibility = matches.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
+							ParseRemoteFolder(ComboBoxSources.Text);
+							//LabelNothingFound.Content = App.GetResource<string>(Properties.Resources.ResKey_String_NothingFound);
+						//LabelNothingFound.Visibility = matches.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
 					}
 				}
 			}
 			catch(System.Net.WebException)
 			{
-				ParseRemoteFolder(ComboBoxSources.Text);
+				ParseRemoteFolder(ComboBoxSources.Text, !ComboBoxSources.Text.ToUpper().Contains("DIST"));
 			}
 			finally
 			{
@@ -148,7 +156,7 @@ namespace DebianPackagesExplorer.Windows
 			Sources.Remove(ComboBoxSources.SelectedItem as string);
 		}
 
-		public void ParseRemoteFolder(string url)
+		public void ParseRemoteFolder(string url, bool scanForDistsFolder = true)
 		{
 			try
 			{
@@ -157,36 +165,69 @@ namespace DebianPackagesExplorer.Windows
 				HtmlNode table = document.DocumentNode.SelectNodes("//table").Cast<HtmlNode>().FirstOrDefault();
 				if (table != null)
 				{
-					List<string> folders = new List<string>();
+					SiteInfo.Clear();
 					IEnumerable<HtmlNode> tableRows = table.SelectNodes("tr").Cast<HtmlNode>();
-					for (int index = 2; index < tableRows.Count(); index++)
+					if (scanForDistsFolder)
 					{
-						HtmlNode tableRow = tableRows.ElementAt(index);
-						if (tableRow.ChildNodes.Count > 1)
+						for (int index = 2; index < tableRows.Count(); index++)
 						{
-							string item = tableRow.ChildNodes[1].ChildNodes[0].InnerHtml;
-							if (item.ToUpper().Contains("DISTS") || item.ToUpper().Contains("-PORTS"))
+							HtmlNode tableRow = tableRows.ElementAt(index);
+							if (tableRow.ChildNodes.Count > 1)
 							{
-								folders.Add(item);
+								string item = tableRow.ChildNodes[1].ChildNodes[0].InnerHtml.Trim('/');
+								if (item.ToUpper().CompareTo("DISTS") == 0)
+									ParseRemoteFolder(url + '/' + item, false);
 							}
 						}
 					}
-					Debug.WriteLine(folders.Count.ToString());
+					else
+					{
+						List<string> folders = new List<string>();
+						// Gather all folders except files...
+						for (int index = 3; index < tableRows.Count(); index++)
+						{
+							HtmlNode tableRow = tableRows.ElementAt(index);
+							if (tableRow.ChildNodes.Count > 1)
+							{
+								string item = tableRow.ChildNodes[1].ChildNodes[0].InnerHtml.Trim('/');
+								if (!item.Contains('.'))
+									folders.Add(item);
+							}
+						}
+						// Reset progress bar...
+						ProgressBarStatus.IsIndeterminate = false;
+						ProgressBarStatus.Value = 0;
+						// Now make make groups...
+						IEnumerable<string> groupNames = folders.Where(f => !f.Contains('-') && f.CompareTo("README") != 0);
+						List<ReleaseFile> releaseFiles = new List<ReleaseFile>();
+						List<CodeNameInfo> discovery = new List<CodeNameInfo>();
+						Task.Factory.StartNew(new Action(() =>
+						{
+							Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Maximum = groupNames.Count(); }));
+							foreach (string groupName in groupNames)
+							{
+								discovery.Add(new CodeNameInfo(url + '/' + groupName, groupName.ToUpper().CompareTo("DEVEL") == 0));
+								Dispatcher.Invoke(new Action(() => { ProgressBarStatus.Value++; }));
+							}
+							discovery.Sort((CodeNameInfo first, CodeNameInfo second) => first.FullName.CompareTo(second.FullName));
+						})).ContinueWith((task) =>
+						{
+							Dispatcher.Invoke(new Action(() =>
+							{
+								foreach(CodeNameInfo codeName in discovery)
+									if (SiteInfo.Where(i => (i as CodeNameInfo).Name.CompareTo(codeName.Name) == 0).Count() == 0)
+										SiteInfo.Add(codeName);
+								CommandManager.InvalidateRequerySuggested();
+								LabelNothingFound.Content = App.GetResource<string>(Properties.Resources.ResKey_String_NothingFound);
+								LabelNothingFound.Visibility = SiteInfo.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
+							}));
+						});
+					}
 				}
-
-				//FtpWebRequest request = (FtpWebRequest)WebRequest.Create(url);
-				//{
-				//	request.Method = WebRequestMethods.Ftp.ListDirectory;
-				//	using (Stream stream = request.GetResponse().GetResponseStream())
-				//	using (StreamReader reader = new StreamReader(stream))
-				//	{
-				//		string data = reader.ReadToEnd();
-				//	}
-				//}
 			}
 			catch (Exception ex)
 			{
-				LabelNothingFound.Content = "Nothing found";
+				LabelNothingFound.Content = ex.Message;
 				LabelNothingFound.Visibility = Visibility.Visible;
 			}
 		}
@@ -195,11 +236,19 @@ namespace DebianPackagesExplorer.Windows
 		{
 			CommandOk.Execute(null, null);
 		}
-
-		private void Window_Closed(object sender, EventArgs e)
+		
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			Properties.Settings.Default.Sources.Clear();
 			Properties.Settings.Default.Sources.AddRange(Sources.ToArray());
+			DialogResult = false;
+			e.Cancel = true;
+			Hide();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			SelectedPackagesSource = null;
 		}
 
 		#endregion

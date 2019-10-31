@@ -331,6 +331,24 @@ namespace DebianPackagesExplorer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to String_DownloadPackage.
+        /// </summary>
+        internal static string ResKey_String_DownloadPackage {
+            get {
+                return ResourceManager.GetString("ResKey_String_DownloadPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_EmptyPackagesFile.
+        /// </summary>
+        internal static string ResKey_String_EmptyPackagesFile {
+            get {
+                return ResourceManager.GetString("ResKey_String_EmptyPackagesFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to String_InvalidLink.
         /// </summary>
         internal static string ResKey_String_InvalidLink {
@@ -354,6 +372,15 @@ namespace DebianPackagesExplorer.Properties {
         internal static string ResKey_String_OpenFileDialogFilter {
             get {
                 return ResourceManager.GetString("ResKey_String_OpenFileDialogFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to String_OverwriteFile.
+        /// </summary>
+        internal static string ResKey_String_OverwriteFile {
+            get {
+                return ResourceManager.GetString("ResKey_String_OverwriteFile", resourceCulture);
             }
         }
         

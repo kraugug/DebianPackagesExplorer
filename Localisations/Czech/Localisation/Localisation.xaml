@@ -82,9 +82,12 @@
 	<mscore:String x:Key="String_DotNetVersionInfo">Microsoft .NET Framework\nVersion {0}\nCopyright © 2010 Microsoft Corporation\n{1}</mscore:String>
 	<mscore:String x:Key="String_DownloadingFile_Formatted">Stahuji soubor {0}</mscore:String>
 	<mscore:String x:Key="String_DownloadCompleted">Stažení dokončeno</mscore:String>
+	<mscore:String x:Key="String_DownloadPackage">Stažení Balíčku</mscore:String>
+	<mscore:String x:Key="String_EmptyPackagesFile">Packages info soubor je prázdný!</mscore:String>
 	<mscore:String x:Key="String_InvalidLink">Neplatný odkaz!</mscore:String>
 	<mscore:String x:Key="String_NothingFound">Nic nenalezeno</mscore:String>
 	<mscore:String x:Key="String_OpenFileDialogFilter">GZ archivy|*.gz|Textové soubory|*.txt</mscore:String>
+	<mscore:String x:Key="String_OverwriteFile">Přejete si soubor přepsat?</mscore:String>
 	<mscore:String x:Key="String_ParsingFile">Šťárám se v souboru ...</mscore:String>
 	<mscore:String x:Key="String_Ready">Připraven</mscore:String>
 	<mscore:String x:Key="String_VersionInfo">{0}\nVerze {1}\n{2}\n{3}</mscore:String>

@@ -1,29 +1,29 @@
-﻿using DebianPackagesExplorer.Debian;
+﻿/*
+ * Copyright(C) 2018, Michal Heczko All rights reserved.
+ *
+ * This software may be modified and distributed under the terms of the
+ * GNU General Public License v3.0. See the LICENSE file for details.
+ */
+
+using DebianPackagesExplorer.Debian;
 using DebianPackagesExplorer.Extensions;
 using DebianPackagesExplorer.Tools;
 using DebianPackagesExplorer.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
 
@@ -107,11 +107,12 @@ namespace DebianPackagesExplorer
 
 		private void CommandFileBrowseDebianSources_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			PackagesSourcesWindow dialog = new PackagesSourcesWindow();
-			if (dialog.ShowDialog().Value)
+			//PackagesSourcesWindow dialog = new PackagesSourcesWindow();
+			PackagesSourcesWindow.Instance.ShowDialog();
+			if (PackagesSourcesWindow.Instance.SelectedPackagesSource != null)
 			{
 				Packages.Clear();
-				OpenRemotePackagesFile(dialog.SelectedPackagesSource);
+				OpenRemotePackagesFile(PackagesSourcesWindow.Instance.SelectedPackagesSource);
 			}
 		}
 
@@ -187,7 +188,8 @@ namespace DebianPackagesExplorer
 		{
 			bool go = true;
 			if (Properties.Settings.Default.ConfirmFileOverwrite && File.Exists(fileName))
-				go = MessageBox.Show("Do wish to overwrite existing file?", "Download Package", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+				go = MessageBox.Show(App.GetResource<string>(Properties.Resources.ResKey_String_OverwriteFile), App.GetResource<string>(Properties.Resources.ResKey_String_DownloadPackage),
+					MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
 			if (go)
 				using (WebClient webClient = new WebClient())
 				{
@@ -243,7 +245,15 @@ namespace DebianPackagesExplorer
 					{
 						if (!e1.Cancelled)
 						{
-							ParseList(PackagesCollection.ParseArchive(tempFile));
+							try
+							{
+								ParseList(PackagesCollection.ParseArchive(tempFile));
+							}
+							catch (InvalidDataException ex)
+							{
+								MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+								TextBlockStatus.Text = App.GetResource<string>(Properties.Resources.ResKey_String_Ready);
+							}
 							if (!Properties.Settings.Default.LinkHistory.Contains(url))
 								Properties.Settings.Default.LinkHistory.Add(url);
 						}
@@ -297,6 +307,27 @@ namespace DebianPackagesExplorer
 			}
 		}
 
+		private void TextBoxFilterName_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				ICollectionView view = CollectionViewSource.GetDefaultView(DataGridPackages.ItemsSource);
+				view.Filter = (object item) =>
+				{
+					PackageInfo info = item as PackageInfo;
+					if (info == null)
+						return false;
+					return info.Name.ToLower().StartsWith((sender as TextBox).Text.ToLower());
+				};
+			}
+		}
+
+		private void TextBoxFilterName_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (string.IsNullOrEmpty((sender as TextBox).Text))
+				CollectionViewSource.GetDefaultView(DataGridPackages.ItemsSource).Filter = null;
+		}
+
 		private void TextBoxHomepage_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			string link = (sender as TextBox).Text;
@@ -311,11 +342,6 @@ namespace DebianPackagesExplorer
 			Properties.Settings.Default.MainWindowMaximized = WindowState == WindowState.Maximized;
 			Properties.Settings.Default.MainWindowTop = Top;
 			Properties.Settings.Default.MainWindowWidth = Width;
-		}
-
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-
 		}
 
 		#endregion
