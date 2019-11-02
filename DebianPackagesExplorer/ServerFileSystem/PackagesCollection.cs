@@ -13,7 +13,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DebianPackagesExplorer.Debian
+namespace DebianPackagesExplorer.ServerFileSystem
 {
 	public class PackagesCollection : ObservableCollection<PackageInfo>
 	{

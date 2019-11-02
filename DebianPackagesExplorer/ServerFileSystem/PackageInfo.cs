@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace DebianPackagesExplorer.Debian
+namespace DebianPackagesExplorer.ServerFileSystem
 {
 	[DebuggerDisplay("Package = {Name}")]
 	public class PackageInfo : BaseInfo

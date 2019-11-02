@@ -7,7 +7,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace DebianPackagesExplorer.Debian
+namespace DebianPackagesExplorer.ServerFileSystem
 {
 	public class SelectedSourcePackageInfo
 	{

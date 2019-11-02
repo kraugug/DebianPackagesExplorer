@@ -5,7 +5,7 @@
  * GNU General Public License v3.0. See the LICENSE file for details.
  */
 
-namespace DebianPackagesExplorer.Debian
+namespace DebianPackagesExplorer.ServerFileSystem
 {
 	public abstract class BaseInfo
 	{

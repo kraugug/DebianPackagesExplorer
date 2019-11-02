@@ -9,6 +9,7 @@ namespace DebianPackagesExplorer.Tools
 {
     public enum HistoryPoolAction
     {
+		CurrentChanged,
 		GoNext,
 		GoPrevious
     }

@@ -7,7 +7,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace DebianPackagesExplorer.Debian
+namespace DebianPackagesExplorer.ServerFileSystem
 {
     public class ArchitectureInfo : FolderInfo
     {

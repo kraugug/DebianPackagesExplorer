@@ -75,34 +75,34 @@
 
 		<!--  Toolbar  -->
 		<StackPanel Grid.Row="1" Margin="5" Orientation="Horizontal">
-			<Button Command="local:MainWindow.CommandDownloadPackage"
-			        Style="{DynamicResource ToolButton28}"
-			        ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
+			<Button Command="local:MainWindow.CommandDownloadPackage" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
 				<Image Source="/Resources/DownloadPackage.png" Style="{DynamicResource ToolButtonImage}" />
 			</Button>
-			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandOpenContainingFolder"
-			        Style="{DynamicResource ToolButton28}"
-			        ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
+			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandOpenContainingFolder" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
 				<Image Source="/Resources/Folder.png" Style="{DynamicResource ToolButtonImage}" />
 			</Button>
-			<Button Margin="10,0,0,0" Command="local:MainWindow.CommandHistoryGoPrevious"
-			        Style="{DynamicResource ToolButton28}"
-			        ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoPrevious}">
+			<Button Margin="10,0,0,0" Command="local:MainWindow.CommandHistoryGoPrevious" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoPrevious}">
 				<Image Source="/Resources/GoPrevious.png" Style="{DynamicResource ToolButtonImage}" />
 			</Button>
-			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandHistoryGoNext"
-			        Style="{DynamicResource ToolButton28}"
-			        ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoNext}">
+			<ComboBox Width="280" Height="26" Margin="2,0,0,0" DisplayMemberPath="Name" FontSize="14"
+			          ItemsSource="{Binding History.Pool}"
+			          SelectedItem="{Binding History.Current, UpdateSourceTrigger=PropertyChanged}" />
+			<Button Margin="2,0,0,0" Command="local:MainWindow.CommandHistoryGoNext" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_GoNext}">
 				<Image Source="/Resources/GoNext.png" Style="{DynamicResource ToolButtonImage}" />
 			</Button>
 		</StackPanel>
 
 		<!--  Content  -->
 		<Grid Grid.Row="2">
-			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False" Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False"
-			          CanUserSortColumns="True" EnableColumnVirtualization="True" EnableRowVirtualization="True" HeadersVisibility="Column" IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
+			<DataGrid Name="DataGridPackages" Grid.Row="1" AutoGenerateColumns="False"
+			          Background="Transparent" CanUserAddRows="False" CanUserDeleteRows="False"
+			          CanUserSortColumns="True" EnableColumnVirtualization="True"
+			          EnableRowVirtualization="True" HeadersVisibility="Column"
+			          IsTextSearchCaseSensitive="False" IsTextSearchEnabled="True"
 			          ItemsSource="{Binding Packages}"
-			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent" SelectionChanged="DataGridPackages_SelectionChanged" SelectionMode="Single" SelectionUnit="FullRow">
+			          MouseDoubleClick="DataGridPackages_MouseDoubleClick" RowBackground="Transparent"
+			          SelectionChanged="DataGridPackages_SelectionChanged" SelectionMode="Single"
+			          SelectionUnit="FullRow">
 				<!--  TextSearch.TextPath="Name"  -->
 				<DataGrid.Columns>
 					<DataGridTextColumn Binding="{Binding Name, Mode=OneWay}">
@@ -112,8 +112,7 @@
 									<ColumnDefinition Width="Auto" />
 									<ColumnDefinition Width="*" />
 								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0" Margin="0,0,5,0" VerticalAlignment="Center"
-								           Text="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
+								<TextBlock Grid.Column="0" Margin="0,0,5,0" VerticalAlignment="Center" Text="{DynamicResource MainWindow_DataGridPackages_Headers_Name}" />
 								<TextBox Grid.Column="1" Width="220" KeyDown="TextBoxFilterName_KeyDown" TextChanged="TextBoxFilterName_TextChanged" />
 							</Grid>
 						</DataGridTextColumn.Header>
@@ -176,8 +175,7 @@
 				</Grid.ColumnDefinitions>
 
 				<!--  Package info  -->
-				<Grid Grid.Column="0" Background="Transparent"
-				      DataContext="{Binding ElementName=DataGridPackages, Path=SelectedItem}">
+				<Grid Grid.Column="0" Background="Transparent" DataContext="{Binding ElementName=DataGridPackages, Path=SelectedItem}">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto" />
 						<RowDefinition Height="*" />
@@ -205,38 +203,28 @@
 						</Grid.RowDefinitions>
 
 						<!--  Name  -->
-						<TextBlock Grid.Row="0" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Package}" />
-						<TextBox Grid.Row="0" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding Name, Mode=OneWay}" />
+						<TextBlock Grid.Row="0" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Package}" />
+						<TextBox Grid.Row="0" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Name, Mode=OneWay}" />
 
 						<!--  Author  -->
-						<TextBlock Grid.Row="1" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Author}" />
-						<TextBox Grid.Row="1" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding Author, Mode=OneWay}" />
+						<TextBlock Grid.Row="1" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Author}" />
+						<TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Author, Mode=OneWay}" />
 
 						<!--  Maintainer  -->
-						<TextBlock Grid.Row="2" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Maintainer}" />
-						<TextBox Grid.Row="2" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding Maintainer, Mode=OneWay}" />
+						<TextBlock Grid.Row="2" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Maintainer}" />
+						<TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding Maintainer, Mode=OneWay}" />
 
 						<!--  Homepage  -->
-						<TextBlock Grid.Row="3" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Homepage}" />
-						<TextBox Name="TextBoxHomepage" Grid.Row="3" Grid.Column="1" Width="Auto" HorizontalAlignment="Left" Cursor="Hand"
-						         Foreground="Blue" PreviewMouseDown="TextBoxHomepage_MouseDown"
+						<TextBlock Grid.Row="3" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Homepage}" />
+						<TextBox Name="TextBoxHomepage" Grid.Row="3" Grid.Column="1" Width="Auto"
+						         HorizontalAlignment="Left" Cursor="Hand" Foreground="Blue"
+						         PreviewMouseDown="TextBoxHomepage_MouseDown"
 						         Style="{DynamicResource StyleTextBoxInfo}"
 						         Text="{Binding Homepage, Mode=OneWay}"
 						         TextDecorations="Underline" />
 
 						<!--  Depends  -->
-						<TextBlock Grid.Row="4" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
+						<TextBlock Grid.Row="4" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Depends}" />
 						<ComboBox Grid.Row="4" Grid.Column="1"
 						          ItemsSource="{Binding Depends}"
 						          SelectionChanged="ComboBoxPackageInfo_SelectionChanged"
@@ -245,44 +233,30 @@
 						          Visibility="{Binding Depends, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  MD5SUm  -->
-						<TextBlock Grid.Row="5" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Md5}" />
-						<TextBox Grid.Row="5" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding MD5Sum, Mode=OneWay}" />
+						<TextBlock Grid.Row="5" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Md5}" />
+						<TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding MD5Sum, Mode=OneWay}" />
 
 						<!--  SHA1  -->
-						<TextBlock Grid.Row="6" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Sha1}" />
-						<TextBox Grid.Row="6" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding SHA1, Mode=OneWay}" />
+						<TextBlock Grid.Row="6" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha1}" />
+						<TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA1, Mode=OneWay}" />
 
 						<!--  SHA256  -->
-						<TextBlock Grid.Row="7" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Sha256}" />
-						<TextBox Grid.Row="7" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding SHA256, Mode=OneWay}" />
+						<TextBlock Grid.Row="7" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Sha256}" />
+						<TextBox Grid.Row="7" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding SHA256, Mode=OneWay}" />
 
 						<!--  Filename  -->
-						<TextBlock Grid.Row="8" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_FileName}" />
-						<TextBox Grid.Row="8" Grid.Column="1"
-						         Style="{DynamicResource StyleTextBoxInfo}"
-						         Text="{Binding FileNameWithPath, Mode=OneWay}" />
+						<TextBlock Grid.Row="8" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_FileName}" />
+						<TextBox Grid.Row="8" Grid.Column="1" Style="{DynamicResource StyleTextBoxInfo}" Text="{Binding FileNameWithPath, Mode=OneWay}" />
 
 						<!--  Suggests  -->
-						<TextBlock Grid.Row="9" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
+						<TextBlock Grid.Row="9" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Suggests}" />
 						<TextBox Grid.Row="9" Grid.Column="1"
 						         Style="{DynamicResource StyleTextBoxInfo}"
 						         Text="{Binding Suggests.Joined, Mode=OneWay}"
 						         Visibility="{Binding Suggests, Converter={c:StringCollectionToVisibilityConverter}}" />
 
 						<!--  Tags  -->
-						<TextBlock Grid.Row="10" Grid.Column="0"
-						           Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
+						<TextBlock Grid.Row="10" Grid.Column="0" Text="{DynamicResource MainWindow_TextBlock_Text_Tags}" />
 						<TextBox Grid.Row="10" Grid.Column="1"
 						         Style="{DynamicResource StyleTextBoxInfo}"
 						         Text="{Binding Tags.Joined, Mode=OneWay}"
@@ -296,23 +270,19 @@
 					</Grid>
 
 					<!--  Package description  -->
-					<GroupBox Grid.Row="1" Margin="5" Padding="5"
-					          Header="{DynamicResource MainWindow_GroupBox_Header_Description}">
-						<TextBox Name="TextBoxPackageDescription" Background="Transparent" BorderThickness="0" IsReadOnly="True"
+					<GroupBox Grid.Row="1" Margin="5" Padding="5" Header="{DynamicResource MainWindow_GroupBox_Header_Description}">
+						<TextBox Name="TextBoxPackageDescription" Background="Transparent" BorderThickness="0"
+						         IsReadOnly="True"
 						         Text="{Binding Description, Mode=OneWay}" />
 					</GroupBox>
 				</Grid>
 
 				<!--  Tolbar  -->
 				<StackPanel Grid.Column="1" Margin="2,-2,0,2">
-					<Button Command="local:MainWindow.CommandDownloadPackage"
-					        Style="{DynamicResource ToolButton28}"
-					        ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
+					<Button Command="local:MainWindow.CommandDownloadPackage" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_DownloadPackage}">
 						<Image Source="/Resources/DownloadPackage.png" Style="{DynamicResource ToolButtonImage}" />
 					</Button>
-					<Button Margin="0,2,0,0" Command="local:MainWindow.CommandOpenContainingFolder"
-					        Style="{DynamicResource ToolButton28}"
-					        ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
+					<Button Margin="0,2,0,0" Command="local:MainWindow.CommandOpenContainingFolder" Style="{DynamicResource ToolButton28}" ToolTip="{DynamicResource MainWindow_Button_ToolTip_ShowInContainingFolder}">
 						<Image Source="/Resources/Folder.png" Style="{DynamicResource ToolButtonImage}" />
 					</Button>
 				</StackPanel>
@@ -322,8 +292,8 @@
 		<!--  Statusbar  -->
 		<StatusBar Grid.Row="4">
 			<StatusBarItem Width="300" HorizontalAlignment="Right">
-				<ProgressBar Name="ProgressBarStatus" Width="290" Height="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Maximum="100"
-				             Minimum="0" />
+				<ProgressBar Name="ProgressBarStatus" Width="290" Height="14" HorizontalAlignment="Stretch"
+				             VerticalAlignment="Stretch" Maximum="100" Minimum="0" />
 			</StatusBarItem>
 			<StatusBarItem>
 				<TextBlock Name="TextBlockStatus" />

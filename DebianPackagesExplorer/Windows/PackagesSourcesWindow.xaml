@@ -2,16 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:debian="clr-namespace:DebianPackagesExplorer.Debian"
         xmlns:local="clr-namespace:DebianPackagesExplorer.Windows"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p="clr-namespace:DebianPackagesExplorer.Properties"
+        xmlns:sfs="clr-namespace:DebianPackagesExplorer.ServerFileSystem"
         Title="{DynamicResource PackagesSourcesWindow_Title}"
         Width="800"
         Height="450"
         Closing="Window_Closing"
-		Loaded="Window_Loaded"
         Icon="/Resources/Application_x_deb.png"
+        Loaded="Window_Loaded"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
         mc:Ignorable="d">
@@ -41,8 +41,7 @@
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
 				<StackPanel Grid.Column="0">
-					<TextBlock FontSize="16" FontWeight="SemiBold"
-					           Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_Packages}" />
+					<TextBlock FontSize="16" FontWeight="SemiBold" Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_Packages}" />
 					<TextBlock Margin="40,5,0,0" Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_PackagesDescription}" />
 				</StackPanel>
 				<Image Grid.Column="1" Source="/Resources/Application_x_deb.png" />
@@ -56,14 +55,14 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<TextBlock Grid.Column="0" VerticalAlignment="Center"
-			           Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_WorkWith}" />
+			<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{DynamicResource PackagesSourcesWindow_TextBlock_Text_WorkWith}" />
 			<ComboBox Name="ComboBoxSources" Grid.Column="1" Margin="10,0,10,0" IsEditable="True"
 			          ItemsSource="{Binding Sources}" />
 			<Button Grid.Column="2" Width="70" Command="local:PackagesSourcesWindow.CommandAdd"
 			        Content="{DynamicResource PackagesSourcesWindow_Button_Content_Add}"
 			        Style="{DynamicResource ToolButton}" />
-			<Button Grid.Column="3" Width="70" Margin="5,0,0,0" Command="local:PackagesSourcesWindow.CommandRemove"
+			<Button Grid.Column="3" Width="70" Margin="5,0,0,0"
+			        Command="local:PackagesSourcesWindow.CommandRemove"
 			        Content="{DynamicResource PackagesSourcesWindow_Button_Content_Remove}"
 			        Style="{DynamicResource ToolButton}" />
 		</Grid>
@@ -74,33 +73,30 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<TreeView Name="TreeViewBrowser" Grid.Column="0"
-			          ItemsSource="{Binding SiteInfo}"
-			          MouseDoubleClick="TreeViewBrowser_MouseDoubleClick">
+			<TreeView Name="TreeViewBrowser" Grid.Column="0" ItemsSource="{Binding SiteInfo}" MouseDoubleClick="TreeViewBrowser_MouseDoubleClick">
 				<TreeView.Resources>
-					<HierarchicalDataTemplate DataType="{x:Type debian:ArchitectureInfo}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type sfs:ArchitectureInfo}" ItemsSource="{Binding Items}">
 						<TextBlock Text="{Binding Name}" />
 					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type debian:CodeNameInfo}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type sfs:CodeNameInfo}" ItemsSource="{Binding Items}">
 						<TextBlock Text="{Binding FullName}" />
 					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type debian:ComponentInfo}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type sfs:ComponentInfo}" ItemsSource="{Binding Items}">
 						<TextBlock Text="{Binding Name}" />
 					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type debian:FolderInfo}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type sfs:FolderInfo}" ItemsSource="{Binding Items}">
 						<TextBlock Text="{Binding Name}" />
 					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type debian:PackageInfo}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type sfs:PackageInfo}" ItemsSource="{Binding Items}">
 						<TextBlock Text="{Binding Name}" />
 					</HierarchicalDataTemplate>
 				</TreeView.Resources>
 			</TreeView>
-			<Label Name="LabelNothingFound" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" FontSize="16"
+			<Label Name="LabelNothingFound" Grid.Column="0" HorizontalContentAlignment="Center"
+			       VerticalContentAlignment="Center" Background="LightGray" FontSize="16"
 			       FontWeight="SemiBold" Foreground="Red" Visibility="Collapsed" />
 			<StackPanel Grid.Column="1" Width="100" Margin="5,0,0,0" Orientation="Vertical">
-				<Button Command="local:PackagesSourcesWindow.CommandRefresh"
-				        Content="{DynamicResource PackagesSourcesWindow_Button_Content_Refresh}"
-				        Style="{DynamicResource ToolButton}" />
+				<Button Command="local:PackagesSourcesWindow.CommandRefresh" Content="{DynamicResource PackagesSourcesWindow_Button_Content_Refresh}" Style="{DynamicResource ToolButton}" />
 			</StackPanel>
 		</Grid>
 
@@ -117,7 +113,8 @@
 				        Content="{DynamicResource PackagesSourcesWindow_Button_Content_Cancel}"
 				        IsCancel="True"
 				        Style="{DynamicResource ToolButton}" />
-				<Button Grid.Column="3" Width="80" Margin="5,0,0,0" Command="local:PackagesSourcesWindow.CommandOk"
+				<Button Grid.Column="3" Width="80" Margin="5,0,0,0"
+				        Command="local:PackagesSourcesWindow.CommandOk"
 				        Content="{DynamicResource PackagesSourcesWindow_Button_Content_Ok}"
 				        Style="{DynamicResource ToolButton}" />
 			</Grid>
